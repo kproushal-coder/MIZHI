@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#100d20">
+<title>MIZHI - Connect Hearts</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#100d20;color:white;font-family:Arial,sans-serif}
+header{padding:25px 20px;background:#19142b;text-align:center}
+.logo{font-size:36px;font-weight:bold;color:#ff6b9d;letter-spacing:5px}
+header p{color:#c5b7ce;margin:8px}
+main{padding:22px;max-width:500px;margin:auto}
+h2{color:#ff75a6}
+.hero{background:linear-gradient(145deg,#39204e,#a83268);padding:30px 20px;border-radius:22px;text-align:center;margin:15px 0}
+.hero h1{font-size:30px}
+.hero p{color:#ffe1ed}
+.card{background:#211b35;padding:22px;border-radius:18px;margin-top:20px;text-align:center}
+.avatar{font-size:75px}
+button{border:0;border-radius:25px;padding:13px 22px;font-size:15px;font-weight:bold;cursor:pointer}
+.primary{background:#ff5790;color:white}
+.secondary{background:#39304c;color:white;margin-left:8px}
+nav{position:fixed;bottom:0;left:0;right:0;background:#1b162c;display:flex;justify-content:space-around;padding:14px 3px}
+nav button{background:none;color:#e5d8ed;padding:8px;font-size:12px}
+nav button:focus{color:#ff75a6}
+section{padding-bottom:90px}
+.small{color:#b9adc9;font-size:13px}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">MIZHI ❤️</div>
+<p>Connect Hearts • Find Your Soulmate</p>
+</header>
+<main>
+<section id="home">
+<div class="hero">
+<h1>Find Your Perfect Match ❤️</h1>
+<p>Every heart deserves a beautiful connection.</p>
+<button class="primary" onclick="show('discover')">Discover Now</button>
+</div>
+<h2>Welcome to MIZHI</h2>
+<p class="small">Meet new people. Build meaningful connections.</p>
+<div class="card">
+<div class="avatar">💑</div>
+<h3>Your Love Story Starts Here</h3>
+<p class="small">Discover genuine connections.</p>
+</div>
+</section>
+<section id="discover" hidden>
+<h2>Discover ❤️</h2>
+<div class="card">
+<div class="avatar">🌹</div>
+<h3>Find Someone Special</h3>
+<p class="small">Your matching profiles will appear here.</p>
+<button class="primary" onclick="alert('Matching feature coming soon!')">Find Matches</button>
+</div>
+</section>
+<section id="likes" hidden>
+<h2>Your Likes 💗</h2>
+<div class="card">Your likes will appear here.</div>
+</section>
+<section id="chats" hidden>
+<h2>Messages 💬</h2>
+<div class="card">Your conversations will appear here.</div>
+</section>
+<section id="profile" hidden>
+<h2>My Profile 👤</h2>
+<div class="card">
+<div class="avatar">👤</div>
+<h3>Welcome to MIZHI</h3>
+<p class="small">Your profile settings will appear here.</p>
+</div>
+</section>
+</main>
+<nav>
+<button onclick="show('home')">🏠<br>Home</button>
+<button onclick="show('discover')">❤️<br>Discover</button>
+<button onclick="show('likes')">💗<br>Likes</button>
+<button onclick="show('chats')">💬<br>Chats</button>
+<button onclick="show('profile')">👤<br>Profile</button>
+</nav>
+<script>
+function show(id){
+document.querySelectorAll('main section').forEach(s=>s.hidden=true);
+document.getElementById(id).hidden=false;
+}
+</script>
+</body>
+</html>
