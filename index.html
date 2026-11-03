@@ -1,91 +1,243 @@
+<!-- MIZHI Phase 1 -->
+<!-- Login, Register and Profile Setup -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#100d20">
 <title>MIZHI - Connect Hearts</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#100d20;color:white;font-family:Arial,sans-serif}
-header{padding:25px 20px;background:#19142b;text-align:center}
-.logo{font-size:36px;font-weight:bold;color:#ff6b9d;letter-spacing:5px}
-header p{color:#c5b7ce;margin:8px}
-main{padding:22px;max-width:500px;margin:auto}
+body{margin:0;background:#100d20;color:white;font-family:Arial}
+header{padding:22px;background:#19142b;text-align:center}
+.logo{font-size:35px;font-weight:bold;color:#ff6b9d;letter-spacing:4px}
+main{padding:20px;max-width:500px;margin:auto}
 h2{color:#ff75a6}
-.hero{background:linear-gradient(145deg,#39204e,#a83268);padding:30px 20px;border-radius:22px;text-align:center;margin:15px 0}
-.hero h1{font-size:30px}
-.hero p{color:#ffe1ed}
-.card{background:#211b35;padding:22px;border-radius:18px;margin-top:20px;text-align:center}
-.avatar{font-size:75px}
-button{border:0;border-radius:25px;padding:13px 22px;font-size:15px;font-weight:bold;cursor:pointer}
+.card{background:#211b35;padding:22px;border-radius:18px;margin:18px 0}
+.hero{background:linear-gradient(145deg,#39204e,#a83268);padding:25px;border-radius:22px;text-align:center}
+input,select,textarea{
+width:100%;padding:14px;margin:9px 0;
+border:1px solid #51405f;border-radius:12px;
+background:#302640;color:white;font-size:15px
+}
+button{border:0;border-radius:25px;padding:13px 20px;font-weight:bold;cursor:pointer}
 .primary{background:#ff5790;color:white}
-.secondary{background:#39304c;color:white;margin-left:8px}
-nav{position:fixed;bottom:0;left:0;right:0;background:#1b162c;display:flex;justify-content:space-around;padding:14px 3px}
-nav button{background:none;color:#e5d8ed;padding:8px;font-size:12px}
-nav button:focus{color:#ff75a6}
-section{padding-bottom:90px}
+.secondary{background:#39304c;color:white}
+nav{position:fixed;bottom:0;left:0;right:0;
+background:#1b162c;display:flex;justify-content:space-around;padding:10px 2px}
+nav button{background:none;color:white;font-size:11px;padding:7px}
+section{padding-bottom:85px}
+.avatar{font-size:65px;text-align:center}
 .small{color:#b9adc9;font-size:13px}
+[hidden]{display:none!important}
 </style>
 </head>
 <body>
+
 <header>
 <div class="logo">MIZHI ❤️</div>
 <p>Connect Hearts • Find Your Soulmate</p>
 </header>
+
 <main>
-<section id="home">
+
+<section id="welcome">
 <div class="hero">
 <h1>Find Your Perfect Match ❤️</h1>
 <p>Every heart deserves a beautiful connection.</p>
+<button class="primary" onclick="show('register')">Create Account</button>
+<button class="secondary" onclick="show('login')">Login</button>
+</div>
+</section>
+
+<section id="register" hidden>
+<div class="card">
+<h2>Create Your Account ❤️</h2>
+<form onsubmit="registerUser(event)">
+<input id="regName" placeholder="Full Name" required>
+<input id="regEmail" type="email" placeholder="Email Address" required>
+<input id="regPassword" type="password" placeholder="Password" required>
+<input id="regAge" type="number" placeholder="Age (18+)" min="18" required>
+<select id="regGender" required>
+<option value="">Select Gender</option>
+<option>Male</option>
+<option>Female</option>
+</select>
+<button class="primary">Register</button>
+</form>
+<p class="small">Already registered?</p>
+<button class="secondary" onclick="show('login')">Login</button>
+</div>
+</section>
+
+<section id="login" hidden>
+<div class="card">
+<h2>Welcome Back ❤️</h2>
+<form onsubmit="loginUser(event)">
+<input id="loginEmail" type="email" placeholder="Email" required>
+<input id="loginPassword" type="password" placeholder="Password" required>
+<button class="primary">Login</button>
+</form>
+<button class="secondary" onclick="show('register')">Create Account</button>
+</div>
+</section>
+
+<section id="home" hidden>
+<div class="hero">
+<h1>Welcome to MIZHI ❤️</h1>
+<p>Your journey to meaningful connections starts here.</p>
 <button class="primary" onclick="show('discover')">Discover Now</button>
 </div>
-<h2>Welcome to MIZHI</h2>
-<p class="small">Meet new people. Build meaningful connections.</p>
 <div class="card">
 <div class="avatar">💑</div>
 <h3>Your Love Story Starts Here</h3>
-<p class="small">Discover genuine connections.</p>
+<p class="small">Meet people and build genuine connections.</p>
 </div>
 </section>
+
 <section id="discover" hidden>
 <h2>Discover ❤️</h2>
 <div class="card">
 <div class="avatar">🌹</div>
 <h3>Find Someone Special</h3>
-<p class="small">Your matching profiles will appear here.</p>
-<button class="primary" onclick="alert('Matching feature coming soon!')">Find Matches</button>
+<p class="small">Matching profiles will appear here after connecting the database.</p>
 </div>
 </section>
+
 <section id="likes" hidden>
 <h2>Your Likes 💗</h2>
 <div class="card">Your likes will appear here.</div>
 </section>
+
 <section id="chats" hidden>
 <h2>Messages 💬</h2>
 <div class="card">Your conversations will appear here.</div>
 </section>
+
 <section id="profile" hidden>
 <h2>My Profile 👤</h2>
 <div class="card">
 <div class="avatar">👤</div>
-<h3>Welcome to MIZHI</h3>
-<p class="small">Your profile settings will appear here.</p>
+<h3 id="profileName">My Profile</h3>
+<p id="profileEmail" class="small"></p>
+<form onsubmit="saveProfile(event)">
+<input id="editBio" placeholder="About yourself">
+<input id="editCity" placeholder="Your City">
+<button class="primary">Save Profile</button>
+</form>
+<button class="secondary" onclick="logout()">Logout</button>
 </div>
 </section>
+
 </main>
-<nav>
+
+<nav id="navigation" hidden>
 <button onclick="show('home')">🏠<br>Home</button>
 <button onclick="show('discover')">❤️<br>Discover</button>
 <button onclick="show('likes')">💗<br>Likes</button>
 <button onclick="show('chats')">💬<br>Chats</button>
 <button onclick="show('profile')">👤<br>Profile</button>
 </nav>
+
 <script>
+let users=JSON.parse(localStorage.getItem('mizhiUsers')||'[]');
+let current=localStorage.getItem('mizhiCurrent');
+
 function show(id){
 document.querySelectorAll('main section').forEach(s=>s.hidden=true);
 document.getElementById(id).hidden=false;
 }
+
+function registerUser(e){
+e.preventDefault();
+
+let email=document.getElementById('regEmail').value.trim().toLowerCase();
+
+if(users.some(u=>u.email===email)){
+alert('Account already exists. Please login.');
+return;
+}
+
+let user={
+name:document.getElementById('regName').value,
+email:email,
+password:document.getElementById('regPassword').value,
+age:Number(document.getElementById('regAge').value),
+gender:document.getElementById('regGender').value,
+bio:'',
+city:''
+};
+
+if(user.age<18){
+alert('You must be 18 or older.');
+return;
+}
+
+users.push(user);
+localStorage.setItem('mizhiUsers',JSON.stringify(users));
+current=email;
+localStorage.setItem('mizhiCurrent',email);
+openApp();
+}
+
+function loginUser(e){
+e.preventDefault();
+
+let email=document.getElementById('loginEmail').value.trim().toLowerCase();
+let password=document.getElementById('loginPassword').value;
+
+let user=users.find(u=>u.email===email&&u.password===password);
+
+if(!user){
+alert('Incorrect email or password.');
+return;
+}
+
+current=email;
+localStorage.setItem('mizhiCurrent',email);
+openApp();
+}
+
+function openApp(){
+document.getElementById('navigation').hidden=false;
+show('home');
+loadProfile();
+}
+
+function loadProfile(){
+let user=users.find(u=>u.email===current);
+if(!user)return;
+document.getElementById('profileName').textContent=user.name;
+document.getElementById('profileEmail').textContent=user.email;
+document.getElementById('editBio').value=user.bio||'';
+document.getElementById('editCity').value=user.city||'';
+}
+
+function saveProfile(e){
+e.preventDefault();
+let user=users.find(u=>u.email===current);
+if(!user)return;
+user.bio=document.getElementById('editBio').value;
+user.city=document.getElementById('editCity').value;
+localStorage.setItem('mizhiUsers',JSON.stringify(users));
+alert('Profile saved!');
+}
+
+function logout(){
+current=null;
+localStorage.removeItem('mizhiCurrent');
+document.getElementById('navigation').hidden=true;
+show('welcome');
+}
+
+if(current&&users.some(u=>u.email===current)){
+openApp();
+}else{
+current=null;
+show('welcome');
+}
 </script>
+
 </body>
-</html>
+  </html>
