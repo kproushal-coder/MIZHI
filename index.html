@@ -8,10 +8,10 @@
 <title>MIZHI - Connect Hearts</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#100d20;color:white;font-family:Arial}
-header{padding:22px;background:#19142b;text-align:center}
+body{margin:0;background:#100d20;color:white;font-family:Arial,sans-serif}
+header{padding:20px;background:#19142b;text-align:center}
 .logo{font-size:35px;font-weight:bold;color:#ff6b9d;letter-spacing:4px}
-header img{width:180px;height:auto}
+header img{width:180px;height:auto;max-width:80%}
 main{padding:20px;max-width:500px;margin:auto}
 h2{color:#ff75a6}
 .card{background:#211b35;padding:22px;border-radius:18px;margin:18px 0}
@@ -21,7 +21,7 @@ button{border:0;border-radius:25px;padding:13px 20px;font-weight:bold;cursor:poi
 button:disabled{opacity:.55;cursor:not-allowed}
 .primary{background:#ff5790;color:white}
 .secondary{background:#39304c;color:white}
-nav{position:fixed;bottom:0;left:0;right:0;background:#1b162c;display:flex;justify-content:space-around;padding:10px 2px}
+nav{position:fixed;bottom:0;left:0;right:0;background:#1b162c;display:flex;justify-content:space-around;padding:10px 2px;z-index:5}
 nav button{background:none;color:white;font-size:11px;padding:7px}
 section{padding-bottom:85px}
 .avatar{font-size:65px;text-align:center}
@@ -32,140 +32,136 @@ section{padding-bottom:85px}
 .profile-placeholder{font-size:65px}
 .profile-card h3{color:#ff8db5}
 .action-button{margin:8px 4px}
+.message{color:#ff9fbd;font-size:13px;white-space:pre-wrap}
 </style>
 </head>
 <body>
 
 <header>
-<div class="logo">
-<img src="Neon%20MIZHI%20Hearts%20Logo%20Poster.png" alt="MIZHI Logo">
-</div>
-<p>Connect Hearts • Find Your Soulmate</p>
+  <div class="logo">
+    <img src="Neon%20MIZHI%20Hearts%20Logo%20Poster.png" alt="MIZHI Logo">
+  </div>
+  <p>Connect Hearts • Find Your Soulmate</p>
 </header>
 
 <main>
 <section id="welcome">
-<div class="hero">
-<h1>Find Your Perfect Match ❤️</h1>
-<p>Every heart deserves a beautiful connection.</p>
-<button class="primary" onclick="show('register')">Create Account</button>
-<button class="secondary" onclick="show('login')">Login</button>
-</div>
+  <div class="hero">
+    <h1>Find Your Perfect Match ❤️</h1>
+    <p>Every heart deserves a beautiful connection.</p>
+    <button class="primary" onclick="show('register')">Create Account</button>
+    <button class="secondary" onclick="show('login')">Login</button>
+  </div>
 </section>
 
 <section id="register" hidden>
-<div class="card">
-<h2>Create Your Account ❤️</h2>
-<form onsubmit="registerUser(event)">
-<input id="regName" placeholder="Full Name" required>
-<input id="regEmail" type="email" placeholder="Email Address" required>
-<input id="regPassword" type="password" placeholder="Password" minlength="6" required>
-<input id="regAge" type="number" placeholder="Age (18+)" min="18" required>
-<select id="regGender" required>
-<option value="">Select Gender</option>
-<option>Male</option>
-<option>Female</option>
-</select>
-<button class="primary">Register</button>
-</form>
-<p class="small">Already registered?</p>
-<button class="secondary" onclick="show('login')">Login</button>
-</div>
+  <div class="card">
+    <h2>Create Your Account ❤️</h2>
+    <form onsubmit="registerUser(event)">
+      <input id="regName" placeholder="Full Name" required>
+      <input id="regEmail" type="email" placeholder="Email Address" required>
+      <input id="regPassword" type="password" placeholder="Password (minimum 6 characters)" minlength="6" required>
+      <input id="regAge" type="number" placeholder="Age (18+)" min="18" required>
+      <select id="regGender" required>
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+      <button class="primary" id="registerButton">Register</button>
+    </form>
+    <p class="small">Already registered?</p>
+    <button class="secondary" onclick="show('login')">Login</button>
+  </div>
 </section>
 
 <section id="login" hidden>
-<div class="card">
-<h2>Welcome Back ❤️</h2>
-<form onsubmit="loginUser(event)">
-<input id="loginEmail" type="email" placeholder="Email" required>
-<input id="loginPassword" type="password" placeholder="Password" required>
-<button class="primary">Login</button>
-</form>
-<button class="secondary" onclick="show('register')">Create Account</button>
-</div>
+  <div class="card">
+    <h2>Welcome Back ❤️</h2>
+    <form onsubmit="loginUser(event)">
+      <input id="loginEmail" type="email" placeholder="Email" required>
+      <input id="loginPassword" type="password" placeholder="Password" required>
+      <button class="primary" id="loginButton">Login</button>
+    </form>
+    <button class="secondary" onclick="show('register')">Create Account</button>
+  </div>
 </section>
 
 <section id="home" hidden>
-<div class="hero">
-<h1>Welcome to MIZHI ❤️</h1>
-<p>Your journey to meaningful connections starts here.</p>
-<button class="primary" onclick="show('discover')">Discover Now</button>
-</div>
-<div class="card">
-<div class="avatar">💑</div>
-<h3>Your Love Story Starts Here</h3>
-<p class="small">Meet people and build genuine connections.</p>
-</div>
+  <div class="hero">
+    <h1>Welcome to MIZHI ❤️</h1>
+    <p>Your journey to meaningful connections starts here.</p>
+    <button class="primary" onclick="show('discover')">Discover Now</button>
+  </div>
+  <div class="card">
+    <div class="avatar">💑</div>
+    <h3>Your Love Story Starts Here</h3>
+    <p class="small">Meet people and build genuine connections.</p>
+  </div>
 </section>
 
 <section id="discover" hidden>
-<h2>Discover ❤️</h2>
-<div id="discoverList">
-<div class="card">Loading profiles... ❤️</div>
-</div>
+  <h2>Discover ❤️</h2>
+  <div id="discoverList"><div class="card">Loading profiles...</div></div>
 </section>
 
 <section id="likes" hidden>
-<h2>Your Likes 💗</h2>
-<p class="small">People who liked your profile</p>
-<div id="likesList">
-<div class="card">Loading likes...</div>
-</div>
+  <h2>Your Likes 💗</h2>
+  <p class="small">People who liked your profile</p>
+  <div id="likesList"><div class="card">Loading likes...</div></div>
 </section>
 
 <section id="chats" hidden>
-<h2>Your Matches 💕</h2>
-<p class="small">People who liked you back!</p>
-<div id="matchesList">
-<div class="card">Loading matches...</div>
-</div>
+  <h2>Your Matches 💕</h2>
+  <p class="small">People who liked you back!</p>
+  <div id="matchesList"><div class="card">Loading matches...</div></div>
 </section>
 
 <section id="profile" hidden>
-<h2>My Profile 👤</h2>
-<div class="card">
-<div class="avatar">👤</div>
-<h3 id="profileName">My Profile</h3>
-<p id="profileEmail" class="small"></p>
-<form onsubmit="saveProfile(event)">
-<input id="editBio" placeholder="About yourself">
-<input id="editCity" placeholder="Your City">
-<button class="primary">Save Profile</button>
-</form>
-<button class="secondary" onclick="logout()">Logout</button>
-</div>
+  <h2>My Profile 👤</h2>
+  <div class="card">
+    <div class="avatar">👤</div>
+    <h3 id="profileName">My Profile</h3>
+    <p id="profileEmail" class="small"></p>
+    <form onsubmit="saveProfile(event)">
+      <input id="editBio" placeholder="About yourself">
+      <input id="editCity" placeholder="Your City">
+      <button class="primary">Save Profile</button>
+    </form>
+    <button class="secondary" onclick="logout()">Logout</button>
+  </div>
 </section>
 </main>
 
 <nav id="navigation" hidden>
-<button onclick="show('home')">🏠<br>Home</button>
-<button onclick="show('discover')">❤️<br>Discover</button>
-<button onclick="show('likes')">💗<br>Likes</button>
-<button onclick="show('chats')">💕<br>Matches</button>
-<button onclick="show('profile')">👤<br>Profile</button>
+  <button onclick="show('home')">🏠<br>Home</button>
+  <button onclick="show('discover')">❤️<br>Discover</button>
+  <button onclick="show('likes')">💗<br>Likes</button>
+  <button onclick="show('chats')">💕<br>Matches</button>
+  <button onclick="show('profile')">👤<br>Profile</button>
 </nav>
 
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
 import {
-getAuth,createUserWithEmailAndPassword,
-signInWithEmailAndPassword,onAuthStateChanged,signOut
+  getAuth,createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,onAuthStateChanged,signOut
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
 import {
-getFirestore,doc,setDoc,getDoc,updateDoc,
-collection,getDocs,query,where,serverTimestamp
+  getFirestore,doc,setDoc,getDoc,updateDoc,
+  collection,getDocs,query,where,serverTimestamp
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
+/* Firebase configuration */
 const firebaseConfig = {
-apiKey:"AIzaSySyBlmHvVRkcJ2DB6I6H3a-zsN1Zt0CKo94s",
-authDomain:"mizhi-59e7e.firebaseapp.com",
-projectId:"mizhi-59e7e",
-storageBucket:"mizhi-59e7e.firebasestorage.app",
-messagingSenderId:"109570780589",
-appId:"1:109570780589:web:5a42cede76210ba8e5c524",
-measurementId:"G-FG0P26JEXK"
+  apiKey:"AIzaSyBlmHvVRkcJ2DB6I6H3a-zsN1Zt0CKo94s",
+  authDomain:"mizhi-59e7e.firebaseapp.com",
+  projectId:"mizhi-59e7e",
+  storageBucket:"mizhi-59e7e.firebasestorage.app",
+  messagingSenderId:"109570780589",
+  appId:"1:109570780589:web:5a42cede76210ba8e5c524",
+  measurementId:"G-FG0P26JEXK"
 };
 
 const app=initializeApp(firebaseConfig);
@@ -174,375 +170,449 @@ const db=getFirestore(app);
 let currentUser=null;
 
 window.show=function(id){
-document.querySelectorAll("main section").forEach(s=>s.hidden=true);
-document.getElementById(id).hidden=false;
+  document.querySelectorAll("main section").forEach(s=>s.hidden=true);
+  const section=document.getElementById(id);
+  if(section)section.hidden=false;
 
-if(id==="discover")loadDiscover();
-if(id==="likes")loadLikes();
-if(id==="chats")loadMatches();
+  if(id==="discover")loadDiscover();
+  if(id==="likes")loadLikes();
+  if(id==="chats")loadMatches();
 };
+
+function showError(error){
+  console.error(error);
+  alert(error.message || "Something went wrong. Please try again.");
+}
 
 async function syncPublicProfile(){
-if(!currentUser)return;
-const snap=await getDoc(doc(db,"users",currentUser.uid));
-if(!snap.exists())return;
-const u=snap.data();
+  if(!currentUser)return;
 
-await setDoc(doc(db,"publicProfiles",currentUser.uid),{
-uid:currentUser.uid,
-name:u.name||"MIZHI User",
-age:u.age||18,
-gender:u.gender||"",
-bio:u.bio||"",
-city:u.city||"",
-photoURL:u.photoURL||"",
-status:"active",
-updatedAt:serverTimestamp()
-},{merge:true});
+  const snap=await getDoc(doc(db,"users",currentUser.uid));
+  if(!snap.exists())return;
+
+  const u=snap.data();
+  await setDoc(doc(db,"publicProfiles",currentUser.uid),{
+    uid:currentUser.uid,
+    name:u.name||"MIZHI User",
+    age:u.age||18,
+    gender:u.gender||"",
+    bio:u.bio||"",
+    city:u.city||"",
+    photoURL:u.photoURL||"",
+    status:"active",
+    updatedAt:serverTimestamp()
+  },{merge:true});
 }
 
+/* Registration */
 window.registerUser=async function(e){
-e.preventDefault();
+  e.preventDefault();
 
-const name=document.getElementById("regName").value.trim();
-const email=document.getElementById("regEmail").value.trim().toLowerCase();
-const password=document.getElementById("regPassword").value;
-const age=Number(document.getElementById("regAge").value);
-const gender=document.getElementById("regGender").value;
+  const button=document.getElementById("registerButton");
+  button.disabled=true;
+  button.textContent="Creating account...";
 
-if(age<18){alert("You must be 18 or older.");return;}
+  const name=document.getElementById("regName").value.trim();
+  const email=document.getElementById("regEmail").value.trim().toLowerCase();
+  const password=document.getElementById("regPassword").value;
+  const age=Number(document.getElementById("regAge").value);
+  const gender=document.getElementById("regGender").value;
 
-try{
-const result=await createUserWithEmailAndPassword(auth,email,password);
-const user=result.user;
+  if(age<18){
+    alert("You must be 18 or older.");
+    button.disabled=false;
+    button.textContent="Register";
+    return;
+  }
 
-await setDoc(doc(db,"users",user.uid),{
-uid:user.uid,name,email,age,gender,
-bio:"",city:"",photoURL:"",
-isOnline:true,coins:0,status:"active",
-createdAt:serverTimestamp(),lastSeen:serverTimestamp()
-});
+  try{
+    const result=await createUserWithEmailAndPassword(auth,email,password);
+    const user=result.user;
 
-await setDoc(doc(db,"publicProfiles",user.uid),{
-uid:user.uid,name,age,gender,
-bio:"",city:"",photoURL:"",status:"active",
-updatedAt:serverTimestamp()
-});
+    await setDoc(doc(db,"users",user.uid),{
+      uid:user.uid,name,email,age,gender,
+      bio:"",city:"",photoURL:"",
+      isOnline:true,coins:0,status:"active",
+      createdAt:serverTimestamp(),
+      lastSeen:serverTimestamp()
+    });
 
-alert("MIZHI account created successfully!");
-}catch(error){alert(error.message);}
+    await setDoc(doc(db,"publicProfiles",user.uid),{
+      uid:user.uid,name,age,gender,
+      bio:"",city:"",photoURL:"",
+      status:"active",
+      updatedAt:serverTimestamp()
+    });
+
+    alert("MIZHI account created successfully!");
+  }catch(error){
+    showError(error);
+  }finally{
+    button.disabled=false;
+    button.textContent="Register";
+  }
 };
 
+/* Login */
 window.loginUser=async function(e){
-e.preventDefault();
-const email=document.getElementById("loginEmail").value.trim().toLowerCase();
-const password=document.getElementById("loginPassword").value;
-try{
-await signInWithEmailAndPassword(auth,email,password);
-}catch(error){alert(error.message);}
+  e.preventDefault();
+
+  const button=document.getElementById("loginButton");
+  button.disabled=true;
+  button.textContent="Logging in...";
+
+  const email=document.getElementById("loginEmail").value.trim().toLowerCase();
+  const password=document.getElementById("loginPassword").value;
+
+  try{
+    await signInWithEmailAndPassword(auth,email,password);
+  }catch(error){
+    showError(error);
+  }finally{
+    button.disabled=false;
+    button.textContent="Login";
+  }
 };
 
+/* Load own profile */
 async function loadProfile(){
-if(!currentUser)return;
-const ref=doc(db,"users",currentUser.uid);
-let snap=await getDoc(ref);
+  if(!currentUser)return;
 
-if(!snap.exists()){
-await setDoc(ref,{
-uid:currentUser.uid,
-name:currentUser.displayName||"MIZHI User",
-email:currentUser.email||"",
-age:18,gender:"",bio:"",city:"",photoURL:"",
-isOnline:true,coins:0,status:"active",
-createdAt:serverTimestamp(),lastSeen:serverTimestamp()
-});
-snap=await getDoc(ref);
-}
+  const ref=doc(db,"users",currentUser.uid);
+  let snap=await getDoc(ref);
 
-const u=snap.data();
-document.getElementById("profileName").textContent=u.name||"";
-document.getElementById("profileEmail").textContent=u.email||"";
-document.getElementById("editBio").value=u.bio||"";
-document.getElementById("editCity").value=u.city||"";
-await syncPublicProfile();
+  if(!snap.exists()){
+    await setDoc(ref,{
+      uid:currentUser.uid,
+      name:currentUser.displayName||"MIZHI User",
+      email:currentUser.email||"",
+      age:18,gender:"",
+      bio:"",city:"",photoURL:"",
+      isOnline:true,coins:0,status:"active",
+      createdAt:serverTimestamp(),
+      lastSeen:serverTimestamp()
+    });
+    snap=await getDoc(ref);
+  }
+
+  const u=snap.data();
+  document.getElementById("profileName").textContent=u.name||"";
+  document.getElementById("profileEmail").textContent=u.email||"";
+  document.getElementById("editBio").value=u.bio||"";
+  document.getElementById("editCity").value=u.city||"";
+
+  await syncPublicProfile();
 }
 
 function addPhoto(card,p){
-if(p.photoURL){
-const img=document.createElement("img");
-img.className="profile-photo";
-img.src=p.photoURL;
-img.alt="Profile photo";
-img.onerror=()=>img.remove();
-card.appendChild(img);
-}else{
-const avatar=document.createElement("div");
-avatar.className="profile-placeholder";
-avatar.textContent="👤";
-card.appendChild(avatar);
-}
+  if(p.photoURL){
+    const img=document.createElement("img");
+    img.className="profile-photo";
+    img.src=p.photoURL;
+    img.alt="Profile photo";
+    img.onerror=()=>img.remove();
+    card.appendChild(img);
+  }else{
+    const avatar=document.createElement("div");
+    avatar.className="profile-placeholder";
+    avatar.textContent="👤";
+    card.appendChild(avatar);
+  }
 }
 
 function addProfileDetails(card,p){
-const name=document.createElement("h3");
-name.textContent=p.name||"MIZHI User";
-card.appendChild(name);
+  const name=document.createElement("h3");
+  name.textContent=p.name||"MIZHI User";
+  card.appendChild(name);
 
-const details=document.createElement("p");
-details.className="small";
-details.textContent=[p.age,p.gender,p.city].filter(Boolean).join(" • ");
-card.appendChild(details);
+  const details=document.createElement("p");
+  details.className="small";
+  details.textContent=[p.age,p.gender,p.city].filter(Boolean).join(" • ");
+  card.appendChild(details);
 
-if(p.bio){
-const bio=document.createElement("p");
-bio.textContent=p.bio;
-card.appendChild(bio);
+  if(p.bio){
+    const bio=document.createElement("p");
+    bio.textContent=p.bio;
+    card.appendChild(bio);
+  }
 }
-}
 
+/* Discover profiles */
 async function loadDiscover(){
-const list=document.getElementById("discoverList");
-if(!currentUser){list.textContent="Please login.";return;}
+  const list=document.getElementById("discoverList");
+  if(!currentUser){
+    list.textContent="Please login.";
+    return;
+  }
 
-list.innerHTML='<div class="card">Loading profiles... ❤️</div>';
+  list.innerHTML='<div class="card">Loading profiles... ❤️</div>';
 
-try{
-const q=query(collection(db,"publicProfiles"),where("status","==","active"));
-const result=await getDocs(q);
-list.innerHTML="";
-let count=0;
+  try{
+    const q=query(
+      collection(db,"publicProfiles"),
+      where("status","==","active")
+    );
+    const result=await getDocs(q);
+    list.innerHTML="";
+    let count=0;
 
-for(const item of result.docs){
-const p=item.data();
-if(p.uid===currentUser.uid)continue;
+    for(const item of result.docs){
+      const p=item.data();
+      if(p.uid===currentUser.uid)continue;
 
-count++;
-const card=document.createElement("div");
-card.className="card profile-card";
-addPhoto(card,p);
-addProfileDetails(card,p);
+      count++;
+      const card=document.createElement("div");
+      card.className="card profile-card";
+      addPhoto(card,p);
+      addProfileDetails(card,p);
 
-const likeRef=doc(db,"likes",currentUser.uid+"_"+p.uid);
-const liked=await getDoc(likeRef);
+      const likeRef=doc(db,"likes",currentUser.uid+"_"+p.uid);
+      const liked=await getDoc(likeRef);
 
-const btn=document.createElement("button");
-btn.className="primary action-button";
-btn.textContent=liked.exists()?"❤️ Liked":"❤️ Like";
-btn.disabled=liked.exists();
-btn.onclick=async()=>{
-btn.disabled=true;
-btn.textContent="Sending...";
-try{
-await likeUser(p.uid);
-btn.textContent="❤️ Liked";
-}catch(error){
-btn.disabled=false;
-btn.textContent="❤️ Like";
-alert(error.message);
+      const btn=document.createElement("button");
+      btn.className="primary action-button";
+      btn.textContent=liked.exists()?"❤️ Liked":"❤️ Like";
+      btn.disabled=liked.exists();
+
+      btn.onclick=async()=>{
+        btn.disabled=true;
+        btn.textContent="Sending...";
+        try{
+          await likeUser(p.uid);
+          btn.textContent="❤️ Liked";
+        }catch(error){
+          btn.disabled=false;
+          btn.textContent="❤️ Like";
+          showError(error);
+        }
+      };
+
+      card.appendChild(btn);
+      list.appendChild(card);
+    }
+
+    if(count===0){
+      list.innerHTML='<div class="card"><div class="avatar">🌹</div><h3>Find Someone Special</h3><p class="small">No other active profiles yet. Invite someone to join MIZHI!</p></div>';
+    }
+  }catch(error){
+    list.innerHTML='<div class="card">Could not load profiles. Please try again.</div>';
+    console.error(error);
+  }
 }
-};
-card.appendChild(btn);
-list.appendChild(card);
-}
 
-if(count===0){
-list.innerHTML='<div class="card"><div class="avatar">🌹</div><h3>Find Someone Special</h3><p class="small">No other active profiles yet. Invite someone to join MIZHI!</p></div>';
-}
-}catch(error){
-list.innerHTML='<div class="card">Could not load profiles. Please try again.</div>';
-console.error(error);
-}
-}
-
+/* Like and automatic match */
 async function likeUser(targetUid){
-if(!currentUser)throw new Error("Please login first.");
-if(targetUid===currentUser.uid)throw new Error("You cannot like your own profile.");
+  if(!currentUser)throw new Error("Please login first.");
+  if(targetUid===currentUser.uid)throw new Error("You cannot like your own profile.");
 
-const myUid=currentUser.uid;
-const myLikeId=myUid+"_"+targetUid;
-const theirLikeId=targetUid+"_"+myUid;
+  const myUid=currentUser.uid;
+  const myLikeId=myUid+"_"+targetUid;
+  const theirLikeId=targetUid+"_"+myUid;
 
-const myLikeRef=doc(db,"likes",myLikeId);
-const theirLikeRef=doc(db,"likes",theirLikeId);
+  const myLikeRef=doc(db,"likes",myLikeId);
+  const theirLikeRef=doc(db,"likes",theirLikeId);
 
-const existing=await getDoc(myLikeRef);
+  const existing=await getDoc(myLikeRef);
 
-if(!existing.exists()){
-await setDoc(myLikeRef,{
-fromUid:myUid,
-toUid:targetUid,
-createdAt:serverTimestamp()
-});
+  if(!existing.exists()){
+    await setDoc(myLikeRef,{
+      fromUid:myUid,
+      toUid:targetUid,
+      createdAt:serverTimestamp()
+    });
+  }
+
+  const reverse=await getDoc(theirLikeRef);
+
+  if(reverse.exists()){
+    const ids=[myUid,targetUid].sort();
+    const matchId=ids[0]+"_"+ids[1];
+    const matchRef=doc(db,"matches",matchId);
+    const matchSnap=await getDoc(matchRef);
+
+    if(!matchSnap.exists()){
+      await setDoc(matchRef,{
+        user1:ids[0],
+        user2:ids[1],
+        createdAt:serverTimestamp()
+      });
+    }
+
+    alert("It's a Match! 💕 You both liked each other!");
+  }
 }
 
-const reverse=await getDoc(theirLikeRef);
-
-if(reverse.exists()){
-const ids=[myUid,targetUid].sort();
-const matchId=ids[0]+"_"+ids[1];
-const matchRef=doc(db,"matches",matchId);
-const matchSnap=await getDoc(matchRef);
-
-if(!matchSnap.exists()){
-await setDoc(matchRef,{
-user1:ids[0],
-user2:ids[1],
-createdAt:serverTimestamp()
-});
-}
-alert("It's a Match! 💕 You both liked each other!");
-}
-}
-
+/* People who liked me */
 async function loadLikes(){
-const list=document.getElementById("likesList");
-if(!currentUser)return;
+  const list=document.getElementById("likesList");
+  if(!currentUser)return;
 
-list.innerHTML='<div class="card">Loading likes...</div>';
+  list.innerHTML='<div class="card">Loading likes...</div>';
 
-try{
-const q=query(collection(db,"likes"),where("toUid","==",currentUser.uid));
-const result=await getDocs(q);
-list.innerHTML="";
+  try{
+    const q=query(
+      collection(db,"likes"),
+      where("toUid","==",currentUser.uid)
+    );
+    const result=await getDocs(q);
+    list.innerHTML="";
+    let count=0;
 
-let count=0;
+    for(const item of result.docs){
+      const like=item.data();
+      const profileSnap=await getDoc(doc(db,"publicProfiles",like.fromUid));
+      if(!profileSnap.exists())continue;
 
-for(const item of result.docs){
-const like=item.data();
-const profileSnap=await getDoc(doc(db,"publicProfiles",like.fromUid));
-if(!profileSnap.exists())continue;
+      const p=profileSnap.data();
+      count++;
 
-const p=profileSnap.data();
-count++;
+      const card=document.createElement("div");
+      card.className="card profile-card";
+      addPhoto(card,p);
+      addProfileDetails(card,p);
 
-const card=document.createElement("div");
-card.className="card profile-card";
-addPhoto(card,p);
-addProfileDetails(card,p);
+      const myLike=await getDoc(
+        doc(db,"likes",currentUser.uid+"_"+like.fromUid)
+      );
 
-const myLike=await getDoc(doc(db,"likes",currentUser.uid+"_"+like.fromUid));
-const btn=document.createElement("button");
-btn.className="primary action-button";
+      const btn=document.createElement("button");
+      btn.className="primary action-button";
 
-if(myLike.exists()){
-btn.textContent="💕 Liked Back";
-btn.disabled=true;
-}else{
-btn.textContent="❤️ Like Back";
-btn.onclick=async()=>{
-btn.disabled=true;
-btn.textContent="Sending...";
-try{
-await likeUser(like.fromUid);
-btn.textContent="💕 Matched!";
-}catch(error){
-btn.disabled=false;
-btn.textContent="❤️ Like Back";
-alert(error.message);
+      if(myLike.exists()){
+        btn.textContent="💕 Liked Back";
+        btn.disabled=true;
+      }else{
+        btn.textContent="❤️ Like Back";
+        btn.onclick=async()=>{
+          btn.disabled=true;
+          btn.textContent="Sending...";
+          try{
+            await likeUser(like.fromUid);
+            btn.textContent="💕 Matched!";
+          }catch(error){
+            btn.disabled=false;
+            btn.textContent="❤️ Like Back";
+            showError(error);
+          }
+        };
+      }
+
+      card.appendChild(btn);
+      list.appendChild(card);
+    }
+
+    if(count===0){
+      list.innerHTML='<div class="card">No likes yet. Keep discovering! ❤️</div>';
+    }
+  }catch(error){
+    list.innerHTML='<div class="card">Could not load likes. Please try again.</div>';
+    console.error(error);
+  }
 }
-};
-}
-card.appendChild(btn);
-list.appendChild(card);
-}
 
-if(count===0){
-list.innerHTML='<div class="card">No likes yet. Keep discovering! ❤️</div>';
-}
-}catch(error){
-list.innerHTML='<div class="card">Could not load likes. Please try again.</div>';
-console.error(error);
-}
-}
-
+/* Matches */
 async function loadMatches(){
-const list=document.getElementById("matchesList");
-if(!currentUser)return;
+  const list=document.getElementById("matchesList");
+  if(!currentUser)return;
 
-list.innerHTML='<div class="card">Loading matches...</div>';
+  list.innerHTML='<div class="card">Loading matches...</div>';
 
-try{
-const uid=currentUser.uid;
-const q1=query(collection(db,"matches"),where("user1","==",uid));
-const q2=query(collection(db,"matches"),where("user2","==",uid));
+  try{
+    const uid=currentUser.uid;
+    const q1=query(collection(db,"matches"),where("user1","==",uid));
+    const q2=query(collection(db,"matches"),where("user2","==",uid));
 
-const results=await Promise.all([getDocs(q1),getDocs(q2)]);
-const allDocs=[...results[0].docs,...results[1].docs];
+    const results=await Promise.all([getDocs(q1),getDocs(q2)]);
+    const allDocs=[...results[0].docs,...results[1].docs];
 
-list.innerHTML="";
-let count=0;
+    list.innerHTML="";
+    let count=0;
 
-for(const item of allDocs){
-const m=item.data();
-const otherUid=m.user1===uid?m.user2:m.user1;
-const profileSnap=await getDoc(doc(db,"publicProfiles",otherUid));
-if(!profileSnap.exists())continue;
+    for(const item of allDocs){
+      const m=item.data();
+      const otherUid=m.user1===uid?m.user2:m.user1;
+      const profileSnap=await getDoc(doc(db,"publicProfiles",otherUid));
+      if(!profileSnap.exists())continue;
 
-const p=profileSnap.data();
-count++;
+      const p=profileSnap.data();
+      count++;
 
-const card=document.createElement("div");
-card.className="card profile-card";
-addPhoto(card,p);
-addProfileDetails(card,p);
+      const card=document.createElement("div");
+      card.className="card profile-card";
+      addPhoto(card,p);
+      addProfileDetails(card,p);
 
-const matched=document.createElement("p");
-matched.textContent="💕 You are matched!";
-matched.style.color="#ff8db5";
-card.appendChild(matched);
-list.appendChild(card);
+      const matched=document.createElement("p");
+      matched.textContent="💕 You are matched!";
+      matched.style.color="#ff8db5";
+      card.appendChild(matched);
+      list.appendChild(card);
+    }
+
+    if(count===0){
+      list.innerHTML='<div class="card">No matches yet. When someone likes you back, your match will appear here! 💗</div>';
+    }
+  }catch(error){
+    list.innerHTML='<div class="card">Could not load matches. Please try again.</div>';
+    console.error(error);
+  }
 }
 
-if(count===0){
-list.innerHTML='<div class="card">No matches yet. When someone likes you back, your match will appear here! 💗</div>';
-}
-}catch(error){
-list.innerHTML='<div class="card">Could not load matches. Please try again.</div>';
-console.error(error);
-}
-}
-
+/* Save profile */
 window.saveProfile=async function(e){
-e.preventDefault();
-if(!currentUser)return;
+  e.preventDefault();
+  if(!currentUser)return;
 
-try{
-await updateDoc(doc(db,"users",currentUser.uid),{
-bio:document.getElementById("editBio").value,
-city:document.getElementById("editCity").value,
-lastSeen:serverTimestamp()
-});
-await syncPublicProfile();
-alert("Profile saved successfully!");
-}catch(error){alert(error.message);}
+  try{
+    await updateDoc(doc(db,"users",currentUser.uid),{
+      bio:document.getElementById("editBio").value.trim(),
+      city:document.getElementById("editCity").value.trim(),
+      lastSeen:serverTimestamp()
+    });
+    await syncPublicProfile();
+    alert("Profile saved successfully!");
+  }catch(error){
+    showError(error);
+  }
 };
 
+/* Logout */
 window.logout=async function(){
-try{
-if(currentUser){
-await updateDoc(doc(db,"users",currentUser.uid),{
-isOnline:false,lastSeen:serverTimestamp()
-});
-}
-await signOut(auth);
-}catch(error){alert(error.message);}
+  try{
+    if(currentUser){
+      await updateDoc(doc(db,"users",currentUser.uid),{
+        isOnline:false,
+        lastSeen:serverTimestamp()
+      });
+    }
+    await signOut(auth);
+  }catch(error){
+    showError(error);
+  }
 };
 
+/* Open app after login */
 async function openApp(){
-document.getElementById("navigation").hidden=false;
-window.show("home");
-try{await loadProfile();}
-catch(error){alert("Profile error: "+error.message);}
+  document.getElementById("navigation").hidden=false;
+  window.show("home");
+
+  try{
+    await loadProfile();
+  }catch(error){
+    alert("Profile error: "+error.message);
+  }
 }
 
+/* Login status */
 onAuthStateChanged(auth,user=>{
-currentUser=user;
-if(user){
-openApp();
-}else{
-document.getElementById("navigation").hidden=true;
-window.show("welcome");
-}
+  currentUser=user;
+
+  if(user){
+    openApp();
+  }else{
+    document.getElementById("navigation").hidden=true;
+    window.show("welcome");
+  }
 });
 </script>
 </body>
