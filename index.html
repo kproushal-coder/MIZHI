@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#100d20">
 <title>MIZHI - Connect Hearts</title>
+
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#100d20;color:white;font-family:Arial,sans-serif}
@@ -33,8 +33,19 @@ section{padding-bottom:85px}
 .profile-card h3{color:#ff8db5}
 .action-button{margin:8px 4px}
 .message{color:#ff9fbd;font-size:13px;white-space:pre-wrap}
+
+/* Chat design */
+.chat-box{background:#211b35;padding:15px;border-radius:18px;margin:15px 0}
+.chat-messages{height:350px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:10px}
+.chat-bubble{max-width:80%;padding:12px 15px;border-radius:15px;background:#39304c;overflow-wrap:anywhere}
+.chat-bubble.mine{align-self:flex-end;background:#a83268}
+.chat-bubble.theirs{align-self:flex-start;background:#39304c}
+.chat-form{display:flex;gap:8px;align-items:center}
+.chat-form input{flex:1;min-width:0}
+.chat-form button{flex-shrink:0}
 </style>
 </head>
+
 <body>
 
 <header>
@@ -45,6 +56,7 @@ section{padding-bottom:85px}
 </header>
 
 <main>
+
 <section id="welcome">
   <div class="hero">
     <h1>Find Your Perfect Match ❤️</h1>
@@ -62,13 +74,16 @@ section{padding-bottom:85px}
       <input id="regEmail" type="email" placeholder="Email Address" required>
       <input id="regPassword" type="password" placeholder="Password (minimum 6 characters)" minlength="6" required>
       <input id="regAge" type="number" placeholder="Age (18+)" min="18" required>
+
       <select id="regGender" required>
         <option value="">Select Gender</option>
         <option value="Male">Male</option>
         <option value="Female">Female</option>
       </select>
+
       <button class="primary" id="registerButton">Register</button>
     </form>
+
     <p class="small">Already registered?</p>
     <button class="secondary" onclick="show('login')">Login</button>
   </div>
@@ -92,6 +107,7 @@ section{padding-bottom:85px}
     <p>Your journey to meaningful connections starts here.</p>
     <button class="primary" onclick="show('discover')">Discover Now</button>
   </div>
+
   <div class="card">
     <div class="avatar">💑</div>
     <h3>Your Love Story Starts Here</h3>
@@ -101,35 +117,73 @@ section{padding-bottom:85px}
 
 <section id="discover" hidden>
   <h2>Discover ❤️</h2>
-  <div id="discoverList"><div class="card">Loading profiles...</div></div>
+  <div id="discoverList">
+    <div class="card">Loading profiles...</div>
+  </div>
 </section>
 
 <section id="likes" hidden>
   <h2>Your Likes 💗</h2>
   <p class="small">People who liked your profile</p>
-  <div id="likesList"><div class="card">Loading likes...</div></div>
+  <div id="likesList">
+    <div class="card">Loading likes...</div>
+  </div>
 </section>
 
+<!-- Matches and Chat -->
 <section id="chats" hidden>
-  <h2>Your Matches 💕</h2>
-  <p class="small">People who liked you back!</p>
-  <div id="matchesList"><div class="card">Loading matches...</div></div>
+
+  <div id="matchesView">
+    <h2>Your Matches 💕</h2>
+    <p class="small">People who liked you back!</p>
+    <div id="matchesList">
+      <div class="card">Loading matches...</div>
+    </div>
+  </div>
+
+  <div id="chatView" hidden>
+    <div class="card">
+      <button class="secondary" onclick="backToMatches()">← Back to Matches</button>
+
+      <h2 id="chatPartnerName">Chat ❤️</h2>
+
+      <div id="chatMessages" class="chat-messages">
+        <p class="small">Loading messages...</p>
+      </div>
+
+      <form class="chat-form" onsubmit="sendChatMessage(event)">
+        <input
+          id="chatInput"
+          placeholder="Type a message..."
+          maxlength="1000"
+          autocomplete="off"
+          required
+        >
+        <button class="primary" id="sendChatButton">Send</button>
+      </form>
+    </div>
+  </div>
+
 </section>
 
 <section id="profile" hidden>
   <h2>My Profile 👤</h2>
+
   <div class="card">
     <div class="avatar">👤</div>
     <h3 id="profileName">My Profile</h3>
     <p id="profileEmail" class="small"></p>
+
     <form onsubmit="saveProfile(event)">
       <input id="editBio" placeholder="About yourself">
       <input id="editCity" placeholder="Your City">
       <button class="primary">Save Profile</button>
     </form>
+
     <button class="secondary" onclick="logout()">Logout</button>
   </div>
 </section>
+
 </main>
 
 <nav id="navigation" hidden>
@@ -141,19 +195,37 @@ section{padding-bottom:85px}
 </nav>
 
 <script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
 import {
-  getAuth,createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,onAuthStateChanged,signOut
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
 import {
-  getFirestore,doc,setDoc,getDoc,updateDoc,
-  collection,getDocs,query,where,serverTimestamp
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc,
+  collection,
+  getDocs,
+  query,
+  where,
+  serverTimestamp,
+  addDoc,
+  onSnapshot,
+  orderBy
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
+
 /* Firebase configuration */
+
 const firebaseConfig = {
   apiKey:"AIzaSyBlmHvVRkcJ2DB6I6H3a-zsN1Zt0CKo94s",
   authDomain:"mizhi-59e7e.firebaseapp.com",
@@ -167,30 +239,61 @@ const firebaseConfig = {
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const db=getFirestore(app);
+
 let currentUser=null;
+let activeChatId=null;
+let chatUnsubscribe=null;
+
+
+/* Navigation */
 
 window.show=function(id){
-  document.querySelectorAll("main section").forEach(s=>s.hidden=true);
+
+  if(chatUnsubscribe){
+    chatUnsubscribe();
+    chatUnsubscribe=null;
+  }
+
+  activeChatId=null;
+
+  document.querySelectorAll("main section").forEach(s=>{
+    s.hidden=true;
+  });
+
   const section=document.getElementById(id);
   if(section)section.hidden=false;
 
+  if(id==="chats"){
+    document.getElementById("matchesView").hidden=false;
+    document.getElementById("chatView").hidden=true;
+    loadMatches();
+  }
+
   if(id==="discover")loadDiscover();
   if(id==="likes")loadLikes();
-  if(id==="chats")loadMatches();
 };
+
+
+/* Error display */
 
 function showError(error){
   console.error(error);
   alert(error.message || "Something went wrong. Please try again.");
 }
 
+
+/* Sync public profile */
+
 async function syncPublicProfile(){
+
   if(!currentUser)return;
 
   const snap=await getDoc(doc(db,"users",currentUser.uid));
+
   if(!snap.exists())return;
 
   const u=snap.data();
+
   await setDoc(doc(db,"publicProfiles",currentUser.uid),{
     uid:currentUser.uid,
     name:u.name||"MIZHI User",
@@ -204,11 +307,15 @@ async function syncPublicProfile(){
   },{merge:true});
 }
 
+
 /* Registration */
+
 window.registerUser=async function(e){
+
   e.preventDefault();
 
   const button=document.getElementById("registerButton");
+
   button.disabled=true;
   button.textContent="Creating account...";
 
@@ -226,25 +333,43 @@ window.registerUser=async function(e){
   }
 
   try{
-    const result=await createUserWithEmailAndPassword(auth,email,password);
+
+    const result=await createUserWithEmailAndPassword(
+      auth,email,password
+    );
+
     const user=result.user;
 
     await setDoc(doc(db,"users",user.uid),{
-      uid:user.uid,name,email,age,gender,
-      bio:"",city:"",photoURL:"",
-      isOnline:true,coins:0,status:"active",
+      uid:user.uid,
+      name,
+      email,
+      age,
+      gender,
+      bio:"",
+      city:"",
+      photoURL:"",
+      isOnline:true,
+      coins:0,
+      status:"active",
       createdAt:serverTimestamp(),
       lastSeen:serverTimestamp()
     });
 
     await setDoc(doc(db,"publicProfiles",user.uid),{
-      uid:user.uid,name,age,gender,
-      bio:"",city:"",photoURL:"",
+      uid:user.uid,
+      name,
+      age,
+      gender,
+      bio:"",
+      city:"",
+      photoURL:"",
       status:"active",
       updatedAt:serverTimestamp()
     });
 
     alert("MIZHI account created successfully!");
+
   }catch(error){
     showError(error);
   }finally{
@@ -253,11 +378,15 @@ window.registerUser=async function(e){
   }
 };
 
+
 /* Login */
+
 window.loginUser=async function(e){
+
   e.preventDefault();
 
   const button=document.getElementById("loginButton");
+
   button.disabled=true;
   button.textContent="Logging in...";
 
@@ -265,7 +394,9 @@ window.loginUser=async function(e){
   const password=document.getElementById("loginPassword").value;
 
   try{
+
     await signInWithEmailAndPassword(auth,email,password);
+
   }catch(error){
     showError(error);
   }finally{
@@ -274,28 +405,39 @@ window.loginUser=async function(e){
   }
 };
 
+
 /* Load own profile */
+
 async function loadProfile(){
+
   if(!currentUser)return;
 
   const ref=doc(db,"users",currentUser.uid);
   let snap=await getDoc(ref);
 
   if(!snap.exists()){
+
     await setDoc(ref,{
       uid:currentUser.uid,
       name:currentUser.displayName||"MIZHI User",
       email:currentUser.email||"",
-      age:18,gender:"",
-      bio:"",city:"",photoURL:"",
-      isOnline:true,coins:0,status:"active",
+      age:18,
+      gender:"",
+      bio:"",
+      city:"",
+      photoURL:"",
+      isOnline:true,
+      coins:0,
+      status:"active",
       createdAt:serverTimestamp(),
       lastSeen:serverTimestamp()
     });
+
     snap=await getDoc(ref);
   }
 
   const u=snap.data();
+
   document.getElementById("profileName").textContent=u.name||"";
   document.getElementById("profileEmail").textContent=u.email||"";
   document.getElementById("editBio").value=u.bio||"";
@@ -304,42 +446,66 @@ async function loadProfile(){
   await syncPublicProfile();
 }
 
+
+/* Profile photo */
+
 function addPhoto(card,p){
+
   if(p.photoURL){
+
     const img=document.createElement("img");
+
     img.className="profile-photo";
     img.src=p.photoURL;
     img.alt="Profile photo";
     img.onerror=()=>img.remove();
+
     card.appendChild(img);
+
   }else{
+
     const avatar=document.createElement("div");
+
     avatar.className="profile-placeholder";
     avatar.textContent="👤";
+
     card.appendChild(avatar);
   }
 }
 
+
+/* Profile details */
+
 function addProfileDetails(card,p){
+
   const name=document.createElement("h3");
+
   name.textContent=p.name||"MIZHI User";
   card.appendChild(name);
 
   const details=document.createElement("p");
+
   details.className="small";
   details.textContent=[p.age,p.gender,p.city].filter(Boolean).join(" • ");
+
   card.appendChild(details);
 
   if(p.bio){
+
     const bio=document.createElement("p");
+
     bio.textContent=p.bio;
     card.appendChild(bio);
   }
 }
 
+
 /* Discover profiles */
+
 async function loadDiscover(){
+
   const list=document.getElementById("discoverList");
+
   if(!currentUser){
     list.textContent="Please login.";
     return;
@@ -348,41 +514,61 @@ async function loadDiscover(){
   list.innerHTML='<div class="card">Loading profiles... ❤️</div>';
 
   try{
+
     const q=query(
       collection(db,"publicProfiles"),
       where("status","==","active")
     );
+
     const result=await getDocs(q);
+
     list.innerHTML="";
+
     let count=0;
 
     for(const item of result.docs){
+
       const p=item.data();
+
       if(p.uid===currentUser.uid)continue;
 
       count++;
+
       const card=document.createElement("div");
       card.className="card profile-card";
+
       addPhoto(card,p);
       addProfileDetails(card,p);
 
-      const likeRef=doc(db,"likes",currentUser.uid+"_"+p.uid);
+      const likeRef=doc(
+        db,"likes",
+        currentUser.uid+"_"+p.uid
+      );
+
       const liked=await getDoc(likeRef);
 
       const btn=document.createElement("button");
+
       btn.className="primary action-button";
       btn.textContent=liked.exists()?"❤️ Liked":"❤️ Like";
       btn.disabled=liked.exists();
 
       btn.onclick=async()=>{
+
         btn.disabled=true;
         btn.textContent="Sending...";
+
         try{
+
           await likeUser(p.uid);
+
           btn.textContent="❤️ Liked";
+
         }catch(error){
+
           btn.disabled=false;
           btn.textContent="❤️ Like";
+
           showError(error);
         }
       };
@@ -392,20 +578,33 @@ async function loadDiscover(){
     }
 
     if(count===0){
-      list.innerHTML='<div class="card"><div class="avatar">🌹</div><h3>Find Someone Special</h3><p class="small">No other active profiles yet. Invite someone to join MIZHI!</p></div>';
+
+      list.innerHTML=
+        '<div class="card"><div class="avatar">🌹</div><h3>Find Someone Special</h3><p class="small">No other active profiles yet. Invite someone to join MIZHI!</p></div>';
     }
+
   }catch(error){
-    list.innerHTML='<div class="card">Could not load profiles. Please try again.</div>';
+
+    list.innerHTML=
+      '<div class="card">Could not load profiles. Please try again.</div>';
+
     console.error(error);
   }
 }
 
+
 /* Like and automatic match */
+
 async function likeUser(targetUid){
+
   if(!currentUser)throw new Error("Please login first.");
-  if(targetUid===currentUser.uid)throw new Error("You cannot like your own profile.");
+
+  if(targetUid===currentUser.uid){
+    throw new Error("You cannot like your own profile.");
+  }
 
   const myUid=currentUser.uid;
+
   const myLikeId=myUid+"_"+targetUid;
   const theirLikeId=targetUid+"_"+myUid;
 
@@ -415,6 +614,7 @@ async function likeUser(targetUid){
   const existing=await getDoc(myLikeRef);
 
   if(!existing.exists()){
+
     await setDoc(myLikeRef,{
       fromUid:myUid,
       toUid:targetUid,
@@ -425,12 +625,17 @@ async function likeUser(targetUid){
   const reverse=await getDoc(theirLikeRef);
 
   if(reverse.exists()){
+
     const ids=[myUid,targetUid].sort();
+
     const matchId=ids[0]+"_"+ids[1];
+
     const matchRef=doc(db,"matches",matchId);
+
     const matchSnap=await getDoc(matchRef);
 
     if(!matchSnap.exists()){
+
       await setDoc(matchRef,{
         user1:ids[0],
         user2:ids[1],
@@ -442,32 +647,47 @@ async function likeUser(targetUid){
   }
 }
 
+
 /* People who liked me */
+
 async function loadLikes(){
+
   const list=document.getElementById("likesList");
+
   if(!currentUser)return;
 
   list.innerHTML='<div class="card">Loading likes...</div>';
 
   try{
+
     const q=query(
       collection(db,"likes"),
       where("toUid","==",currentUser.uid)
     );
+
     const result=await getDocs(q);
+
     list.innerHTML="";
+
     let count=0;
 
     for(const item of result.docs){
+
       const like=item.data();
-      const profileSnap=await getDoc(doc(db,"publicProfiles",like.fromUid));
+
+      const profileSnap=await getDoc(
+        doc(db,"publicProfiles",like.fromUid)
+      );
+
       if(!profileSnap.exists())continue;
 
       const p=profileSnap.data();
+
       count++;
 
       const card=document.createElement("div");
       card.className="card profile-card";
+
       addPhoto(card,p);
       addProfileDetails(card,p);
 
@@ -476,22 +696,34 @@ async function loadLikes(){
       );
 
       const btn=document.createElement("button");
+
       btn.className="primary action-button";
 
       if(myLike.exists()){
+
         btn.textContent="💕 Liked Back";
         btn.disabled=true;
+
       }else{
+
         btn.textContent="❤️ Like Back";
+
         btn.onclick=async()=>{
+
           btn.disabled=true;
           btn.textContent="Sending...";
+
           try{
+
             await likeUser(like.fromUid);
+
             btn.textContent="💕 Matched!";
+
           }catch(error){
+
             btn.disabled=false;
             btn.textContent="❤️ Like Back";
+
             showError(error);
           }
         };
@@ -502,118 +734,376 @@ async function loadLikes(){
     }
 
     if(count===0){
-      list.innerHTML='<div class="card">No likes yet. Keep discovering! ❤️</div>';
+
+      list.innerHTML=
+        '<div class="card">No likes yet. Keep discovering! ❤️</div>';
     }
+
   }catch(error){
-    list.innerHTML='<div class="card">Could not load likes. Please try again.</div>';
+
+    list.innerHTML=
+      '<div class="card">Could not load likes. Please try again.</div>';
+
     console.error(error);
   }
 }
 
-/* Matches */
+
+/* Matches list */
+
 async function loadMatches(){
+
   const list=document.getElementById("matchesList");
+
   if(!currentUser)return;
 
   list.innerHTML='<div class="card">Loading matches...</div>';
 
   try{
-    const uid=currentUser.uid;
-    const q1=query(collection(db,"matches"),where("user1","==",uid));
-    const q2=query(collection(db,"matches"),where("user2","==",uid));
 
-    const results=await Promise.all([getDocs(q1),getDocs(q2)]);
-    const allDocs=[...results[0].docs,...results[1].docs];
+    const uid=currentUser.uid;
+
+    const q1=query(
+      collection(db,"matches"),
+      where("user1","==",uid)
+    );
+
+    const q2=query(
+      collection(db,"matches"),
+      where("user2","==",uid)
+    );
+
+    const results=await Promise.all([
+      getDocs(q1),
+      getDocs(q2)
+    ]);
+
+    const allDocs=[
+      ...results[0].docs,
+      ...results[1].docs
+    ];
 
     list.innerHTML="";
+
     let count=0;
 
     for(const item of allDocs){
+
       const m=item.data();
-      const otherUid=m.user1===uid?m.user2:m.user1;
-      const profileSnap=await getDoc(doc(db,"publicProfiles",otherUid));
+
+      const otherUid=
+        m.user1===uid ? m.user2 : m.user1;
+
+      const profileSnap=await getDoc(
+        doc(db,"publicProfiles",otherUid)
+      );
+
       if(!profileSnap.exists())continue;
 
       const p=profileSnap.data();
+
       count++;
 
       const card=document.createElement("div");
       card.className="card profile-card";
+
       addPhoto(card,p);
       addProfileDetails(card,p);
 
       const matched=document.createElement("p");
+
       matched.textContent="💕 You are matched!";
       matched.style.color="#ff8db5";
+
       card.appendChild(matched);
+
+      const chatButton=document.createElement("button");
+
+      chatButton.className="primary action-button";
+      chatButton.textContent="💬 Open Chat";
+
+      chatButton.onclick=()=>{
+        openChat(item.id,p);
+      };
+
+      card.appendChild(chatButton);
       list.appendChild(card);
     }
 
     if(count===0){
-      list.innerHTML='<div class="card">No matches yet. When someone likes you back, your match will appear here! 💗</div>';
+
+      list.innerHTML=
+        '<div class="card">No matches yet. When someone likes you back, your match will appear here! 💗</div>';
     }
+
   }catch(error){
-    list.innerHTML='<div class="card">Could not load matches. Please try again.</div>';
+
+    list.innerHTML=
+      '<div class="card">Could not load matches. Please try again.</div>';
+
     console.error(error);
   }
 }
 
-/* Save profile */
-window.saveProfile=async function(e){
+
+/* Open Chat */
+
+async function openChat(matchId,profile){
+
+  if(chatUnsubscribe){
+    chatUnsubscribe();
+    chatUnsubscribe=null;
+  }
+
+  activeChatId=matchId;
+
+  document.getElementById("matchesView").hidden=true;
+  document.getElementById("chatView").hidden=false;
+
+  document.getElementById("chatPartnerName").textContent=
+    "Chat with "+(profile.name||"MIZHI User")+" ❤️";
+
+  const messagesBox=document.getElementById("chatMessages");
+
+  messagesBox.innerHTML=
+    '<p class="small">Loading messages...</p>';
+
+  try{
+
+    const chatRef=doc(db,"chats",matchId);
+
+    const chatSnap=await getDoc(chatRef);
+
+    if(!chatSnap.exists()){
+
+      await setDoc(chatRef,{
+        matchId:matchId,
+        createdAt:serverTimestamp()
+      });
+    }
+
+    const messagesRef=collection(
+      db,"chats",matchId,"messages"
+    );
+
+    const messagesQuery=query(
+      messagesRef,
+      orderBy("createdAt","asc")
+    );
+
+    chatUnsubscribe=onSnapshot(
+      messagesQuery,
+      snapshot=>{
+
+        messagesBox.innerHTML="";
+
+        snapshot.forEach(messageDoc=>{
+
+          const message=messageDoc.data();
+
+          const bubble=document.createElement("div");
+
+          bubble.className=
+            "chat-bubble "+
+            (
+              message.senderUid===currentUser.uid
+              ? "mine"
+              : "theirs"
+            );
+
+          const content=document.createElement("div");
+
+          content.textContent=message.text||"";
+
+          bubble.appendChild(content);
+          messagesBox.appendChild(bubble);
+        });
+
+        if(snapshot.empty){
+
+          messagesBox.innerHTML=
+            '<p class="small">Say hello! ❤️</p>';
+        }
+
+        messagesBox.scrollTop=messagesBox.scrollHeight;
+
+      },
+      error=>{
+        showError(error);
+      }
+    );
+
+  }catch(error){
+
+    showError(error);
+  }
+}
+
+
+/* Send Chat Message */
+
+window.sendChatMessage=async function(e){
+
   e.preventDefault();
+
+  if(!currentUser||!activeChatId)return;
+
+  const input=document.getElementById("chatInput");
+
+  const button=document.getElementById("sendChatButton");
+
+  const message=input.value.trim();
+
+  if(!message)return;
+
+  button.disabled=true;
+
+  try{
+
+    await addDoc(
+      collection(db,"chats",activeChatId,"messages"),
+      {
+        text:message,
+        senderUid:currentUser.uid,
+        createdAt:serverTimestamp()
+      }
+    );
+
+    input.value="";
+
+  }catch(error){
+
+    showError(error);
+
+  }finally{
+
+    button.disabled=false;
+  }
+};
+
+
+/* Back to Matches */
+
+window.backToMatches=function(){
+
+  if(chatUnsubscribe){
+    chatUnsubscribe();
+    chatUnsubscribe=null;
+  }
+
+  activeChatId=null;
+
+  document.getElementById("chatView").hidden=true;
+  document.getElementById("matchesView").hidden=false;
+
+  loadMatches();
+};
+
+
+/* Save profile */
+
+window.saveProfile=async function(e){
+
+  e.preventDefault();
+
   if(!currentUser)return;
 
   try{
-    await updateDoc(doc(db,"users",currentUser.uid),{
-      bio:document.getElementById("editBio").value.trim(),
-      city:document.getElementById("editCity").value.trim(),
-      lastSeen:serverTimestamp()
-    });
+
+    await updateDoc(
+      doc(db,"users",currentUser.uid),
+      {
+        bio:document.getElementById("editBio").value.trim(),
+        city:document.getElementById("editCity").value.trim(),
+        lastSeen:serverTimestamp()
+      }
+    );
+
     await syncPublicProfile();
+
     alert("Profile saved successfully!");
+
   }catch(error){
+
     showError(error);
   }
 };
+
 
 /* Logout */
+
 window.logout=async function(){
+
   try{
+
     if(currentUser){
-      await updateDoc(doc(db,"users",currentUser.uid),{
-        isOnline:false,
-        lastSeen:serverTimestamp()
-      });
+
+      await updateDoc(
+        doc(db,"users",currentUser.uid),
+        {
+          isOnline:false,
+          lastSeen:serverTimestamp()
+        }
+      );
     }
+
+    if(chatUnsubscribe){
+      chatUnsubscribe();
+      chatUnsubscribe=null;
+    }
+
     await signOut(auth);
+
   }catch(error){
+
     showError(error);
   }
 };
 
+
 /* Open app after login */
+
 async function openApp(){
+
   document.getElementById("navigation").hidden=false;
+
   window.show("home");
 
   try{
+
     await loadProfile();
+
   }catch(error){
+
     alert("Profile error: "+error.message);
   }
 }
 
+
 /* Login status */
+
 onAuthStateChanged(auth,user=>{
+
   currentUser=user;
 
   if(user){
+
     openApp();
+
   }else{
+
+    if(chatUnsubscribe){
+      chatUnsubscribe();
+      chatUnsubscribe=null;
+    }
+
     document.getElementById("navigation").hidden=true;
+
     window.show("welcome");
   }
 });
+
 </script>
+
 </body>
 </html>
