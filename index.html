@@ -1,959 +1,535 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#100d20">
-<title>MIZHI - Connect Hearts</title>
+<title>MIZHI ❤️ Connect Hearts</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#100d20;color:white;font-family:Arial,sans-serif}
-header{padding:20px;background:#19142b;text-align:center}
-.logo{font-size:35px;font-weight:bold;color:#ff6b9d;letter-spacing:4px}
-header img{width:180px;height:auto;max-width:80%}
-main{padding:20px;max-width:500px;margin:auto}
-h2{color:#ff75a6}
-.card{background:#211b35;padding:22px;border-radius:18px;margin:18px 0}
-.hero{background:linear-gradient(145deg,#39204e,#a83268);padding:25px;border-radius:22px;text-align:center}
-input,select,textarea{width:100%;padding:14px;margin:9px 0;border:1px solid #51405f;border-radius:12px;background:#302640;color:white;font-size:15px}
-button{border:0;border-radius:25px;padding:13px 20px;font-weight:bold;cursor:pointer}
-button:disabled{opacity:.55;cursor:not-allowed}
-.primary{background:#ff5790;color:white}
-.secondary{background:#39304c;color:white}
-nav{position:fixed;bottom:0;left:0;right:0;background:#1b162c;display:flex;justify-content:space-around;padding:10px 2px;z-index:5}
-nav button{background:none;color:white;font-size:11px;padding:7px}
-section{padding-bottom:85px}
-.avatar{font-size:65px;text-align:center}
-.small{color:#b9adc9;font-size:13px}
-[hidden]{display:none!important}
-.profile-card{text-align:center}
-.profile-photo{width:110px;height:110px;border-radius:50%;object-fit:cover;background:#39304c;margin:auto;display:block}
-.profile-placeholder{font-size:65px}
-.profile-card h3{color:#ff8db5}
-.action-button{margin:8px 4px}
-.message{color:#ff9fbd;font-size:13px;white-space:pre-wrap}
-.chat-box{background:#211b35;padding:15px;border-radius:18px;margin:15px 0}
-.chat-messages{height:350px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:10px}
-.chat-bubble{max-width:80%;padding:12px 15px;border-radius:15px;background:#39304c;overflow-wrap:anywhere}
-.chat-bubble.mine{align-self:flex-end;background:#a83268}
-.chat-bubble.theirs{align-self:flex-start;background:#39304c}
-.chat-form{display:flex;gap:8px;align-items:center}
-.chat-form input{flex:1;min-width:0}
-.chat-form button{flex-shrink:0}
-.call-panel{text-align:center;border:1px solid #a83268}
-.call-status{color:#ff9fbd;font-size:18px;margin:15px}
-.call-button{margin:6px}
+header{background:#21172f;padding:15px;text-align:center;border-bottom:1px solid #ff5790}
+header h1{color:#ff6399;letter-spacing:5px;margin:5px}
+header img{width:75px;height:75px;object-fit:contain}
+main{max-width:850px;margin:auto;padding:15px}
+.card{background:#211b35;padding:20px;border-radius:18px;margin:12px 0}
+input,textarea,select{width:100%;padding:13px;margin:7px 0;border-radius:10px;border:1px solid #514263;background:#171326;color:white}
+button{padding:12px 16px;border:0;border-radius:22px;background:#ff5790;color:white;font-weight:bold;margin:5px;cursor:pointer}
+button.secondary{background:#514263}
+button:disabled{opacity:.5}
+nav{display:flex;flex-wrap:wrap;justify-content:center;background:#171326;padding:8px;position:sticky;top:0;z-index:5}
+nav button{font-size:12px}
+.hidden{display:none!important}
+.profile{display:flex;gap:15px;align-items:center}
+.avatar{width:85px;height:85px;border-radius:50%;object-fit:cover;background:#514263}
+.person{display:inline-block;width:220px;vertical-align:top;margin:8px}
+.person img{width:100%;height:180px;object-fit:cover;border-radius:14px}
+.small{color:#c9bbd5;font-size:13px}
+#messages{height:300px;overflow:auto;background:#171326;padding:12px;border-radius:12px}
+.msg{padding:9px;margin:6px;border-radius:12px;background:#392747;max-width:85%}
+.mine{margin-left:auto;background:#9d326b}
+video{width:100%;max-width:350px;background:black;border-radius:12px}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">
-    <img src="Neon%20MIZHI%20Hearts%20Logo%20Poster.png" alt="MIZHI Logo">
-  </div>
-  <p>Connect Hearts • Find Your Soulmate</p>
+<img src="Neon%20MIZHI%20Hearts%20Logo%20Poster.png" alt="MIZHI Logo"
+onerror="this.style.display='none'">
+<h1>MIZHI ❤️</h1>
+<p>Connect Hearts • Find Your Soulmate</p>
 </header>
 
-<main>
-<section id="welcome">
-  <div class="hero">
-    <h1>Find Your Perfect Match ❤️</h1>
-    <p>Every heart deserves a beautiful connection.</p>
-    <button class="primary" onclick="show('register')">Create Account</button>
-    <button class="secondary" onclick="show('login')">Login</button>
-  </div>
+<section id="auth" class="card" style="max-width:420px;margin:25px auto">
+<h2 id="authTitle">Welcome to MIZHI</h2>
+<input id="email" type="email" placeholder="Email Address">
+<input id="password" type="password" placeholder="Password">
+<button onclick="login()">LOGIN</button>
+<button class="secondary" onclick="register()">CREATE ACCOUNT</button>
+<p id="authMsg" class="small"></p>
 </section>
 
-<section id="register" hidden>
-  <div class="card">
-    <h2>Create Your Account ❤️</h2>
-    <form onsubmit="registerUser(event)">
-      <input id="regName" placeholder="Full Name" required>
-      <input id="regEmail" type="email" placeholder="Email Address" required>
-      <input id="regPassword" type="password" placeholder="Password (minimum 6 characters)" minlength="6" required>
-      <input id="regAge" type="number" placeholder="Age (18+)" min="18" required>
-      <select id="regGender" required>
-        <option value="">Select Gender</option>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-      </select>
-      <button class="primary" id="registerButton">Register</button>
-    </form>
-    <p class="small">Already registered?</p>
-    <button class="secondary" onclick="show('login')">Login</button>
-  </div>
-</section>
-
-<section id="login" hidden>
-  <div class="card">
-    <h2>Welcome Back ❤️</h2>
-    <form onsubmit="loginUser(event)">
-      <input id="loginEmail" type="email" placeholder="Email" required>
-      <input id="loginPassword" type="password" placeholder="Password" required>
-      <button class="primary" id="loginButton">Login</button>
-    </form>
-    <button class="secondary" onclick="show('register')">Create Account</button>
-  </div>
-</section>
-
-<section id="home" hidden>
-  <div class="hero">
-    <h1>Welcome to MIZHI ❤️</h1>
-    <p>Your journey to meaningful connections starts here.</p>
-    <button class="primary" onclick="show('discover')">Discover Now</button>
-  </div>
-  <div class="card">
-    <div class="avatar">💑</div>
-    <h3>Your Love Story Starts Here</h3>
-    <p class="small">Meet people and build genuine connections.</p>
-  </div>
-</section>
-
-<section id="discover" hidden>
-  <h2>Discover ❤️</h2>
-  <div id="discoverList"><div class="card">Loading profiles...</div></div>
-</section>
-
-<section id="likes" hidden>
-  <h2>Your Likes 💗</h2>
-  <p class="small">People who liked your profile</p>
-  <div id="likesList"><div class="card">Loading likes...</div></div>
-</section>
-
-<section id="chats" hidden>
-  <div id="matchesView">
-    <h2>Your Matches 💕</h2>
-    <p class="small">People who liked you back!</p>
-    <div id="matchesList"><div class="card">Loading matches...</div></div>
-  </div>
-  <div id="chatView" hidden>
-    <div class="card">
-      <button class="secondary" onclick="backToMatches()">← Back to Matches</button>
-      <h2 id="chatPartnerName">Chat ❤️</h2>
-      <div id="chatMessages" class="chat-messages">
-        <p class="small">Loading messages...</p>
-      </div>
-      <form class="chat-form" onsubmit="sendChatMessage(event)">
-        <input id="chatInput" placeholder="Type a message..." maxlength="1000" autocomplete="off" required>
-        <button class="primary" id="sendChatButton">Send</button>
-      </form>
-    </div>
-  </div>
-</section>
-
-<section id="profile" hidden>
-  <h2>My Profile 👤</h2>
-  <div class="card">
-    <div class="avatar">👤</div>
-    <h3 id="profileName">My Profile</h3>
-    <p id="profileEmail" class="small"></p>
-    <form onsubmit="saveProfile(event)">
-      <input id="editBio" placeholder="About yourself">
-      <input id="editCity" placeholder="Your City">
-      <button class="primary">Save Profile</button>
-    </form>
-    <button class="secondary" onclick="logout()">Logout</button>
-  </div>
-</section>
-
-<!-- Audio call panel -->
-<div id="callPanel" class="card call-panel" hidden>
-  <h2 id="callTitle">Audio Call ❤️</h2>
-  <p id="callPartner" class="small"></p>
-  <div id="incomingCallActions" hidden>
-    <p class="call-status">Incoming audio call...</p>
-    <button class="primary call-button" onclick="acceptIncomingCall()">Accept ❤️</button>
-    <button class="secondary call-button" onclick="rejectIncomingCall()">Reject</button>
-  </div>
-  <div id="activeCallActions" hidden>
-    <p id="callStatus" class="call-status">Connecting...</p>
-    <p id="callTimer" class="small">Free call: 05:00</p>
-    <button class="primary call-button" onclick="endAudioCall()">Hang Up ☎️</button>
-  </div>
-</div>
-<audio id="remoteAudio" autoplay playsinline></audio>
-</main>
-
-<nav id="navigation" hidden>
-  <button onclick="show('home')">🏠<br>Home</button>
-  <button onclick="show('discover')">❤️<br>Discover</button>
-  <button onclick="show('likes')">💗<br>Likes</button>
-  <button onclick="show('chats')">💕<br>Matches</button>
-  <button onclick="show('profile')">👤<br>Profile</button>
+<div id="app" class="hidden">
+<nav>
+<button onclick="show('home')">Home</button>
+<button onclick="show('discover')">Discover</button>
+<button onclick="show('likes')">Likes</button>
+<button onclick="show('matches')">Matches</button>
+<button onclick="show('chat')">Chat</button>
+<button onclick="show('profile')">Profile</button>
+<button onclick="show('wallet')">Wallet</button>
+<button onclick="show('admin')">Admin</button>
+<button onclick="logout()">Logout</button>
 </nav>
+
+<main>
+<section id="home" class="page card">
+<h2>Welcome to MIZHI ❤️</h2>
+<p>Meet new people and connect hearts.</p>
+<div id="welcome"></div>
+</section>
+
+<section id="discover" class="page hidden">
+<h2>Discover People</h2>
+<div id="people"></div>
+</section>
+
+<section id="likes" class="page hidden card">
+<h2>People Who Like You</h2>
+<div id="likesList"></div>
+</section>
+
+<section id="matches" class="page hidden card">
+<h2>Your Matches</h2>
+<div id="matchesList"></div>
+</section>
+
+<section id="chat" class="page hidden card">
+<h2>Chat</h2>
+<div id="chatList"></div>
+<div id="messages"></div>
+<input id="chatText" placeholder="Write a message...">
+<button onclick="sendMessage()">SEND</button>
+</section>
+
+<section id="profile" class="page hidden card">
+<h2>My Profile</h2>
+<div class="profile">
+<img id="myPhoto" class="avatar" alt="Profile">
+<div id="myDetails"></div>
+</div>
+<input id="name" placeholder="Your Name">
+<input id="age" type="number" placeholder="Age">
+<select id="gender">
+<option value="">Select Gender</option>
+<option>Male</option><option>Female</option><option>Other</option>
+</select>
+<textarea id="bio" placeholder="About yourself"></textarea>
+<label>Profile Photo</label>
+<input id="photo" type="file" accept="image/*">
+<button onclick="saveProfile()">SAVE PROFILE</button>
+<p id="profileMsg" class="small"></p>
+</section>
+
+<section id="wallet" class="page hidden card">
+<h2>My Wallet 🪙</h2>
+<h1 id="coinBalance">0 Coins</h1>
+<p class="small">Coin balance is displayed from your account.</p>
+<p>Audio call rate: <span id="audioRate">5</span> coins/min</p>
+<p>Video call rate: <span id="videoRate">10</span> coins/min</p>
+<p class="small">Coin purchases and deductions require secure server-side payment and billing setup.</p>
+</section>
+
+<section id="admin" class="page hidden card">
+<h2>Admin Dashboard</h2>
+<div id="adminContent">Admin access only.</div>
+</section>
+
+<section id="call" class="page hidden card">
+<h2 id="callTitle">Call</h2>
+<p id="callStatus">Waiting...</p>
+<div>
+<video id="remoteVideo" autoplay playsinline></video>
+<video id="localVideo" autoplay muted playsinline></video>
+</div>
+<button onclick="endCall()">END CALL</button>
+</section>
+</main>
+</div>
 
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-
 import {
-  getAuth,createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,onAuthStateChanged,signOut
+ getAuth,onAuthStateChanged,createUserWithEmailAndPassword,
+ signInWithEmailAndPassword,signOut
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-
 import {
-  getFirestore,doc,setDoc,getDoc,updateDoc,
-  collection,getDocs,query,where,serverTimestamp,
-  addDoc,onSnapshot,orderBy
+ getFirestore,doc,setDoc,getDoc,collection,addDoc,getDocs,
+ query,where,onSnapshot,serverTimestamp,updateDoc
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+import {
+ getStorage,ref,uploadBytes,getDownloadURL
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
 
 const firebaseConfig={
-  apiKey:"AIzaSyBlmHvVRkcJ2DB6I6H3a-zsN1Zt0CKo94s",
-  authDomain:"mizhi-59e7e.firebaseapp.com",
-  projectId:"mizhi-59e7e",
-  storageBucket:"mizhi-59e7e.firebasestorage.app",
-  messagingSenderId:"109570780589",
-  appId:"1:109570780589:web:5a42cede76210ba8e5c524",
-  measurementId:"G-FG0P26JEXK"
+ apiKey:"AIzaSyBlmHvVRkcJ2DB6I6H3a-zsN1Zt0CKo94s",
+ authDomain:"mizhi-59e7e.firebaseapp.com",
+ projectId:"mizhi-59e7e",
+ storageBucket:"mizhi-59e7e.firebasestorage.app",
+ messagingSenderId:"109570780589",
+ appId:"1:109570780589:web:5a42cede76210ba8e5c524",
+ measurementId:"G-FG0P26JEXK"
 };
 
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
-const db=getFirestore(app);
+const appFirebase=initializeApp(firebaseConfig);
+const auth=getAuth(appFirebase);
+const db=getFirestore(appFirebase);
+const storage=getStorage(appFirebase);
 
-let currentUser=null;
-let activeChatId=null;
-let chatUnsubscribe=null;
-let incomingUnsubscribe=null;
+const ADMIN="kproushal@gmail.com";
+let me=null,myProfile={},activeMatch=null,chatUnsub=null;
+let callPC=null,localStream=null,activeCall=null;
+let incomingUnsub=null;
+let freeCallUsed=false;
 
-let activeCallId=null;
-let activeCallRole=null;
-let activeCallMatchId=null;
-let activeCallPartner="";
-let peerConnection=null;
-let localStream=null;
-let candidateUnsubscribe=null;
-let callDocUnsubscribe=null;
-let pendingIncomingCall=null;
-let callTimerInterval=null;
-let callSeconds=300;
-let callStarted=false;
-let callDocReady=false;
-let pendingLocalCandidates=[];
+const $=id=>document.getElementById(id);
+const say=(id,msg)=>$(id).textContent=msg;
+
+window.show=id=>{
+ document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
+ $(id).classList.remove("hidden");
+ if(id==="discover")loadPeople();
+ if(id==="likes")loadLikes();
+ if(id==="matches")loadMatches();
+ if(id==="wallet")loadWallet();
+ if(id==="admin")loadAdmin();
+ if(id==="chat")loadChatList();
+};
+
+window.login=async()=>{
+ try{
+  await signInWithEmailAndPassword(auth,$("email").value,$("password").value);
+ }catch(e){say("authMsg",e.message)}
+};
+
+window.register=async()=>{
+ try{
+  await createUserWithEmailAndPassword(auth,$("email").value,$("password").value);
+ }catch(e){say("authMsg",e.message)}
+};
+
+window.logout=()=>signOut(auth);
+
+onAuthStateChanged(auth,async user=>{
+ if(!user){
+  me=null;
+  $("auth").classList.remove("hidden");
+  $("app").classList.add("hidden");
+  if(incomingUnsub)incomingUnsub();
+  return;
+ }
+ me=user;
+ $("auth").classList.add("hidden");
+ $("app").classList.remove("hidden");
+ await loadMyProfile();
+ listenIncomingCalls();
+ show("home");
+});
+
+async function loadMyProfile(){
+ const snap=await getDoc(doc(db,"users",me.uid));
+ myProfile=snap.exists()?snap.data():{};
+ $("name").value=myProfile.name||"";
+ $("age").value=myProfile.age||"";
+ $("gender").value=myProfile.gender||"";
+ $("bio").value=myProfile.bio||"";
+ $("myPhoto").src=myProfile.photoURL||"";
+ $("myDetails").textContent=myProfile.name||me.email;
+ $("welcome").textContent="Hello "+(myProfile.name||me.email)+" ❤️";
+}
+
+window.saveProfile=async()=>{
+ try{
+  let photoURL=myProfile.photoURL||"";
+  const file=$("photo").files[0];
+  if(file){
+   const imageRef=ref(storage,"profilePhotos/"+me.uid+"/"+Date.now());
+   await uploadBytes(imageRef,file);
+   photoURL=await getDownloadURL(imageRef);
+  }
+  myProfile={
+   ...myProfile,
+   uid:me.uid,
+   email:me.email,
+   name:$("name").value.trim(),
+   age:Number($("age").value)||null,
+   gender:$("gender").value,
+   bio:$("bio").value.trim(),
+   photoURL,
+   updatedAt:serverTimestamp()
+  };
+  await setDoc(doc(db,"users",me.uid),myProfile,{merge:true});
+  await setDoc(doc(db,"publicProfiles",me.uid),{
+   uid:me.uid,name:myProfile.name,age:myProfile.age,
+   gender:myProfile.gender,bio:myProfile.bio,photoURL
+  },{merge:true});
+  $("myPhoto").src=photoURL;
+  say("profileMsg","Profile saved ❤️");
+ }catch(e){say("profileMsg",e.message)}
+};
+
+async function loadPeople(){
+ const area=$("people");area.innerHTML="Loading...";
+ const snap=await getDocs(collection(db,"publicProfiles"));
+ area.innerHTML="";
+ snap.forEach(d=>{
+  const p=d.data();
+  if(p.uid===me.uid)return;
+  const card=document.createElement("div");
+  card.className="card person";
+  const img=document.createElement("img");
+  img.src=p.photoURL||"";
+  const title=document.createElement("h3");
+  title.textContent=(p.name||"MIZHI Member")+(p.age?" • "+p.age:"");
+  const bio=document.createElement("p");
+  bio.textContent=p.bio||"";
+  const btn=document.createElement("button");
+  btn.textContent="❤️ LIKE";
+  btn.onclick=()=>sendLike(p.uid);
+  card.append(img,title,bio,btn);
+  area.append(card);
+ });
+}
+
+async function sendLike(toUid){
+ try{
+  const likeId=me.uid+"_"+toUid;
+  await setDoc(doc(db,"likes",likeId),{
+   from:me.uid,to:toUid,createdAt:serverTimestamp()
+  });
+  const reverse=await getDoc(doc(db,"likes",toUid+"_"+me.uid));
+  if(reverse.exists()){
+   const ids=[me.uid,toUid].sort();
+   const matchId=ids.join("_");
+   await setDoc(doc(db,"matches",matchId),{
+    users:ids,createdAt:serverTimestamp()
+   },{merge:true});
+   alert("It's a Match! ❤️");
+  }else alert("Like sent ❤️");
+ }catch(e){alert(e.message)}
+}
+
+async function loadLikes(){
+ const area=$("likesList");area.innerHTML="Loading...";
+ const snap=await getDocs(query(collection(db,"likes"),where("to","==",me.uid)));
+ area.innerHTML="";
+ for(const d of snap.docs){
+  const like=d.data();
+  const u=await getDoc(doc(db,"publicProfiles",like.from));
+  if(!u.exists())continue;
+  const p=u.data();
+  const div=document.createElement("div");div.className="card";
+  div.textContent=(p.name||"Someone")+" likes you ❤️";
+  area.append(div);
+ }
+}
+
+async function loadMatches(){
+ const area=$("matchesList");area.innerHTML="Loading...";
+ const snap=await getDocs(query(collection(db,"matches"),where("users","array-contains",me.uid)));
+ area.innerHTML="";
+ for(const d of snap.docs){
+  const match=d.data();
+  const other=match.users.find(x=>x!==me.uid);
+  const u=await getDoc(doc(db,"publicProfiles",other));
+  const p=u.exists()?u.data():{};
+  const b=document.createElement("button");
+  b.textContent="Chat with "+(p.name||"Match");
+  b.onclick=()=>openChat(d.id);
+  area.append(b);
+ }
+}
+
+async function loadChatList(){await loadMatches()}
+
+async function openChat(matchId){
+ activeMatch=matchId;
+ show("chat");
+ if(chatUnsub)chatUnsub();
+ const messages=$("messages");messages.innerHTML="";
+ chatUnsub=onSnapshot(
+  query(collection(db,"chats",matchId,"messages")),
+  snap=>{
+   messages.innerHTML="";
+   const docs=snap.docs.sort((a,b)=>(a.data().createdAt?.seconds||0)-(b.data().createdAt?.seconds||0));
+   docs.forEach(d=>{
+    const m=d.data();const div=document.createElement("div");
+    div.className="msg "+(m.from===me.uid?"mine":"");
+    div.textContent=(m.from===me.uid?"You: ":"")+m.text;
+    messages.append(div);
+   });
+   messages.scrollTop=messages.scrollHeight;
+  }
+ );
+}
+
+window.sendMessage=async()=>{
+ const text=$("chatText").value.trim();
+ if(!text||!activeMatch)return;
+ await addDoc(collection(db,"chats",activeMatch,"messages"),{
+  from:me.uid,text,createdAt:serverTimestamp()
+ });
+ $("chatText").value="";
+};
+
+async function loadWallet(){
+ const snap=await getDoc(doc(db,"wallets",me.uid));
+ $("coinBalance").textContent=(snap.exists()?snap.data().coins||0:0)+" Coins";
+ const rates=await getDoc(doc(db,"settings","rates"));
+ if(rates.exists()){
+  $("audioRate").textContent=rates.data().audio||5;
+  $("videoRate").textContent=rates.data().video||10;
+ }
+}
+
+async function loadAdmin(){
+ const area=$("adminContent");
+ if(me.email!==ADMIN){area.textContent="Access denied.";return}
+ const rates=await getDoc(doc(db,"settings","rates"));
+ const r=rates.exists()?rates.data():{audio:5,video:10};
+ area.innerHTML=`
+ <p>Admin: ${ADMIN}</p>
+ <label>Audio coins per minute</label>
+ <input id="adminAudio" type="number" min="1" value="${r.audio||5}">
+ <label>Video coins per minute</label>
+ <input id="adminVideo" type="number" min="1" value="${r.video||10}">
+ <button id="saveRates">SAVE RATES</button>
+ <p class="small">Secure admin authorization must also be enforced in Firestore rules.</p>`;
+ $("saveRates").onclick=async()=>{
+  await setDoc(doc(db,"settings","rates"),{
+   audio:Math.max(1,Number($("adminAudio").value)),
+   video:Math.max(1,Number($("adminVideo").value))
+  });
+  alert("Rates saved");
+ };
+}
+
+/* WEBRTC AUDIO / VIDEO CALLS */
 
 const rtcConfig={
-  iceServers:[{urls:"stun:stun.l.google.com:19302"}]
+ iceServers:[{urls:"stun:stun.l.google.com:19302"}]
 };
 
-/* Navigation */
-window.show=function(id){
-  if(chatUnsubscribe){chatUnsubscribe();chatUnsubscribe=null;}
-  activeChatId=null;
-  document.querySelectorAll("main section").forEach(s=>s.hidden=true);
-  const section=document.getElementById(id);
-  if(section)section.hidden=false;
-
-  if(id==="chats"){
-    document.getElementById("matchesView").hidden=false;
-    document.getElementById("chatView").hidden=true;
-    loadMatches();
-  }
-  if(id==="discover")loadDiscover();
-  if(id==="likes")loadLikes();
-};
-
-function showError(error){
-  console.error(error);
-  alert(error.message||"Something went wrong. Please try again.");
+async function prepareMedia(type){
+ localStream=await navigator.mediaDevices.getUserMedia({
+  audio:true,video:type==="video"
+ });
+ $("localVideo").srcObject=localStream;
 }
 
-/* Public profile sync */
-async function syncPublicProfile(){
-  if(!currentUser)return;
-  const snap=await getDoc(doc(db,"users",currentUser.uid));
-  if(!snap.exists())return;
-  const u=snap.data();
-  await setDoc(doc(db,"publicProfiles",currentUser.uid),{
-    uid:currentUser.uid,name:u.name||"MIZHI User",
-    age:u.age||18,gender:u.gender||"",bio:u.bio||"",
-    city:u.city||"",photoURL:u.photoURL||"",
-    status:"active",updatedAt:serverTimestamp()
-  },{merge:true});
-}
+async function startCall(type){
+ if(!activeMatch){alert("Open a match chat first.");return}
+ try{
+  const matchSnap=await getDoc(doc(db,"matches",activeMatch));
+  if(!matchSnap.exists())throw Error("Match not found");
+  const other=matchSnap.data().users.find(x=>x!==me.uid);
+  const freeRef=doc(db,"calls",activeMatch+"_first_free");
+  const freeSnap=await getDoc(freeRef);
+  freeCallUsed=freeSnap.exists();
 
-/* Registration */
-window.registerUser=async function(e){
-  e.preventDefault();
-  const button=document.getElementById("registerButton");
-  button.disabled=true;
-  button.textContent="Creating account...";
-  const name=document.getElementById("regName").value.trim();
-  const email=document.getElementById("regEmail").value.trim().toLowerCase();
-  const password=document.getElementById("regPassword").value;
-  const age=Number(document.getElementById("regAge").value);
-  const gender=document.getElementById("regGender").value;
+  await prepareMedia(type);
+  callPC=new RTCPeerConnection(rtcConfig);
+  localStream.getTracks().forEach(t=>callPC.addTrack(t,localStream));
+  callPC.ontrack=e=>$("remoteVideo").srcObject=e.streams[0];
 
-  if(age<18){
-    alert("You must be 18 or older.");
-    button.disabled=false;button.textContent="Register";return;
-  }
-  try{
-    const result=await createUserWithEmailAndPassword(auth,email,password);
-    const user=result.user;
-    await setDoc(doc(db,"users",user.uid),{
-      uid:user.uid,name,email,age,gender,bio:"",city:"",
-      photoURL:"",isOnline:true,coins:0,status:"active",
-      createdAt:serverTimestamp(),lastSeen:serverTimestamp()
-    });
-    await setDoc(doc(db,"publicProfiles",user.uid),{
-      uid:user.uid,name,age,gender,bio:"",city:"",
-      photoURL:"",status:"active",updatedAt:serverTimestamp()
-    });
-    alert("MIZHI account created successfully!");
-  }catch(error){showError(error);}
-  finally{button.disabled=false;button.textContent="Register";}
-};
-
-/* Login */
-window.loginUser=async function(e){
-  e.preventDefault();
-  const button=document.getElementById("loginButton");
-  button.disabled=true;button.textContent="Logging in...";
-  const email=document.getElementById("loginEmail").value.trim().toLowerCase();
-  const password=document.getElementById("loginPassword").value;
-  try{await signInWithEmailAndPassword(auth,email,password);}
-  catch(error){showError(error);}
-  finally{button.disabled=false;button.textContent="Login";}
-};
-
-/* Load own profile */
-async function loadProfile(){
-  if(!currentUser)return;
-  const ref=doc(db,"users",currentUser.uid);
-  let snap=await getDoc(ref);
-  if(!snap.exists()){
-    await setDoc(ref,{
-      uid:currentUser.uid,name:currentUser.displayName||"MIZHI User",
-      email:currentUser.email||"",age:18,gender:"",bio:"",
-      city:"",photoURL:"",isOnline:true,coins:0,status:"active",
-      createdAt:serverTimestamp(),lastSeen:serverTimestamp()
-    });
-    snap=await getDoc(ref);
-  }
-  const u=snap.data();
-  document.getElementById("profileName").textContent=u.name||"";
-  document.getElementById("profileEmail").textContent=u.email||"";
-  document.getElementById("editBio").value=u.bio||"";
-  document.getElementById("editCity").value=u.city||"";
-  await syncPublicProfile();
-}
-
-/* Profile photo */
-function addPhoto(card,p){
-  if(p.photoURL){
-    const img=document.createElement("img");
-    img.className="profile-photo";img.src=p.photoURL;
-    img.alt="Profile photo";img.onerror=()=>img.remove();
-    card.appendChild(img);
-  }else{
-    const avatar=document.createElement("div");
-    avatar.className="profile-placeholder";avatar.textContent="👤";
-    card.appendChild(avatar);
-  }
-}
-
-function addProfileDetails(card,p){
-  const name=document.createElement("h3");
-  name.textContent=p.name||"MIZHI User";card.appendChild(name);
-  const details=document.createElement("p");
-  details.className="small";
-  details.textContent=[p.age,p.gender,p.city].filter(Boolean).join(" • ");
-  card.appendChild(details);
-  if(p.bio){
-    const bio=document.createElement("p");
-    bio.textContent=p.bio;card.appendChild(bio);
-  }
-}
-
-/* Discover profiles */
-async function loadDiscover(){
-  const list=document.getElementById("discoverList");
-  if(!currentUser){list.textContent="Please login.";return;}
-  list.innerHTML='<div class="card">Loading profiles... ❤️</div>';
-  try{
-    const q=query(collection(db,"publicProfiles"),where("status","==","active"));
-    const result=await getDocs(q);
-    list.innerHTML="";
-    let count=0;
-    for(const item of result.docs){
-      const p=item.data();
-      if(p.uid===currentUser.uid)continue;
-      count++;
-      const card=document.createElement("div");
-      card.className="card profile-card";
-      addPhoto(card,p);addProfileDetails(card,p);
-      const likeRef=doc(db,"likes",currentUser.uid+"_"+p.uid);
-      const liked=await getDoc(likeRef);
-      const btn=document.createElement("button");
-      btn.className="primary action-button";
-      btn.textContent=liked.exists()?"❤️ Liked":"❤️ Like";
-      btn.disabled=liked.exists();
-      btn.onclick=async()=>{
-        btn.disabled=true;btn.textContent="Sending...";
-        try{await likeUser(p.uid);btn.textContent="❤️ Liked";}
-        catch(error){btn.disabled=false;btn.textContent="❤️ Like";showError(error);}
-      };
-      card.appendChild(btn);list.appendChild(card);
-    }
-    if(count===0)list.innerHTML='<div class="card"><div class="avatar">🌹</div><h3>Find Someone Special</h3><p class="small">No other active profiles yet. Invite someone to join MIZHI!</p></div>';
-  }catch(error){
-    list.innerHTML='<div class="card">Could not load profiles. Please try again.</div>';
-    console.error(error);
-  }
-}
-
-/* Like and automatic match */
-async function likeUser(targetUid){
-  if(!currentUser)throw new Error("Please login first.");
-  if(targetUid===currentUser.uid)throw new Error("You cannot like your own profile.");
-  const myUid=currentUser.uid;
-  const myLikeId=myUid+"_"+targetUid;
-  const theirLikeId=targetUid+"_"+myUid;
-  const myLikeRef=doc(db,"likes",myLikeId);
-  const theirLikeRef=doc(db,"likes",theirLikeId);
-  const existing=await getDoc(myLikeRef);
-  if(!existing.exists()){
-    await setDoc(myLikeRef,{fromUid:myUid,toUid:targetUid,createdAt:serverTimestamp()});
-  }
-  const reverse=await getDoc(theirLikeRef);
-  if(reverse.exists()){
-    const ids=[myUid,targetUid].sort();
-    const matchId=ids[0]+"_"+ids[1];
-    const matchRef=doc(db,"matches",matchId);
-    const matchSnap=await getDoc(matchRef);
-    if(!matchSnap.exists()){
-      await setDoc(matchRef,{user1:ids[0],user2:ids[1],createdAt:serverTimestamp()});
-    }
-    alert("It's a Match! 💕 You both liked each other!");
-  }
-}
-
-/* People who liked me */
-async function loadLikes(){
-  const list=document.getElementById("likesList");
-  if(!currentUser)return;
-  list.innerHTML='<div class="card">Loading likes...</div>';
-  try{
-    const q=query(collection(db,"likes"),where("toUid","==",currentUser.uid));
-    const result=await getDocs(q);
-    list.innerHTML="";
-    let count=0;
-    for(const item of result.docs){
-      const like=item.data();
-      const profileSnap=await getDoc(doc(db,"publicProfiles",like.fromUid));
-      if(!profileSnap.exists())continue;
-      const p=profileSnap.data();count++;
-      const card=document.createElement("div");
-      card.className="card profile-card";
-      addPhoto(card,p);addProfileDetails(card,p);
-      const myLike=await getDoc(doc(db,"likes",currentUser.uid+"_"+like.fromUid));
-      const btn=document.createElement("button");
-      btn.className="primary action-button";
-      if(myLike.exists()){
-        btn.textContent="💕 Liked Back";btn.disabled=true;
-      }else{
-        btn.textContent="❤️ Like Back";
-        btn.onclick=async()=>{
-          btn.disabled=true;btn.textContent="Sending...";
-          try{await likeUser(like.fromUid);btn.textContent="💕 Matched!";}
-          catch(error){btn.disabled=false;btn.textContent="❤️ Like Back";showError(error);}
-        };
-      }
-      card.appendChild(btn);list.appendChild(card);
-    }
-    if(count===0)list.innerHTML='<div class="card">No likes yet. Keep discovering! ❤️</div>';
-  }catch(error){
-    list.innerHTML='<div class="card">Could not load likes. Please try again.</div>';
-    console.error(error);
-  }
-}
-
-/* Matches list */
-async function loadMatches(){
-  const list=document.getElementById("matchesList");
-  if(!currentUser)return;
-  list.innerHTML='<div class="card">Loading matches...</div>';
-  try{
-    const uid=currentUser.uid;
-    const q1=query(collection(db,"matches"),where("user1","==",uid));
-    const q2=query(collection(db,"matches"),where("user2","==",uid));
-    const results=await Promise.all([getDocs(q1),getDocs(q2)]);
-    const allDocs=[...results[0].docs,...results[1].docs];
-    list.innerHTML="";
-    let count=0;
-    for(const item of allDocs){
-      const m=item.data();
-      const otherUid=m.user1===uid?m.user2:m.user1;
-      const profileSnap=await getDoc(doc(db,"publicProfiles",otherUid));
-      if(!profileSnap.exists())continue;
-      const p=profileSnap.data();count++;
-      const card=document.createElement("div");
-      card.className="card profile-card";
-      addPhoto(card,p);addProfileDetails(card,p);
-      const matched=document.createElement("p");
-      matched.textContent="💕 You are matched!";
-      matched.style.color="#ff8db5";card.appendChild(matched);
-
-      const chatButton=document.createElement("button");
-      chatButton.className="primary action-button";
-      chatButton.textContent="💬 Open Chat";
-      chatButton.onclick=()=>openChat(item.id,p);
-      card.appendChild(chatButton);
-
-      const callButton=document.createElement("button");
-      callButton.className="secondary action-button";
-      callButton.textContent="📞 Audio Call";
-      callButton.onclick=()=>startAudioCall(item.id,otherUid,p.name||"MIZHI User");
-      card.appendChild(callButton);
-      list.appendChild(card);
-    }
-    if(count===0)list.innerHTML='<div class="card">No matches yet. When someone likes you back, your match will appear here! 💗</div>';
-  }catch(error){
-    list.innerHTML='<div class="card">Could not load matches. Please try again.</div>';
-    console.error(error);
-  }
-}
-
-/* Open Chat */
-async function openChat(matchId,profile){
-  if(chatUnsubscribe){chatUnsubscribe();chatUnsubscribe=null;}
-  activeChatId=matchId;
-  document.getElementById("matchesView").hidden=true;
-  document.getElementById("chatView").hidden=false;
-  document.getElementById("chatPartnerName").textContent="Chat with "+(profile.name||"MIZHI User")+" ❤️";
-  const messagesBox=document.getElementById("chatMessages");
-  messagesBox.innerHTML='<p class="small">Loading messages...</p>';
-  try{
-    const chatRef=doc(db,"chats",matchId);
-    const chatSnap=await getDoc(chatRef);
-    if(!chatSnap.exists())await setDoc(chatRef,{matchId,createdAt:serverTimestamp()});
-    const messagesRef=collection(db,"chats",matchId,"messages");
-    const messagesQuery=query(messagesRef,orderBy("createdAt","asc"));
-    chatUnsubscribe=onSnapshot(messagesQuery,snapshot=>{
-      messagesBox.innerHTML="";
-      snapshot.forEach(messageDoc=>{
-        const message=messageDoc.data();
-        const bubble=document.createElement("div");
-        bubble.className="chat-bubble "+(message.senderUid===currentUser.uid?"mine":"theirs");
-        const content=document.createElement("div");
-        content.textContent=message.text||"";
-        bubble.appendChild(content);messagesBox.appendChild(bubble);
-      });
-      if(snapshot.empty)messagesBox.innerHTML='<p class="small">Say hello! ❤️</p>';
-      messagesBox.scrollTop=messagesBox.scrollHeight;
-    },showError);
-  }catch(error){showError(error);}
-}
-
-/* Send Chat Message */
-window.sendChatMessage=async function(e){
-  e.preventDefault();
-  if(!currentUser||!activeChatId)return;
-  const input=document.getElementById("chatInput");
-  const button=document.getElementById("sendChatButton");
-  const message=input.value.trim();
-  if(!message)return;
-  button.disabled=true;
-  try{
-    await addDoc(collection(db,"chats",activeChatId,"messages"),{
-      text:message,senderUid:currentUser.uid,createdAt:serverTimestamp()
-    });
-    input.value="";
-  }catch(error){showError(error);}
-  finally{button.disabled=false;}
-};
-
-window.backToMatches=function(){
-  if(chatUnsubscribe){chatUnsubscribe();chatUnsubscribe=null;}
-  activeChatId=null;
-  document.getElementById("chatView").hidden=true;
-  document.getElementById("matchesView").hidden=false;
-  loadMatches();
-};
-
-/* ---------------- AUDIO CALL SYSTEM ---------------- */
-
-function showCallPanel(){
-  document.getElementById("callPanel").hidden=false;
-}
-function hideCallPanel(){
-  document.getElementById("callPanel").hidden=true;
-}
-function showIncomingCall(name){
-  document.getElementById("callTitle").textContent="Incoming Call ❤️";
-  document.getElementById("callPartner").textContent=name+" is calling you";
-  document.getElementById("incomingCallActions").hidden=false;
-  document.getElementById("activeCallActions").hidden=true;
-  showCallPanel();
-}
-function showActiveCall(name){
-  document.getElementById("callTitle").textContent="Audio Call ❤️";
-  document.getElementById("callPartner").textContent="Talking with "+name;
-  document.getElementById("incomingCallActions").hidden=true;
-  document.getElementById("activeCallActions").hidden=false;
-  showCallPanel();
-}
-
-function stopCallListeners(){
-  if(candidateUnsubscribe){candidateUnsubscribe();candidateUnsubscribe=null;}
-  if(callDocUnsubscribe){callDocUnsubscribe();callDocUnsubscribe=null;}
-}
-
-function cleanupCall(){
-  if(callTimerInterval){clearInterval(callTimerInterval);callTimerInterval=null;}
-  stopCallListeners();
-  if(peerConnection){
-    peerConnection.onicecandidate=null;
-    peerConnection.ontrack=null;
-    peerConnection.onconnectionstatechange=null;
-    peerConnection.close();
-    peerConnection=null;
-  }
-  if(localStream){
-    localStream.getTracks().forEach(track=>track.stop());
-    localStream=null;
-  }
-  document.getElementById("remoteAudio").srcObject=null;
-  activeCallId=null;
-  activeCallRole=null;
-  activeCallMatchId=null;
-  activeCallPartner="";
-  callStarted=false;
-  callDocReady=false;
-  pendingLocalCandidates=[];
-  pendingIncomingCall=null;
-  hideCallPanel();
-}
-
-async function writeCandidate(candidate){
-  if(!activeCallId||!activeCallRole)return;
-  const role=activeCallRole==="caller"?"callerCandidates":"calleeCandidates";
-  const data={
-    ownerUid:currentUser.uid,
-    candidate:JSON.stringify(candidate.toJSON())
-  };
-  await addDoc(collection(db,"calls",activeCallId,role),data);
-}
-
-async function flushLocalCandidates(){
-  const queued=[...pendingLocalCandidates];
-  pendingLocalCandidates=[];
-  for(const candidate of queued){
-    await writeCandidate(candidate);
-  }
-}
-
-function makePeerConnection(role){
-  peerConnection=new RTCPeerConnection(rtcConfig);
-
-  if(localStream){
-    localStream.getTracks().forEach(track=>{
-      peerConnection.addTrack(track,localStream);
-    });
-  }
-
-  peerConnection.onicecandidate=async event=>{
-    if(!event.candidate)return;
-    try{
-      if(!callDocReady)pendingLocalCandidates.push(event.candidate);
-      else await writeCandidate(event.candidate);
-    }catch(error){console.error("ICE candidate error",error);}
+  const callRef=doc(collection(db,"calls"));
+  activeCall=callRef;
+  callPC.onicecandidate=e=>{
+   if(e.candidate)addDoc(collection(db,"calls",callRef.id,"callerCandidates"),e.candidate.toJSON());
   };
 
-  peerConnection.ontrack=event=>{
-    const audio=document.getElementById("remoteAudio");
-    if(event.streams&&event.streams[0])audio.srcObject=event.streams[0];
-    audio.play().catch(()=>console.log("Tap the page to enable audio playback."));
-  };
+  const offer=await callPC.createOffer();
+  await callPC.setLocalDescription(offer);
+  await setDoc(callRef,{
+   from:me.uid,to:other,matchId:activeMatch,type,
+   offer:{type:offer.type,sdp:offer.sdp},
+   status:"ringing",createdAt:serverTimestamp()
+  });
 
-  peerConnection.onconnectionstatechange=()=>{
-    const state=peerConnection?.connectionState;
-    if(state==="connected"){
-      document.getElementById("callStatus").textContent="Connected ❤️";
-      startFreeCallTimer();
+  onSnapshot(callRef,async snap=>{
+   const data=snap.data();
+   if(data?.answer&&!callPC.currentRemoteDescription){
+    await callPC.setRemoteDescription(new RTCSessionDescription(data.answer));
+   }
+   if(data?.status==="ended")endCallLocal();
+  });
+
+  onSnapshot(collection(db,"calls",callRef.id,"calleeCandidates"),s=>{
+   s.docChanges().forEach(c=>{
+    if(c.type==="added")callPC.addIceCandidate(new RTCIceCandidate(c.doc.data())).catch(()=>{});
+   });
+  });
+
+  $("callTitle").textContent=type.toUpperCase()+" CALL";
+  say("callStatus",freeCallUsed?"Paid call – billing setup required":"First call: free for 5 minutes");
+  show("call");
+ }catch(e){alert("Call error: "+e.message);endCallLocal()}
+}
+
+function listenIncomingCalls(){
+ if(incomingUnsub)incomingUnsub();
+ incomingUnsub=onSnapshot(
+  query(collection(db,"calls"),where("to","==",me.uid),where("status","==","ringing")),
+  snap=>{
+   snap.docChanges().forEach(change=>{
+    if(change.type==="added"){
+     const c=change.doc.data();
+     if(confirm("Incoming "+c.type+" call. Accept?")){
+      acceptCall(change.doc.id,c).catch(e=>alert(e.message));
+     }else{
+      updateDoc(doc(db,"calls",change.doc.id),{status:"ended"}).catch(()=>{});
+     }
     }
-    if(state==="failed"||state==="disconnected"){
-      document.getElementById("callStatus").textContent="Connection problem. You can hang up.";
-    }
-  };
-}
-
-function listenForRemoteCandidates(callId,remoteRole){
-  if(candidateUnsubscribe)candidateUnsubscribe();
-  const path=remoteRole==="caller"?"callerCandidates":"calleeCandidates";
-  candidateUnsubscribe=onSnapshot(
-    collection(db,"calls",callId,path),
-    snapshot=>{
-      snapshot.docChanges().forEach(async change=>{
-        if(change.type!=="added"||!peerConnection)return;
-        try{
-          const data=change.doc.data();
-          if(typeof data.candidate!=="string")return;
-          const candidate=JSON.parse(data.candidate);
-          await peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
-        }catch(error){console.error("Could not add ICE candidate",error);}
-      });
-    },
-    error=>console.error("Candidate listener error",error)
-  );
-}
-
-function startFreeCallTimer(){
-  if(callStarted)return;
-  callStarted=true;
-  callSeconds=300;
-  updateCallTimer();
-  callTimerInterval=setInterval(async()=>{
-    callSeconds--;
-    updateCallTimer();
-    if(callSeconds<=0){
-      clearInterval(callTimerInterval);
-      callTimerInterval=null;
-      document.getElementById("callStatus").textContent="Free call time finished.";
-      await endAudioCall();
-    }
-  },1000);
-}
-
-function updateCallTimer(){
-  const mins=Math.floor(callSeconds/60).toString().padStart(2,"0");
-  const secs=(callSeconds%60).toString().padStart(2,"0");
-  document.getElementById("callTimer").textContent="Free call remaining: "+mins+":"+secs;
-}
-
-/* Start first free call for this match */
-async function startAudioCall(matchId,otherUid,otherName){
-  if(!currentUser)return alert("Please login first.");
-  if(activeCallId)return alert("You are already in a call.");
-  if(!navigator.mediaDevices?.getUserMedia){
-    return alert("Microphone access needs HTTPS and a supported browser.");
+   });
   }
-
-  // One permanent first-free-call document per match.
-  const freeCallId=matchId+"_first_free";
-  try{
-    const existing=await getDoc(doc(db,"calls",freeCallId));
-    if(existing.exists()){
-      alert("This match has already used its first free call. Coin calling will be available after the secure coin system is set up.");
-      return;
-    }
-
-    activeCallId=freeCallId;
-    activeCallRole="caller";
-    activeCallMatchId=matchId;
-    activeCallPartner=otherName;
-    showActiveCall(otherName);
-    document.getElementById("callStatus").textContent="Calling...";
-    document.getElementById("callTimer").textContent="Waiting for answer...";
-
-    localStream=await navigator.mediaDevices.getUserMedia({audio:true,video:false});
-    makePeerConnection("caller");
-
-    const offer=await peerConnection.createOffer();
-    await peerConnection.setLocalDescription(offer);
-
-    await setDoc(doc(db,"calls",freeCallId),{
-      matchId,
-      callerUid:currentUser.uid,
-      calleeUid:otherUid,
-      status:"ringing",
-      offer:{
-        type:peerConnection.localDescription.type,
-        sdp:peerConnection.localDescription.sdp
-      },
-      createdAt:serverTimestamp()
-    });
-
-    callDocReady=true;
-    await flushLocalCandidates();
-
-    callDocUnsubscribe=onSnapshot(doc(db,"calls",freeCallId),async snap=>{
-      if(!snap.exists())return;
-      const data=snap.data();
-
-      if(data.status==="rejected"){
-        alert("The other person declined the call.");
-        cleanupCall();return;
-      }
-      if(data.status==="ended"){
-        cleanupCall();return;
-      }
-      if(data.answer&&peerConnection&&!peerConnection.currentRemoteDescription){
-        try{
-          await peerConnection.setRemoteDescription(new RTCSessionDescription(data.answer));
-          listenForRemoteCandidates(freeCallId,"callee");
-          document.getElementById("callStatus").textContent="Connecting...";
-        }catch(error){showError(error);}
-      }
-    });
-
-  }catch(error){
-    console.error(error);
-    await endAudioCall();
-    showError(error);
-  }
+ );
 }
 
-/* Listen for incoming calls */
-function listenForIncomingCalls(){
-  if(incomingUnsubscribe){incomingUnsubscribe();incomingUnsubscribe=null;}
-  if(!currentUser)return;
-
-  const q=query(
-    collection(db,"calls"),
-    where("calleeUid","==",currentUser.uid),
-    where("status","==","ringing")
-  );
-
-  incomingUnsubscribe=onSnapshot(q,snapshot=>{
-    snapshot.docChanges().forEach(change=>{
-      if(change.type!=="added")return;
-      const data=change.doc.data();
-      if(activeCallId||pendingIncomingCall)return;
-      pendingIncomingCall={id:change.doc.id,data};
-      activeCallId=change.doc.id;
-      activeCallRole="callee";
-      activeCallMatchId=data.matchId;
-      activeCallPartner="MIZHI User";
-      showIncomingCall("MIZHI User");
-    });
-  },error=>console.error("Incoming call listener:",error));
+async function acceptCall(id,c){
+ activeCall=doc(db,"calls",id);
+ activeMatch=c.matchId;
+ await prepareMedia(c.type);
+ callPC=new RTCPeerConnection(rtcConfig);
+ localStream.getTracks().forEach(t=>callPC.addTrack(t,localStream));
+ callPC.ontrack=e=>$("remoteVideo").srcObject=e.streams[0];
+ callPC.onicecandidate=e=>{
+  if(e.candidate)addDoc(collection(db,"calls",id,"calleeCandidates"),e.candidate.toJSON());
+ };
+ await callPC.setRemoteDescription(new RTCSessionDescription(c.offer));
+ const answer=await callPC.createAnswer();
+ await callPC.setLocalDescription(answer);
+ await updateDoc(activeCall,{
+  answer:{type:answer.type,sdp:answer.sdp},status:"connected"
+ });
+ onSnapshot(collection(db,"calls",id,"callerCandidates"),s=>{
+  s.docChanges().forEach(change=>{
+   if(change.type==="added")callPC.addIceCandidate(new RTCIceCandidate(change.doc.data())).catch(()=>{});
+  });
+ });
+ $("callTitle").textContent=c.type.toUpperCase()+" CALL";
+ say("callStatus","Connected");
+ show("call");
 }
 
-/* Accept incoming call */
-window.acceptIncomingCall=async function(){
-  if(!pendingIncomingCall||!currentUser)return;
-  const call=pendingIncomingCall;
-  const id=call.id;
-  try{
-    document.getElementById("callStatus").textContent="Connecting...";
-    document.getElementById("incomingCallActions").hidden=true;
-    document.getElementById("activeCallActions").hidden=false;
-    document.getElementById("callTitle").textContent="Audio Call ❤️";
-
-    if(!navigator.mediaDevices?.getUserMedia){
-      throw new Error("Microphone access needs HTTPS and a supported browser.");
-    }
-
-    localStream=await navigator.mediaDevices.getUserMedia({audio:true,video:false});
-    makePeerConnection("callee");
-
-    await peerConnection.setRemoteDescription(
-      new RTCSessionDescription(call.data.offer)
-    );
-
-    listenForRemoteCandidates(id,"caller");
-
-    const answer=await peerConnection.createAnswer();
-    await peerConnection.setLocalDescription(answer);
-
-    await updateDoc(doc(db,"calls",id),{
-      answer:{
-        type:peerConnection.localDescription.type,
-        sdp:peerConnection.localDescription.sdp
-      },
-      status:"accepted",
-      answeredAt:serverTimestamp()
-    });
-
-    callDocReady=true;
-    await flushLocalCandidates();
-    showActiveCall("Your match");
-    pendingIncomingCall=null;
-
-    callDocUnsubscribe=onSnapshot(doc(db,"calls",id),snap=>{
-      if(!snap.exists())return;
-      if(snap.data().status==="ended")cleanupCall();
-    });
-
-  }catch(error){
-    showError(error);
-    await endAudioCall();
-  }
+window.endCall=async()=>{
+ if(activeCall)await updateDoc(activeCall,{status:"ended"}).catch(()=>{});
+ endCallLocal();
 };
 
-/* Reject incoming call */
-window.rejectIncomingCall=async function(){
-  if(!pendingIncomingCall)return;
-  try{
-    await updateDoc(doc(db,"calls",pendingIncomingCall.id),{
-      status:"rejected"
-    });
-  }catch(error){showError(error);}
-  cleanupCall();
-};
-
-/* Hang up */
-window.endAudioCall=async function(){
-  const id=activeCallId;
-  if(id&&currentUser){
-    try{
-      await updateDoc(doc(db,"calls",id),{
-        status:"ended",
-        endedAt:serverTimestamp()
-      });
-    }catch(error){
-      console.warn("Could not update call status:",error);
-    }
-  }
-  cleanupCall();
-};
-
-/* Save profile */
-window.saveProfile=async function(e){
-  e.preventDefault();
-  if(!currentUser)return;
-  try{
-    await updateDoc(doc(db,"users",currentUser.uid),{
-      bio:document.getElementById("editBio").value.trim(),
-      city:document.getElementById("editCity").value.trim(),
-      lastSeen:serverTimestamp()
-    });
-    await syncPublicProfile();
-    alert("Profile saved successfully!");
-  }catch(error){showError(error);}
-};
-
-/* Logout */
-window.logout=async function(){
-  try{
-    if(activeCallId)await endAudioCall();
-    if(currentUser){
-      await updateDoc(doc(db,"users",currentUser.uid),{
-        isOnline:false,lastSeen:serverTimestamp()
-      });
-    }
-    if(chatUnsubscribe){chatUnsubscribe();chatUnsubscribe=null;}
-    if(incomingUnsubscribe){incomingUnsubscribe();incomingUnsubscribe=null;}
-    await signOut(auth);
-  }catch(error){showError(error);}
-};
-
-/* Open app after login */
-async function openApp(){
-  document.getElementById("navigation").hidden=false;
-  window.show("home");
-  try{
-    await loadProfile();
-    listenForIncomingCalls();
-  }catch(error){
-    alert("Profile error: "+error.message);
-  }
+function endCallLocal(){
+ if(callPC){callPC.close();callPC=null}
+ if(localStream){localStream.getTracks().forEach(t=>t.stop());localStream=null}
+ $("localVideo").srcObject=null;
+ $("remoteVideo").srcObject=null;
+ activeCall=null;
+ show("chat");
 }
 
-/* Login status */
-onAuthStateChanged(auth,user=>{
-  currentUser=user;
-  if(user){
-    openApp();
-  }else{
-    if(chatUnsubscribe){chatUnsubscribe();chatUnsubscribe=null;}
-    if(incomingUnsubscribe){incomingUnsubscribe();incomingUnsubscribe=null;}
-    if(activeCallId)cleanupCall();
-    document.getElementById("navigation").hidden=true;
-    window.show("welcome");
-  }
+window.startAudioCall=()=>startCall("audio");
+window.startVideoCall=()=>startCall("video");
+
+</script>
+
+<!-- Call buttons are available in the chat section after a match is opened -->
+<script>
+document.addEventListener("DOMContentLoaded",()=>{
+ const chat=document.getElementById("chat");
+ const buttons=document.createElement("div");
+ buttons.innerHTML='<button onclick="startAudioCall()">🎙 AUDIO CALL</button><button onclick="startVideoCall()">📹 VIDEO CALL</button>';
+ chat.append(buttons);
 });
 </script>
+
 </body>
 </html>
+```
