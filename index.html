@@ -1,5 +1,3 @@
-<!-- MIZHI Phase 1 -->
-<!-- Login, Register and Profile Setup -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#100d20">
 <title>MIZHI - Connect Hearts</title>
+
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#100d20;color:white;font-family:Arial}
@@ -33,6 +32,7 @@ section{padding-bottom:85px}
 [hidden]{display:none!important}
 </style>
 </head>
+
 <body>
 
 <header>
@@ -57,7 +57,7 @@ section{padding-bottom:85px}
 <form onsubmit="registerUser(event)">
 <input id="regName" placeholder="Full Name" required>
 <input id="regEmail" type="email" placeholder="Email Address" required>
-<input id="regPassword" type="password" placeholder="Password" required>
+<input id="regPassword" type="password" placeholder="Password" minlength="6" required>
 <input id="regAge" type="number" placeholder="Age (18+)" min="18" required>
 <select id="regGender" required>
 <option value="">Select Gender</option>
@@ -140,104 +140,186 @@ section{padding-bottom:85px}
 <button onclick="show('profile')">👤<br>Profile</button>
 </nav>
 
-<script>
-let users=JSON.parse(localStorage.getItem('mizhiUsers')||'[]');
-let current=localStorage.getItem('mizhiCurrent');
+<script type="module">
 
-function show(id){
-document.querySelectorAll('main section').forEach(s=>s.hidden=true);
-document.getElementById(id).hidden=false;
-}
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
-function registerUser(e){
-e.preventDefault();
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+onAuthStateChanged,
+signOut
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
-let email=document.getElementById('regEmail').value.trim().toLowerCase();
+import {
+getFirestore,
+doc,
+setDoc,
+getDoc,
+updateDoc,
+serverTimestamp
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
-if(users.some(u=>u.email===email)){
-alert('Account already exists. Please login.');
-return;
-}
-
-let user={
-name:document.getElementById('regName').value,
-email:email,
-password:document.getElementById('regPassword').value,
-age:Number(document.getElementById('regAge').value),
-gender:document.getElementById('regGender').value,
-bio:'',
-city:''
+const firebaseConfig = {
+apiKey: "AIzaSyBlmHvVRkcJ2DB6I6H3a-zsN1Zt0CKo94s",
+authDomain: "mizhi-59e7e.firebaseapp.com",
+projectId: "mizhi-59e7e",
+storageBucket: "mizhi-59e7e.firebasestorage.app",
+messagingSenderId: "109570780589",
+appId: "1:109570780589:web:5a42cede76210ba8e5c524",
+measurementId: "G-FG0P26JEXK"
 };
 
-if(user.age<18){
-alert('You must be 18 or older.');
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let currentUser = null;
+
+window.show = function(id) {
+document.querySelectorAll("main section").forEach(s => s.hidden = true);
+document.getElementById(id).hidden = false;
+};
+
+window.registerUser = async function(e) {
+e.preventDefault();
+
+const name = document.getElementById("regName").value.trim();
+const email = document.getElementById("regEmail").value.trim().toLowerCase();
+const password = document.getElementById("regPassword").value;
+const age = Number(document.getElementById("regAge").value);
+const gender = document.getElementById("regGender").value;
+
+if (age < 18) {
+alert("You must be 18 or older.");
 return;
 }
 
-users.push(user);
-localStorage.setItem('mizhiUsers',JSON.stringify(users));
-current=email;
-localStorage.setItem('mizhiCurrent',email);
-openApp();
-}
+try {
+const result = await createUserWithEmailAndPassword(auth, email, password);
+const user = result.user;
 
-function loginUser(e){
+await setDoc(doc(db, "users", user.uid), {
+uid: user.uid,
+name: name,
+email: email,
+age: age,
+gender: gender,
+bio: "",
+city: "",
+photoURL: "",
+isOnline: true,
+coins: 0,
+status: "active",
+createdAt: serverTimestamp(),
+lastSeen: serverTimestamp()
+});
+
+alert("MIZHI account created successfully!");
+
+} catch (error) {
+alert(error.message);
+}
+};
+
+window.loginUser = async function(e) {
 e.preventDefault();
 
-let email=document.getElementById('loginEmail').value.trim().toLowerCase();
-let password=document.getElementById('loginPassword').value;
+const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+const password = document.getElementById("loginPassword").value;
 
-let user=users.find(u=>u.email===email&&u.password===password);
+try {
+await signInWithEmailAndPassword(auth, email, password);
+} catch (error) {
+alert(error.message);
+}
+};
 
-if(!user){
-alert('Incorrect email or password.');
-return;
+async function loadProfile() {
+if (!currentUser) return;
+
+const ref = doc(db, "users", currentUser.uid);
+let snap = await getDoc(ref);
+
+if (!snap.exists()) {
+await setDoc(ref, {
+uid: currentUser.uid,
+name: currentUser.displayName || "MIZHI User",
+email: currentUser.email || "",
+age: 18,
+gender: "",
+bio: "",
+city: "",
+photoURL: "",
+isOnline: true,
+coins: 0,
+status: "active",
+createdAt: serverTimestamp(),
+lastSeen: serverTimestamp()
+});
+snap = await getDoc(ref);
 }
 
-current=email;
-localStorage.setItem('mizhiCurrent',email);
-openApp();
+const user = snap.data();
+
+document.getElementById("profileName").textContent = user.name || "";
+document.getElementById("profileEmail").textContent = user.email || "";
+document.getElementById("editBio").value = user.bio || "";
+document.getElementById("editCity").value = user.city || "";
 }
 
-function openApp(){
-document.getElementById('navigation').hidden=false;
-show('home');
-loadProfile();
-}
-
-function loadProfile(){
-let user=users.find(u=>u.email===current);
-if(!user)return;
-document.getElementById('profileName').textContent=user.name;
-document.getElementById('profileEmail').textContent=user.email;
-document.getElementById('editBio').value=user.bio||'';
-document.getElementById('editCity').value=user.city||'';
-}
-
-function saveProfile(e){
+window.saveProfile = async function(e) {
 e.preventDefault();
-let user=users.find(u=>u.email===current);
-if(!user)return;
-user.bio=document.getElementById('editBio').value;
-user.city=document.getElementById('editCity').value;
-localStorage.setItem('mizhiUsers',JSON.stringify(users));
-alert('Profile saved!');
+
+if (!currentUser) return;
+
+try {
+await updateDoc(doc(db, "users", currentUser.uid), {
+bio: document.getElementById("editBio").value,
+city: document.getElementById("editCity").value,
+lastSeen: serverTimestamp()
+});
+
+alert("Profile saved successfully!");
+
+} catch (error) {
+alert(error.message);
+}
+};
+
+window.logout = async function() {
+try {
+if (currentUser) {
+await updateDoc(doc(db, "users", currentUser.uid), {
+isOnline: false,
+lastSeen: serverTimestamp()
+});
+}
+await signOut(auth);
+} catch (error) {
+alert(error.message);
+}
+};
+
+function openApp() {
+document.getElementById("navigation").hidden = false;
+window.show("home");
+loadProfile().catch(error => alert(error.message));
 }
 
-function logout(){
-current=null;
-localStorage.removeItem('mizhiCurrent');
-document.getElementById('navigation').hidden=true;
-show('welcome');
-}
+onAuthStateChanged(auth, user => {
+currentUser = user;
 
-if(current&&users.some(u=>u.email===current)){
+if (user) {
 openApp();
-}else{
-current=null;
-show('welcome');
+} else {
+document.getElementById("navigation").hidden = true;
+window.show("welcome");
 }
+});
+
 </script>
 
 </body>
-  </html>
+</html>
