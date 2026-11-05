@@ -1,155 +1,294 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#100719">
 <title>MIZHI ❤️ Connect Hearts</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#100d20;color:white;font-family:Arial,sans-serif}
-header{background:#21172f;padding:15px;text-align:center;border-bottom:1px solid #ff5790}
-header h1{color:#ff6399;letter-spacing:5px;margin:5px}
-header img{width:75px;height:75px;object-fit:contain}
+:root{
+ --pink:#ff3d9a;
+ --purple:#a855f7;
+ --dark:#0b0613;
+ --panel:#1b1028;
+}
+body{
+ margin:0;
+ background:radial-gradient(ellipse at top,#351044,#100719 65%);
+ color:white;
+ font-family:Arial,sans-serif;
+}
+header{
+ background:#170c22;
+ padding:18px;
+ text-align:center;
+ border-bottom:1px solid var(--pink);
+ box-shadow:0 0 22px #ff3d9a55;
+}
+header h1{
+ color:#ff65b0;
+ letter-spacing:7px;
+ text-shadow:0 0 12px #ff3d9a,0 0 28px #a855f7;
+ margin:8px;
+}
+header img{
+ width:85px;height:85px;
+ object-fit:contain;
+ filter:drop-shadow(0 0 12px #ff3d9a);
+}
+header p{color:#edc9ff;letter-spacing:2px}
 main{max-width:850px;margin:auto;padding:15px}
-.card{background:#211b35;padding:20px;border-radius:18px;margin:12px 0}
-input,textarea,select{width:100%;padding:13px;margin:7px 0;border-radius:10px;border:1px solid #514263;background:#171326;color:white}
-button{padding:12px 16px;border:0;border-radius:22px;background:#ff5790;color:white;font-weight:bold;margin:5px;cursor:pointer}
-button.secondary{background:#514263}
+.card{
+ background:linear-gradient(145deg,#271633,#160d22);
+ padding:20px;
+ border:1px solid #873c89;
+ border-radius:20px;
+ margin:12px 0;
+ box-shadow:0 0 18px #a855f722;
+}
+input,textarea,select{
+ width:100%;padding:14px;margin:7px 0;
+ border-radius:12px;
+ border:1px solid #a855f7;
+ background:#100a1b;color:white;
+ outline:none;
+}
+input:focus,textarea:focus,select:focus{
+ border-color:#ff3d9a;
+ box-shadow:0 0 12px #ff3d9a88;
+}
+button{
+ padding:12px 18px;
+ border:1px solid #ff8ac4;
+ border-radius:25px;
+ background:linear-gradient(100deg,#ff2789,#a43cff);
+ color:white;font-weight:bold;
+ margin:5px;cursor:pointer;
+ box-shadow:0 0 12px #ff3d9a55;
+}
+button:hover{transform:scale(1.03)}
+button.secondary{background:#39264e}
 button:disabled{opacity:.5}
-nav{display:flex;flex-wrap:wrap;justify-content:center;background:#171326;padding:8px;position:sticky;top:0;z-index:5}
+nav{
+ display:flex;flex-wrap:wrap;
+ justify-content:center;
+ background:#100a1b;
+ padding:10px;
+ position:sticky;top:0;z-index:5;
+ border-bottom:1px solid #a855f7;
+}
 nav button{font-size:12px}
 .hidden{display:none!important}
 .profile{display:flex;gap:15px;align-items:center}
-.avatar{width:85px;height:85px;border-radius:50%;object-fit:cover;background:#514263}
+.avatar{
+ width:85px;height:85px;border-radius:50%;
+ object-fit:cover;border:2px solid #ff3d9a;
+ box-shadow:0 0 15px #ff3d9a;
+}
 .person{display:inline-block;width:220px;vertical-align:top;margin:8px}
-.person img{width:100%;height:180px;object-fit:cover;border-radius:14px}
-.small{color:#c9bbd5;font-size:13px}
-#messages{height:300px;overflow:auto;background:#171326;padding:12px;border-radius:12px}
-.msg{padding:9px;margin:6px;border-radius:12px;background:#392747;max-width:85%}
-.mine{margin-left:auto;background:#9d326b}
-video{width:100%;max-width:350px;background:black;border-radius:12px}
+.person img{
+ width:100%;height:180px;
+ object-fit:cover;border-radius:14px;
+ border:1px solid #ff3d9a;
+}
+.small{color:#d5b8e8;font-size:13px}
+h2{color:#ff80bd;text-shadow:0 0 8px #ff3d9a55}
+#messages{
+ height:300px;overflow:auto;
+ background:#100a1b;padding:12px;
+ border-radius:12px;border:1px solid #873c89;
+}
+.msg{
+ padding:9px;margin:6px;border-radius:12px;
+ background:#392747;max-width:85%;
+ overflow-wrap:anywhere;
+}
+.mine{margin-left:auto;background:#922c72}
+video{
+ width:100%;max-width:350px;
+ background:black;border-radius:12px;
+}
+#auth{
+ max-width:420px;margin:25px auto;
+ border:1px solid #ff3d9a;
+ box-shadow:0 0 25px #ff3d9a33;
+}
+#splash{
+ position:fixed;inset:0;z-index:9999;
+ display:flex;flex-direction:column;
+ justify-content:center;align-items:center;
+ background:radial-gradient(circle,#421052,#090514 70%);
+ animation:splashFade 4s forwards;
+}
+#splash img{
+ width:190px;height:190px;object-fit:contain;
+ filter:drop-shadow(0 0 18px #ff3d9a);
+ animation:heartReveal 1.5s ease-in-out infinite alternate;
+}
+#splash h1{
+ color:#ff64b1;letter-spacing:9px;
+ text-shadow:0 0 15px #ff3d9a,0 0 30px #a855f7;
+}
+#splash p{color:#edc4ff;letter-spacing:3px}
+@keyframes heartReveal{
+ from{transform:scale(.8)}
+ to{transform:scale(1.12)}
+}
+@keyframes splashFade{
+ 0%,75%{opacity:1;visibility:visible}
+ 100%{opacity:0;visibility:hidden;pointer-events:none}
+}
+@media(max-width:500px){
+ nav button{font-size:11px;padding:10px}
+ .person{width:100%;margin:5px 0}
+ .profile{flex-wrap:wrap}
+}
 </style>
 </head>
+
 <body>
 
+<div id="splash">
+ <img src="Neon%20MIZHI%20Hearts%20Logo%20Poster.png"
+ alt="MIZHI Logo" onerror="this.style.display='none'">
+ <h1>MIZHI</h1>
+ <p>CONNECT HEARTS ❤️</p>
+</div>
+
 <header>
-<img src="Neon%20MIZHI%20Hearts%20Logo%20Poster.png" alt="MIZHI Logo"
-onerror="this.style.display='none'">
-<h1>MIZHI ❤️</h1>
-<p>Connect Hearts • Find Your Soulmate</p>
+ <img src="Neon%20MIZHI%20Hearts%20Logo%20Poster.png"
+ alt="MIZHI Logo" onerror="this.style.display='none'">
+ <h1>MIZHI ❤️</h1>
+ <p>Connect Hearts • Find Your Soulmate</p>
 </header>
 
-<section id="auth" class="card" style="max-width:420px;margin:25px auto">
-<h2 id="authTitle">Welcome to MIZHI</h2>
-<input id="email" type="email" placeholder="Email Address">
-<input id="password" type="password" placeholder="Password">
-<button onclick="login()">LOGIN</button>
-<button class="secondary" onclick="register()">CREATE ACCOUNT</button>
-<p id="authMsg" class="small"></p>
+<section id="auth" class="card">
+ <h2 id="authTitle">Welcome to MIZHI ❤️</h2>
+ <input id="email" type="email" placeholder="Email Address">
+ <input id="password" type="password" placeholder="Password">
+ <button onclick="login()">LOGIN</button>
+ <button class="secondary" onclick="register()">CREATE ACCOUNT</button>
+ <p id="authMsg" class="small"></p>
 </section>
 
 <div id="app" class="hidden">
+
 <nav>
-<button onclick="show('home')">Home</button>
-<button onclick="show('discover')">Discover</button>
-<button onclick="show('likes')">Likes</button>
-<button onclick="show('matches')">Matches</button>
-<button onclick="show('chat')">Chat</button>
-<button onclick="show('profile')">Profile</button>
-<button onclick="show('wallet')">Wallet</button>
-<button onclick="show('admin')">Admin</button>
-<button onclick="logout()">Logout</button>
+ <button onclick="show('home')">Home</button>
+ <button onclick="show('discover')">Discover</button>
+ <button onclick="show('likes')">Likes</button>
+ <button onclick="show('matches')">Matches</button>
+ <button onclick="show('chat')">Chat</button>
+ <button onclick="show('profile')">Profile</button>
+ <button onclick="show('wallet')">Wallet</button>
+ <button onclick="show('admin')">Admin</button>
+ <button onclick="logout()">Logout</button>
 </nav>
 
 <main>
+
 <section id="home" class="page card">
-<h2>Welcome to MIZHI ❤️</h2>
-<p>Meet new people and connect hearts.</p>
-<div id="welcome"></div>
+ <h2>Welcome to MIZHI ❤️</h2>
+ <p>Meet new people and connect hearts.</p>
+ <div id="welcome"></div>
 </section>
 
 <section id="discover" class="page hidden">
-<h2>Discover People</h2>
-<div id="people"></div>
+ <h2>Discover People 💕</h2>
+ <div id="people"></div>
 </section>
 
 <section id="likes" class="page hidden card">
-<h2>People Who Like You</h2>
-<div id="likesList"></div>
+ <h2>People Who Like You ❤️</h2>
+ <div id="likesList"></div>
 </section>
 
 <section id="matches" class="page hidden card">
-<h2>Your Matches</h2>
-<div id="matchesList"></div>
+ <h2>Your Matches 💜</h2>
+ <div id="matchesList"></div>
 </section>
 
 <section id="chat" class="page hidden card">
-<h2>Chat</h2>
-<div id="chatList"></div>
-<div id="messages"></div>
-<input id="chatText" placeholder="Write a message...">
-<button onclick="sendMessage()">SEND</button>
+ <h2>Chat 💬</h2>
+ <div id="chatList"></div>
+ <div id="messages"></div>
+ <input id="chatText" placeholder="Write a message...">
+ <button onclick="sendMessage()">SEND</button>
+ <div>
+  <button onclick="startAudioCall()">🎙 AUDIO CALL</button>
+  <button onclick="startVideoCall()">📹 VIDEO CALL</button>
+ </div>
 </section>
 
 <section id="profile" class="page hidden card">
-<h2>My Profile</h2>
-<div class="profile">
-<img id="myPhoto" class="avatar" alt="Profile">
-<div id="myDetails"></div>
-</div>
-<input id="name" placeholder="Your Name">
-<input id="age" type="number" placeholder="Age">
-<select id="gender">
-<option value="">Select Gender</option>
-<option>Male</option><option>Female</option><option>Other</option>
-</select>
-<textarea id="bio" placeholder="About yourself"></textarea>
-<label>Profile Photo</label>
-<input id="photo" type="file" accept="image/*">
-<button onclick="saveProfile()">SAVE PROFILE</button>
-<p id="profileMsg" class="small"></p>
+ <h2>My Profile</h2>
+ <div class="profile">
+  <img id="myPhoto" class="avatar" alt="Profile">
+  <div id="myDetails"></div>
+ </div>
+ <input id="name" placeholder="Your Name">
+ <input id="age" type="number" placeholder="Age">
+ <select id="gender">
+  <option value="">Select Gender</option>
+  <option>Male</option>
+  <option>Female</option>
+  <option>Other</option>
+ </select>
+ <textarea id="bio" placeholder="About yourself"></textarea>
+ <label>Profile Photo</label>
+ <input id="photo" type="file" accept="image/*">
+ <button onclick="saveProfile()">SAVE PROFILE</button>
+ <p id="profileMsg" class="small"></p>
 </section>
 
 <section id="wallet" class="page hidden card">
-<h2>My Wallet 🪙</h2>
-<h1 id="coinBalance">0 Coins</h1>
-<p class="small">Coin balance is displayed from your account.</p>
-<p>Audio call rate: <span id="audioRate">5</span> coins/min</p>
-<p>Video call rate: <span id="videoRate">10</span> coins/min</p>
-<p class="small">Coin purchases and deductions require secure server-side payment and billing setup.</p>
+ <h2>My Wallet 🪙</h2>
+ <h1 id="coinBalance">0 Coins</h1>
+ <p>Audio call rate: <span id="audioRate">5</span> coins/min</p>
+ <p>Video call rate: <span id="videoRate">10</span> coins/min</p>
+ <p class="small">
+ Coin purchases and secure deductions require server-side
+ payment and billing integration.
+ </p>
 </section>
 
 <section id="admin" class="page hidden card">
-<h2>Admin Dashboard</h2>
-<div id="adminContent">Admin access only.</div>
+ <h2>Admin Dashboard</h2>
+ <div id="adminContent">Admin access only.</div>
 </section>
 
 <section id="call" class="page hidden card">
-<h2 id="callTitle">Call</h2>
-<p id="callStatus">Waiting...</p>
-<div>
-<video id="remoteVideo" autoplay playsinline></video>
-<video id="localVideo" autoplay muted playsinline></video>
-</div>
-<button onclick="endCall()">END CALL</button>
+ <h2 id="callTitle">Call</h2>
+ <p id="callStatus">Waiting...</p>
+ <video id="remoteVideo" autoplay playsinline></video>
+ <video id="localVideo" autoplay muted playsinline></video>
+ <button onclick="endCall()">END CALL</button>
 </section>
+
 </main>
 </div>
 
 <script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
 import {
  getAuth,onAuthStateChanged,createUserWithEmailAndPassword,
  signInWithEmailAndPassword,signOut
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
 import {
  getFirestore,doc,setDoc,getDoc,collection,addDoc,getDocs,
  query,where,onSnapshot,serverTimestamp,updateDoc
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
 import {
  getStorage,ref,uploadBytes,getDownloadURL
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
+
 
 const firebaseConfig={
  apiKey:"AIzaSyBlmHvVRkcJ2DB6I6H3a-zsN1Zt0CKo94s",
@@ -161,23 +300,33 @@ const firebaseConfig={
  measurementId:"G-FG0P26JEXK"
 };
 
-const appFirebase=initializeApp(firebaseConfig);
-const auth=getAuth(appFirebase);
-const db=getFirestore(appFirebase);
-const storage=getStorage(appFirebase);
+const firebase=initializeApp(firebaseConfig);
+const auth=getAuth(firebase);
+const db=getFirestore(firebase);
+const storage=getStorage(firebase);
 
 const ADMIN="kproushal@gmail.com";
-let me=null,myProfile={},activeMatch=null,chatUnsub=null;
-let callPC=null,localStream=null,activeCall=null;
+
+let me=null;
+let myProfile={};
+let activeMatch=null;
+let chatUnsub=null;
+let callPC=null;
+let localStream=null;
+let activeCall=null;
 let incomingUnsub=null;
-let freeCallUsed=false;
+let callUnsubs=[];
 
 const $=id=>document.getElementById(id);
 const say=(id,msg)=>$(id).textContent=msg;
 
+
 window.show=id=>{
- document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
+ document.querySelectorAll(".page").forEach(p=>{
+  p.classList.add("hidden");
+ });
  $(id).classList.remove("hidden");
+
  if(id==="discover")loadPeople();
  if(id==="likes")loadLikes();
  if(id==="matches")loadMatches();
@@ -186,57 +335,93 @@ window.show=id=>{
  if(id==="chat")loadChatList();
 };
 
+
 window.login=async()=>{
  try{
-  await signInWithEmailAndPassword(auth,$("email").value,$("password").value);
- }catch(e){say("authMsg",e.message)}
+  await signInWithEmailAndPassword(
+   auth,$("email").value,$("password").value
+  );
+ }catch(e){
+  say("authMsg",e.message);
+ }
 };
+
 
 window.register=async()=>{
  try{
-  await createUserWithEmailAndPassword(auth,$("email").value,$("password").value);
- }catch(e){say("authMsg",e.message)}
+  await createUserWithEmailAndPassword(
+   auth,$("email").value,$("password").value
+  );
+ }catch(e){
+  say("authMsg",e.message);
+ }
 };
+
 
 window.logout=()=>signOut(auth);
 
+
 onAuthStateChanged(auth,async user=>{
+
  if(!user){
   me=null;
   $("auth").classList.remove("hidden");
   $("app").classList.add("hidden");
+
   if(incomingUnsub)incomingUnsub();
+  if(chatUnsub)chatUnsub();
+
   return;
  }
+
  me=user;
  $("auth").classList.add("hidden");
  $("app").classList.remove("hidden");
- await loadMyProfile();
- listenIncomingCalls();
- show("home");
+
+ try{
+  await loadMyProfile();
+  listenIncomingCalls();
+  show("home");
+ }catch(e){
+  alert("Loading error: "+e.message);
+ }
 });
 
+
 async function loadMyProfile(){
+
  const snap=await getDoc(doc(db,"users",me.uid));
+
  myProfile=snap.exists()?snap.data():{};
+
  $("name").value=myProfile.name||"";
  $("age").value=myProfile.age||"";
  $("gender").value=myProfile.gender||"";
  $("bio").value=myProfile.bio||"";
+
  $("myPhoto").src=myProfile.photoURL||"";
+
  $("myDetails").textContent=myProfile.name||me.email;
- $("welcome").textContent="Hello "+(myProfile.name||me.email)+" ❤️";
+
+ $("welcome").textContent=
+  "Hello "+(myProfile.name||me.email)+" ❤️";
 }
+
 
 window.saveProfile=async()=>{
  try{
+
   let photoURL=myProfile.photoURL||"";
   const file=$("photo").files[0];
+
   if(file){
-   const imageRef=ref(storage,"profilePhotos/"+me.uid+"/"+Date.now());
+   const imageRef=ref(
+    storage,"profilePhotos/"+me.uid+"/"+Date.now()
+   );
    await uploadBytes(imageRef,file);
    photoURL=await getDownloadURL(imageRef);
   }
+
   myProfile={
    ...myProfile,
    uid:me.uid,
@@ -248,288 +433,585 @@ window.saveProfile=async()=>{
    photoURL,
    updatedAt:serverTimestamp()
   };
+
   await setDoc(doc(db,"users",me.uid),myProfile,{merge:true});
+
   await setDoc(doc(db,"publicProfiles",me.uid),{
-   uid:me.uid,name:myProfile.name,age:myProfile.age,
-   gender:myProfile.gender,bio:myProfile.bio,photoURL
+   uid:me.uid,
+   name:myProfile.name,
+   age:myProfile.age,
+   gender:myProfile.gender,
+   bio:myProfile.bio,
+   photoURL
   },{merge:true});
+
   $("myPhoto").src=photoURL;
+  $("myDetails").textContent=myProfile.name||me.email;
+
   say("profileMsg","Profile saved ❤️");
- }catch(e){say("profileMsg",e.message)}
+
+ }catch(e){
+  say("profileMsg",e.message);
+ }
 };
 
+
 async function loadPeople(){
- const area=$("people");area.innerHTML="Loading...";
- const snap=await getDocs(collection(db,"publicProfiles"));
- area.innerHTML="";
- snap.forEach(d=>{
-  const p=d.data();
-  if(p.uid===me.uid)return;
-  const card=document.createElement("div");
-  card.className="card person";
-  const img=document.createElement("img");
-  img.src=p.photoURL||"";
-  const title=document.createElement("h3");
-  title.textContent=(p.name||"MIZHI Member")+(p.age?" • "+p.age:"");
-  const bio=document.createElement("p");
-  bio.textContent=p.bio||"";
-  const btn=document.createElement("button");
-  btn.textContent="❤️ LIKE";
-  btn.onclick=()=>sendLike(p.uid);
-  card.append(img,title,bio,btn);
-  area.append(card);
- });
+
+ const area=$("people");
+ area.textContent="Loading...";
+
+ try{
+
+  const snap=await getDocs(collection(db,"publicProfiles"));
+  area.innerHTML="";
+
+  snap.forEach(d=>{
+
+   const p=d.data();
+   if(p.uid===me.uid)return;
+
+   const card=document.createElement("div");
+   card.className="card person";
+
+   const img=document.createElement("img");
+   img.src=p.photoURL||"";
+
+   const title=document.createElement("h3");
+   title.textContent=
+    (p.name||"MIZHI Member")+(p.age?" • "+p.age:"");
+
+   const bio=document.createElement("p");
+   bio.textContent=p.bio||"";
+
+   const btn=document.createElement("button");
+   btn.textContent="❤️ LIKE";
+   btn.onclick=()=>sendLike(p.uid);
+
+   card.append(img,title,bio,btn);
+   area.append(card);
+  });
+
+ }catch(e){
+  area.textContent=e.message;
+ }
 }
+
 
 async function sendLike(toUid){
+
  try{
+
   const likeId=me.uid+"_"+toUid;
+
   await setDoc(doc(db,"likes",likeId),{
-   from:me.uid,to:toUid,createdAt:serverTimestamp()
+   from:me.uid,
+   to:toUid,
+   createdAt:serverTimestamp()
   });
-  const reverse=await getDoc(doc(db,"likes",toUid+"_"+me.uid));
+
+  const reverse=await getDoc(
+   doc(db,"likes",toUid+"_"+me.uid)
+  );
+
   if(reverse.exists()){
+
    const ids=[me.uid,toUid].sort();
    const matchId=ids.join("_");
+
    await setDoc(doc(db,"matches",matchId),{
-    users:ids,createdAt:serverTimestamp()
+    users:ids,
+    createdAt:serverTimestamp()
    },{merge:true});
+
    alert("It's a Match! ❤️");
-  }else alert("Like sent ❤️");
- }catch(e){alert(e.message)}
+
+  }else{
+   alert("Like sent ❤️");
+  }
+
+ }catch(e){
+  alert(e.message);
+ }
 }
+
 
 async function loadLikes(){
- const area=$("likesList");area.innerHTML="Loading...";
- const snap=await getDocs(query(collection(db,"likes"),where("to","==",me.uid)));
- area.innerHTML="";
- for(const d of snap.docs){
-  const like=d.data();
-  const u=await getDoc(doc(db,"publicProfiles",like.from));
-  if(!u.exists())continue;
-  const p=u.data();
-  const div=document.createElement("div");div.className="card";
-  div.textContent=(p.name||"Someone")+" likes you ❤️";
-  area.append(div);
+
+ const area=$("likesList");
+ area.textContent="Loading...";
+
+ try{
+
+  const snap=await getDocs(
+   query(collection(db,"likes"),where("to","==",me.uid))
+  );
+
+  area.innerHTML="";
+
+  for(const d of snap.docs){
+
+   const like=d.data();
+
+   const u=await getDoc(
+    doc(db,"publicProfiles",like.from)
+   );
+
+   if(!u.exists())continue;
+
+   const p=u.data();
+   const div=document.createElement("div");
+
+   div.className="card";
+   div.textContent=(p.name||"Someone")+" likes you ❤️";
+
+   area.append(div);
+  }
+
+ }catch(e){
+  area.textContent=e.message;
  }
 }
+
 
 async function loadMatches(){
- const area=$("matchesList");area.innerHTML="Loading...";
- const snap=await getDocs(query(collection(db,"matches"),where("users","array-contains",me.uid)));
- area.innerHTML="";
- for(const d of snap.docs){
-  const match=d.data();
-  const other=match.users.find(x=>x!==me.uid);
-  const u=await getDoc(doc(db,"publicProfiles",other));
-  const p=u.exists()?u.data():{};
-  const b=document.createElement("button");
-  b.textContent="Chat with "+(p.name||"Match");
-  b.onclick=()=>openChat(d.id);
-  area.append(b);
+
+ const area=$("matchesList");
+ area.textContent="Loading...";
+
+ try{
+
+  const snap=await getDocs(
+   query(
+    collection(db,"matches"),
+    where("users","array-contains",me.uid)
+   )
+  );
+
+  area.innerHTML="";
+
+  for(const d of snap.docs){
+
+   const match=d.data();
+   const other=match.users.find(x=>x!==me.uid);
+
+   const u=await getDoc(
+    doc(db,"publicProfiles",other)
+   );
+
+   const p=u.exists()?u.data():{};
+
+   const b=document.createElement("button");
+   b.textContent="Chat with "+(p.name||"Match");
+   b.onclick=()=>openChat(d.id);
+
+   area.append(b);
+  }
+
+ }catch(e){
+  area.textContent=e.message;
  }
 }
 
-async function loadChatList(){await loadMatches()}
+
+async function loadChatList(){
+ await loadMatches();
+}
+
 
 async function openChat(matchId){
+
  activeMatch=matchId;
+
  show("chat");
+
  if(chatUnsub)chatUnsub();
- const messages=$("messages");messages.innerHTML="";
+
+ const messages=$("messages");
+ messages.innerHTML="";
+
  chatUnsub=onSnapshot(
   query(collection(db,"chats",matchId,"messages")),
   snap=>{
+
    messages.innerHTML="";
-   const docs=snap.docs.sort((a,b)=>(a.data().createdAt?.seconds||0)-(b.data().createdAt?.seconds||0));
+
+   const docs=snap.docs.sort(
+    (a,b)=>
+     (a.data().createdAt?.seconds||0)-
+     (b.data().createdAt?.seconds||0)
+   );
+
    docs.forEach(d=>{
-    const m=d.data();const div=document.createElement("div");
+
+    const m=d.data();
+    const div=document.createElement("div");
+
     div.className="msg "+(m.from===me.uid?"mine":"");
     div.textContent=(m.from===me.uid?"You: ":"")+m.text;
+
     messages.append(div);
    });
+
    messages.scrollTop=messages.scrollHeight;
-  }
+  },
+  e=>alert("Chat error: "+e.message)
  );
 }
 
+
 window.sendMessage=async()=>{
+
  const text=$("chatText").value.trim();
+
  if(!text||!activeMatch)return;
- await addDoc(collection(db,"chats",activeMatch,"messages"),{
-  from:me.uid,text,createdAt:serverTimestamp()
- });
- $("chatText").value="";
+
+ try{
+
+  await addDoc(
+   collection(db,"chats",activeMatch,"messages"),
+   {
+    from:me.uid,
+    text,
+    createdAt:serverTimestamp()
+   }
+  );
+
+  $("chatText").value="";
+
+ }catch(e){
+  alert(e.message);
+ }
 };
 
+
 async function loadWallet(){
- const snap=await getDoc(doc(db,"wallets",me.uid));
- $("coinBalance").textContent=(snap.exists()?snap.data().coins||0:0)+" Coins";
- const rates=await getDoc(doc(db,"settings","rates"));
- if(rates.exists()){
-  $("audioRate").textContent=rates.data().audio||5;
-  $("videoRate").textContent=rates.data().video||10;
+
+ try{
+
+  const snap=await getDoc(doc(db,"wallets",me.uid));
+
+  $("coinBalance").textContent=
+   (snap.exists()?snap.data().coins||0:0)+" Coins";
+
+  const rates=await getDoc(doc(db,"settings","rates"));
+
+  if(rates.exists()){
+   $("audioRate").textContent=rates.data().audio||5;
+   $("videoRate").textContent=rates.data().video||10;
+  }
+
+ }catch(e){
+  alert("Wallet error: "+e.message);
  }
 }
 
+
 async function loadAdmin(){
+
  const area=$("adminContent");
- if(me.email!==ADMIN){area.textContent="Access denied.";return}
- const rates=await getDoc(doc(db,"settings","rates"));
- const r=rates.exists()?rates.data():{audio:5,video:10};
- area.innerHTML=`
- <p>Admin: ${ADMIN}</p>
- <label>Audio coins per minute</label>
- <input id="adminAudio" type="number" min="1" value="${r.audio||5}">
- <label>Video coins per minute</label>
- <input id="adminVideo" type="number" min="1" value="${r.video||10}">
- <button id="saveRates">SAVE RATES</button>
- <p class="small">Secure admin authorization must also be enforced in Firestore rules.</p>`;
- $("saveRates").onclick=async()=>{
-  await setDoc(doc(db,"settings","rates"),{
-   audio:Math.max(1,Number($("adminAudio").value)),
-   video:Math.max(1,Number($("adminVideo").value))
-  });
-  alert("Rates saved");
- };
+
+ if(me.email!==ADMIN){
+  area.textContent="Access denied.";
+  return;
+ }
+
+ try{
+
+  const rates=await getDoc(doc(db,"settings","rates"));
+
+  const r=rates.exists()
+   ?rates.data()
+   :{audio:5,video:10};
+
+  area.innerHTML=`
+   <p>Admin: ${ADMIN}</p>
+   <label>Audio coins per minute</label>
+   <input id="adminAudio" type="number" min="1" value="${r.audio||5}">
+   <label>Video coins per minute</label>
+   <input id="adminVideo" type="number" min="1" value="${r.video||10}">
+   <button id="saveRates">SAVE RATES</button>
+   <p class="small">Admin authorization must also be enforced in Firestore rules.</p>
+  `;
+
+  $("saveRates").onclick=async()=>{
+
+   try{
+
+    await setDoc(doc(db,"settings","rates"),{
+     audio:Math.max(1,Number($("adminAudio").value)),
+     video:Math.max(1,Number($("adminVideo").value))
+    });
+
+    alert("Rates saved");
+
+   }catch(e){
+    alert(e.message);
+   }
+  };
+
+ }catch(e){
+  area.textContent=e.message;
+ }
 }
 
-/* WEBRTC AUDIO / VIDEO CALLS */
+
+/* AUDIO AND VIDEO CALLS */
 
 const rtcConfig={
- iceServers:[{urls:"stun:stun.l.google.com:19302"}]
+ iceServers:[
+  {urls:"stun:stun.l.google.com:19302"}
+ ]
 };
 
+
 async function prepareMedia(type){
+
  localStream=await navigator.mediaDevices.getUserMedia({
-  audio:true,video:type==="video"
+  audio:true,
+  video:type==="video"
  });
+
  $("localVideo").srcObject=localStream;
 }
 
+
 async function startCall(type){
- if(!activeMatch){alert("Open a match chat first.");return}
+
+ if(!activeMatch){
+  alert("Open a match chat first.");
+  return;
+ }
+
  try{
-  const matchSnap=await getDoc(doc(db,"matches",activeMatch));
-  if(!matchSnap.exists())throw Error("Match not found");
+
+  const matchSnap=await getDoc(
+   doc(db,"matches",activeMatch)
+  );
+
+  if(!matchSnap.exists()){
+   throw Error("Match not found");
+  }
+
   const other=matchSnap.data().users.find(x=>x!==me.uid);
-  const freeRef=doc(db,"calls",activeMatch+"_first_free");
-  const freeSnap=await getDoc(freeRef);
-  freeCallUsed=freeSnap.exists();
 
   await prepareMedia(type);
+
   callPC=new RTCPeerConnection(rtcConfig);
-  localStream.getTracks().forEach(t=>callPC.addTrack(t,localStream));
-  callPC.ontrack=e=>$("remoteVideo").srcObject=e.streams[0];
+
+  localStream.getTracks().forEach(t=>{
+   callPC.addTrack(t,localStream);
+  });
+
+  callPC.ontrack=e=>{
+   $("remoteVideo").srcObject=e.streams[0];
+  };
 
   const callRef=doc(collection(db,"calls"));
   activeCall=callRef;
+
   callPC.onicecandidate=e=>{
-   if(e.candidate)addDoc(collection(db,"calls",callRef.id,"callerCandidates"),e.candidate.toJSON());
+   if(e.candidate){
+    addDoc(
+     collection(db,"calls",callRef.id,"callerCandidates"),
+     e.candidate.toJSON()
+    ).catch(console.error);
+   }
   };
 
   const offer=await callPC.createOffer();
   await callPC.setLocalDescription(offer);
+
   await setDoc(callRef,{
-   from:me.uid,to:other,matchId:activeMatch,type,
+   from:me.uid,
+   to:other,
+   matchId:activeMatch,
+   type,
    offer:{type:offer.type,sdp:offer.sdp},
-   status:"ringing",createdAt:serverTimestamp()
+   status:"ringing",
+   createdAt:serverTimestamp()
   });
 
-  onSnapshot(callRef,async snap=>{
+  callUnsubs.push(onSnapshot(callRef,async snap=>{
+
    const data=snap.data();
-   if(data?.answer&&!callPC.currentRemoteDescription){
-    await callPC.setRemoteDescription(new RTCSessionDescription(data.answer));
-   }
-   if(data?.status==="ended")endCallLocal();
-  });
 
-  onSnapshot(collection(db,"calls",callRef.id,"calleeCandidates"),s=>{
-   s.docChanges().forEach(c=>{
-    if(c.type==="added")callPC.addIceCandidate(new RTCIceCandidate(c.doc.data())).catch(()=>{});
-   });
-  });
+   if(data?.answer&&!callPC?.currentRemoteDescription){
+    await callPC.setRemoteDescription(
+     new RTCSessionDescription(data.answer)
+    );
+   }
+
+   if(data?.status==="ended"){
+    endCallLocal();
+   }
+  }));
+
+  callUnsubs.push(onSnapshot(
+   collection(db,"calls",callRef.id,"calleeCandidates"),
+   s=>{
+    s.docChanges().forEach(c=>{
+     if(c.type==="added"&&callPC){
+      callPC.addIceCandidate(
+       new RTCIceCandidate(c.doc.data())
+      ).catch(()=>{});
+     }
+    });
+   }
+  ));
 
   $("callTitle").textContent=type.toUpperCase()+" CALL";
-  say("callStatus",freeCallUsed?"Paid call – billing setup required":"First call: free for 5 minutes");
+
+  say("callStatus","Waiting for the other person...");
+
   show("call");
- }catch(e){alert("Call error: "+e.message);endCallLocal()}
+
+ }catch(e){
+  alert("Call error: "+e.message);
+  endCallLocal();
+ }
 }
 
+
 function listenIncomingCalls(){
+
  if(incomingUnsub)incomingUnsub();
+
  incomingUnsub=onSnapshot(
-  query(collection(db,"calls"),where("to","==",me.uid),where("status","==","ringing")),
+  query(
+   collection(db,"calls"),
+   where("to","==",me.uid),
+   where("status","==","ringing")
+  ),
   snap=>{
+
    snap.docChanges().forEach(change=>{
+
     if(change.type==="added"){
+
      const c=change.doc.data();
+
      if(confirm("Incoming "+c.type+" call. Accept?")){
-      acceptCall(change.doc.id,c).catch(e=>alert(e.message));
+
+      acceptCall(change.doc.id,c).catch(e=>{
+       alert(e.message);
+      });
+
      }else{
-      updateDoc(doc(db,"calls",change.doc.id),{status:"ended"}).catch(()=>{});
+
+      updateDoc(
+       doc(db,"calls",change.doc.id),
+       {status:"ended"}
+      ).catch(()=>{});
      }
     }
    });
-  }
+  },
+  e=>console.error("Incoming call listener:",e)
  );
 }
 
+
 async function acceptCall(id,c){
+
  activeCall=doc(db,"calls",id);
  activeMatch=c.matchId;
+
  await prepareMedia(c.type);
+
  callPC=new RTCPeerConnection(rtcConfig);
- localStream.getTracks().forEach(t=>callPC.addTrack(t,localStream));
- callPC.ontrack=e=>$("remoteVideo").srcObject=e.streams[0];
- callPC.onicecandidate=e=>{
-  if(e.candidate)addDoc(collection(db,"calls",id,"calleeCandidates"),e.candidate.toJSON());
+
+ localStream.getTracks().forEach(t=>{
+  callPC.addTrack(t,localStream);
+ });
+
+ callPC.ontrack=e=>{
+  $("remoteVideo").srcObject=e.streams[0];
  };
- await callPC.setRemoteDescription(new RTCSessionDescription(c.offer));
+
+ callPC.onicecandidate=e=>{
+  if(e.candidate){
+   addDoc(
+    collection(db,"calls",id,"calleeCandidates"),
+    e.candidate.toJSON()
+   ).catch(console.error);
+  }
+ };
+
+ await callPC.setRemoteDescription(
+  new RTCSessionDescription(c.offer)
+ );
+
  const answer=await callPC.createAnswer();
+
  await callPC.setLocalDescription(answer);
+
  await updateDoc(activeCall,{
-  answer:{type:answer.type,sdp:answer.sdp},status:"connected"
+  answer:{type:answer.type,sdp:answer.sdp},
+  status:"connected"
  });
- onSnapshot(collection(db,"calls",id,"callerCandidates"),s=>{
-  s.docChanges().forEach(change=>{
-   if(change.type==="added")callPC.addIceCandidate(new RTCIceCandidate(change.doc.data())).catch(()=>{});
-  });
- });
+
+ callUnsubs.push(onSnapshot(
+  collection(db,"calls",id,"callerCandidates"),
+  s=>{
+   s.docChanges().forEach(change=>{
+    if(change.type==="added"&&callPC){
+     callPC.addIceCandidate(
+      new RTCIceCandidate(change.doc.data())
+     ).catch(()=>{});
+    }
+   });
+  }
+ ));
+
  $("callTitle").textContent=c.type.toUpperCase()+" CALL";
+
  say("callStatus","Connected");
+
  show("call");
 }
 
+
 window.endCall=async()=>{
- if(activeCall)await updateDoc(activeCall,{status:"ended"}).catch(()=>{});
+
+ if(activeCall){
+  await updateDoc(
+   activeCall,{status:"ended"}
+  ).catch(()=>{});
+ }
+
  endCallLocal();
 };
 
+
 function endCallLocal(){
- if(callPC){callPC.close();callPC=null}
- if(localStream){localStream.getTracks().forEach(t=>t.stop());localStream=null}
+
+ if(callPC){
+  callPC.close();
+  callPC=null;
+ }
+
+ if(localStream){
+  localStream.getTracks().forEach(t=>t.stop());
+  localStream=null;
+ }
+
+ callUnsubs.forEach(unsub=>unsub());
+ callUnsubs=[];
+
  $("localVideo").srcObject=null;
  $("remoteVideo").srcObject=null;
+
  activeCall=null;
- show("chat");
+
+ if(me)show("chat");
 }
+
 
 window.startAudioCall=()=>startCall("audio");
 window.startVideoCall=()=>startCall("video");
 
 </script>
 
-<!-- Call buttons are available in the chat section after a match is opened -->
-<script>
-document.addEventListener("DOMContentLoaded",()=>{
- const chat=document.getElementById("chat");
- const buttons=document.createElement("div");
- buttons.innerHTML='<button onclick="startAudioCall()">🎙 AUDIO CALL</button><button onclick="startVideoCall()">📹 VIDEO CALL</button>';
- chat.append(buttons);
-});
-</script>
-
 </body>
 </html>
-```
