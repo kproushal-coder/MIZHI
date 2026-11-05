@@ -151,14 +151,14 @@ video{
 <body>
 
 <div id="splash">
- <img src="Neon%20MIZHI%20Hearts%20Logo%20Poster.png"
+ <img src="ChatGPT%20Image%20Nov%205%2C%202026%2C%2005_09_05%20PM.png"
  alt="MIZHI Logo" onerror="this.style.display='none'">
  <h1>MIZHI</h1>
  <p>CONNECT HEARTS ❤️</p>
 </div>
 
 <header>
- <img src="Neon%20MIZHI%20Hearts%20Logo%20Poster.png"
+ <img src="ChatGPT%20Image%20Nov%205%2C%202026%2C%2005_09_05%20PM.png"
  alt="MIZHI Logo" onerror="this.style.display='none'">
  <h1>MIZHI ❤️</h1>
  <p>Connect Hearts • Find Your Soulmate</p>
@@ -320,7 +320,6 @@ let callUnsubs=[];
 const $=id=>document.getElementById(id);
 const say=(id,msg)=>$(id).textContent=msg;
 
-
 window.show=id=>{
  document.querySelectorAll(".page").forEach(p=>{
   p.classList.add("hidden");
@@ -335,7 +334,6 @@ window.show=id=>{
  if(id==="chat")loadChatList();
 };
 
-
 window.login=async()=>{
  try{
   await signInWithEmailAndPassword(
@@ -345,7 +343,6 @@ window.login=async()=>{
   say("authMsg",e.message);
  }
 };
-
 
 window.register=async()=>{
  try{
@@ -357,20 +354,15 @@ window.register=async()=>{
  }
 };
 
-
 window.logout=()=>signOut(auth);
 
-
 onAuthStateChanged(auth,async user=>{
-
  if(!user){
   me=null;
   $("auth").classList.remove("hidden");
   $("app").classList.add("hidden");
-
   if(incomingUnsub)incomingUnsub();
   if(chatUnsub)chatUnsub();
-
   return;
  }
 
@@ -387,37 +379,26 @@ onAuthStateChanged(auth,async user=>{
  }
 });
 
-
 async function loadMyProfile(){
-
  const snap=await getDoc(doc(db,"users",me.uid));
-
  myProfile=snap.exists()?snap.data():{};
 
  $("name").value=myProfile.name||"";
  $("age").value=myProfile.age||"";
  $("gender").value=myProfile.gender||"";
  $("bio").value=myProfile.bio||"";
-
  $("myPhoto").src=myProfile.photoURL||"";
-
  $("myDetails").textContent=myProfile.name||me.email;
-
- $("welcome").textContent=
-  "Hello "+(myProfile.name||me.email)+" ❤️";
+ $("welcome").textContent="Hello "+(myProfile.name||me.email)+" ❤️";
 }
-
 
 window.saveProfile=async()=>{
  try{
-
   let photoURL=myProfile.photoURL||"";
   const file=$("photo").files[0];
 
   if(file){
-   const imageRef=ref(
-    storage,"profilePhotos/"+me.uid+"/"+Date.now()
-   );
+   const imageRef=ref(storage,"profilePhotos/"+me.uid+"/"+Date.now());
    await uploadBytes(imageRef,file);
    photoURL=await getDownloadURL(imageRef);
   }
@@ -447,7 +428,6 @@ window.saveProfile=async()=>{
 
   $("myPhoto").src=photoURL;
   $("myDetails").textContent=myProfile.name||me.email;
-
   say("profileMsg","Profile saved ❤️");
 
  }catch(e){
@@ -455,19 +435,15 @@ window.saveProfile=async()=>{
  }
 };
 
-
 async function loadPeople(){
-
  const area=$("people");
  area.textContent="Loading...";
 
  try{
-
   const snap=await getDocs(collection(db,"publicProfiles"));
   area.innerHTML="";
 
   snap.forEach(d=>{
-
    const p=d.data();
    if(p.uid===me.uid)return;
 
@@ -478,8 +454,7 @@ async function loadPeople(){
    img.src=p.photoURL||"";
 
    const title=document.createElement("h3");
-   title.textContent=
-    (p.name||"MIZHI Member")+(p.age?" • "+p.age:"");
+   title.textContent=(p.name||"MIZHI Member")+(p.age?" • "+p.age:"");
 
    const bio=document.createElement("p");
    bio.textContent=p.bio||"";
@@ -497,11 +472,8 @@ async function loadPeople(){
  }
 }
 
-
 async function sendLike(toUid){
-
  try{
-
   const likeId=me.uid+"_"+toUid;
 
   await setDoc(doc(db,"likes",likeId),{
@@ -510,12 +482,9 @@ async function sendLike(toUid){
    createdAt:serverTimestamp()
   });
 
-  const reverse=await getDoc(
-   doc(db,"likes",toUid+"_"+me.uid)
-  );
+  const reverse=await getDoc(doc(db,"likes",toUid+"_"+me.uid));
 
   if(reverse.exists()){
-
    const ids=[me.uid,toUid].sort();
    const matchId=ids.join("_");
 
@@ -525,24 +494,19 @@ async function sendLike(toUid){
    },{merge:true});
 
    alert("It's a Match! ❤️");
-
   }else{
    alert("Like sent ❤️");
   }
-
  }catch(e){
   alert(e.message);
  }
 }
 
-
 async function loadLikes(){
-
  const area=$("likesList");
  area.textContent="Loading...";
 
  try{
-
   const snap=await getDocs(
    query(collection(db,"likes"),where("to","==",me.uid))
   );
@@ -550,79 +514,54 @@ async function loadLikes(){
   area.innerHTML="";
 
   for(const d of snap.docs){
-
    const like=d.data();
-
-   const u=await getDoc(
-    doc(db,"publicProfiles",like.from)
-   );
-
+   const u=await getDoc(doc(db,"publicProfiles",like.from));
    if(!u.exists())continue;
 
    const p=u.data();
    const div=document.createElement("div");
-
    div.className="card";
    div.textContent=(p.name||"Someone")+" likes you ❤️";
-
    area.append(div);
   }
-
  }catch(e){
   area.textContent=e.message;
  }
 }
 
-
 async function loadMatches(){
-
  const area=$("matchesList");
  area.textContent="Loading...";
 
  try{
-
   const snap=await getDocs(
-   query(
-    collection(db,"matches"),
-    where("users","array-contains",me.uid)
-   )
+   query(collection(db,"matches"),where("users","array-contains",me.uid))
   );
 
   area.innerHTML="";
 
   for(const d of snap.docs){
-
    const match=d.data();
    const other=match.users.find(x=>x!==me.uid);
-
-   const u=await getDoc(
-    doc(db,"publicProfiles",other)
-   );
-
+   const u=await getDoc(doc(db,"publicProfiles",other));
    const p=u.exists()?u.data():{};
 
    const b=document.createElement("button");
    b.textContent="Chat with "+(p.name||"Match");
    b.onclick=()=>openChat(d.id);
-
    area.append(b);
   }
-
  }catch(e){
   area.textContent=e.message;
  }
 }
 
-
 async function loadChatList(){
  await loadMatches();
 }
 
-
 async function openChat(matchId){
-
  activeMatch=matchId;
-
  show("chat");
 
  if(chatUnsub)chatUnsub();
@@ -633,23 +572,18 @@ async function openChat(matchId){
  chatUnsub=onSnapshot(
   query(collection(db,"chats",matchId,"messages")),
   snap=>{
-
    messages.innerHTML="";
 
    const docs=snap.docs.sort(
-    (a,b)=>
-     (a.data().createdAt?.seconds||0)-
-     (b.data().createdAt?.seconds||0)
+    (a,b)=>(a.data().createdAt?.seconds||0)-
+           (b.data().createdAt?.seconds||0)
    );
 
    docs.forEach(d=>{
-
     const m=d.data();
     const div=document.createElement("div");
-
     div.className="msg "+(m.from===me.uid?"mine":"");
     div.textContent=(m.from===me.uid?"You: ":"")+m.text;
-
     messages.append(div);
    });
 
@@ -659,36 +593,24 @@ async function openChat(matchId){
  );
 }
 
-
 window.sendMessage=async()=>{
-
  const text=$("chatText").value.trim();
-
  if(!text||!activeMatch)return;
 
  try{
-
-  await addDoc(
-   collection(db,"chats",activeMatch,"messages"),
-   {
-    from:me.uid,
-    text,
-    createdAt:serverTimestamp()
-   }
-  );
-
+  await addDoc(collection(db,"chats",activeMatch,"messages"),{
+   from:me.uid,
+   text,
+   createdAt:serverTimestamp()
+  });
   $("chatText").value="";
-
  }catch(e){
   alert(e.message);
  }
 };
 
-
 async function loadWallet(){
-
  try{
-
   const snap=await getDoc(doc(db,"wallets",me.uid));
 
   $("coinBalance").textContent=
@@ -700,15 +622,12 @@ async function loadWallet(){
    $("audioRate").textContent=rates.data().audio||5;
    $("videoRate").textContent=rates.data().video||10;
   }
-
  }catch(e){
   alert("Wallet error: "+e.message);
  }
 }
 
-
 async function loadAdmin(){
-
  const area=$("adminContent");
 
  if(me.email!==ADMIN){
@@ -717,12 +636,9 @@ async function loadAdmin(){
  }
 
  try{
-
   const rates=await getDoc(doc(db,"settings","rates"));
 
-  const r=rates.exists()
-   ?rates.data()
-   :{audio:5,video:10};
+  const r=rates.exists()?rates.data():{audio:5,video:10};
 
   area.innerHTML=`
    <p>Admin: ${ADMIN}</p>
@@ -735,26 +651,20 @@ async function loadAdmin(){
   `;
 
   $("saveRates").onclick=async()=>{
-
    try{
-
     await setDoc(doc(db,"settings","rates"),{
      audio:Math.max(1,Number($("adminAudio").value)),
      video:Math.max(1,Number($("adminVideo").value))
     });
-
     alert("Rates saved");
-
    }catch(e){
     alert(e.message);
    }
   };
-
  }catch(e){
   area.textContent=e.message;
  }
 }
-
 
 /* AUDIO AND VIDEO CALLS */
 
@@ -764,34 +674,24 @@ const rtcConfig={
  ]
 };
 
-
 async function prepareMedia(type){
-
  localStream=await navigator.mediaDevices.getUserMedia({
   audio:true,
   video:type==="video"
  });
-
  $("localVideo").srcObject=localStream;
 }
 
-
 async function startCall(type){
-
  if(!activeMatch){
   alert("Open a match chat first.");
   return;
  }
 
  try{
+  const matchSnap=await getDoc(doc(db,"matches",activeMatch));
 
-  const matchSnap=await getDoc(
-   doc(db,"matches",activeMatch)
-  );
-
-  if(!matchSnap.exists()){
-   throw Error("Match not found");
-  }
+  if(!matchSnap.exists())throw Error("Match not found");
 
   const other=matchSnap.data().users.find(x=>x!==me.uid);
 
@@ -799,9 +699,7 @@ async function startCall(type){
 
   callPC=new RTCPeerConnection(rtcConfig);
 
-  localStream.getTracks().forEach(t=>{
-   callPC.addTrack(t,localStream);
-  });
+  localStream.getTracks().forEach(t=>callPC.addTrack(t,localStream));
 
   callPC.ontrack=e=>{
    $("remoteVideo").srcObject=e.streams[0];
@@ -833,18 +731,13 @@ async function startCall(type){
   });
 
   callUnsubs.push(onSnapshot(callRef,async snap=>{
-
    const data=snap.data();
 
    if(data?.answer&&!callPC?.currentRemoteDescription){
-    await callPC.setRemoteDescription(
-     new RTCSessionDescription(data.answer)
-    );
+    await callPC.setRemoteDescription(new RTCSessionDescription(data.answer));
    }
 
-   if(data?.status==="ended"){
-    endCallLocal();
-   }
+   if(data?.status==="ended")endCallLocal();
   }));
 
   callUnsubs.push(onSnapshot(
@@ -852,18 +745,14 @@ async function startCall(type){
    s=>{
     s.docChanges().forEach(c=>{
      if(c.type==="added"&&callPC){
-      callPC.addIceCandidate(
-       new RTCIceCandidate(c.doc.data())
-      ).catch(()=>{});
+      callPC.addIceCandidate(new RTCIceCandidate(c.doc.data())).catch(()=>{});
      }
     });
    }
   ));
 
   $("callTitle").textContent=type.toUpperCase()+" CALL";
-
   say("callStatus","Waiting for the other person...");
-
   show("call");
 
  }catch(e){
@@ -872,37 +761,20 @@ async function startCall(type){
  }
 }
 
-
 function listenIncomingCalls(){
-
  if(incomingUnsub)incomingUnsub();
 
  incomingUnsub=onSnapshot(
-  query(
-   collection(db,"calls"),
-   where("to","==",me.uid),
-   where("status","==","ringing")
-  ),
+  query(collection(db,"calls"),where("to","==",me.uid),where("status","==","ringing")),
   snap=>{
-
    snap.docChanges().forEach(change=>{
-
     if(change.type==="added"){
-
      const c=change.doc.data();
 
      if(confirm("Incoming "+c.type+" call. Accept?")){
-
-      acceptCall(change.doc.id,c).catch(e=>{
-       alert(e.message);
-      });
-
+      acceptCall(change.doc.id,c).catch(e=>alert(e.message));
      }else{
-
-      updateDoc(
-       doc(db,"calls",change.doc.id),
-       {status:"ended"}
-      ).catch(()=>{});
+      updateDoc(doc(db,"calls",change.doc.id),{status:"ended"}).catch(()=>{});
      }
     }
    });
@@ -911,9 +783,7 @@ function listenIncomingCalls(){
  );
 }
 
-
 async function acceptCall(id,c){
-
  activeCall=doc(db,"calls",id);
  activeMatch=c.matchId;
 
@@ -921,9 +791,7 @@ async function acceptCall(id,c){
 
  callPC=new RTCPeerConnection(rtcConfig);
 
- localStream.getTracks().forEach(t=>{
-  callPC.addTrack(t,localStream);
- });
+ localStream.getTracks().forEach(t=>callPC.addTrack(t,callPC));
 
  callPC.ontrack=e=>{
   $("remoteVideo").srcObject=e.streams[0];
@@ -931,19 +799,13 @@ async function acceptCall(id,c){
 
  callPC.onicecandidate=e=>{
   if(e.candidate){
-   addDoc(
-    collection(db,"calls",id,"calleeCandidates"),
-    e.candidate.toJSON()
-   ).catch(console.error);
+   addDoc(collection(db,"calls",id,"calleeCandidates"),e.candidate.toJSON()).catch(console.error);
   }
  };
 
- await callPC.setRemoteDescription(
-  new RTCSessionDescription(c.offer)
- );
+ await callPC.setRemoteDescription(new RTCSessionDescription(c.offer));
 
  const answer=await callPC.createAnswer();
-
  await callPC.setLocalDescription(answer);
 
  await updateDoc(activeCall,{
@@ -956,36 +818,25 @@ async function acceptCall(id,c){
   s=>{
    s.docChanges().forEach(change=>{
     if(change.type==="added"&&callPC){
-     callPC.addIceCandidate(
-      new RTCIceCandidate(change.doc.data())
-     ).catch(()=>{});
+     callPC.addIceCandidate(new RTCIceCandidate(change.doc.data())).catch(()=>{});
     }
    });
   }
  ));
 
  $("callTitle").textContent=c.type.toUpperCase()+" CALL";
-
  say("callStatus","Connected");
-
  show("call");
 }
 
-
 window.endCall=async()=>{
-
  if(activeCall){
-  await updateDoc(
-   activeCall,{status:"ended"}
-  ).catch(()=>{});
+  await updateDoc(activeCall,{status:"ended"}).catch(()=>{});
  }
-
  endCallLocal();
 };
 
-
 function endCallLocal(){
-
  if(callPC){
   callPC.close();
   callPC=null;
@@ -1001,17 +852,14 @@ function endCallLocal(){
 
  $("localVideo").srcObject=null;
  $("remoteVideo").srcObject=null;
-
  activeCall=null;
 
  if(me)show("chat");
 }
 
-
 window.startAudioCall=()=>startCall("audio");
 window.startVideoCall=()=>startCall("video");
 
 </script>
-
 </body>
 </html>
