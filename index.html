@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#100719">
-<title>MIZHI ❤️ Connect Hearts</title>
+<title>THENNAl ❤️ Connect Hearts</title>
 
 <style>
 *{box-sizing:border-box}
@@ -152,20 +153,20 @@ video{
 
 <div id="splash">
  <img src="ChatGPT%20Image%20Nov%205%2C%202026%2C%2005_09_05%20PM.png"
- alt="MIZHI Logo" onerror="this.style.display='none'">
- <h1>MIZHI</h1>
+ alt="THENNAl Logo" onerror="this.style.display='none'">
+ <h1>THENNAl</h1>
  <p>CONNECT HEARTS ❤️</p>
 </div>
 
 <header>
  <img src="ChatGPT%20Image%20Nov%205%2C%202026%2C%2005_09_05%20PM.png"
- alt="MIZHI Logo" onerror="this.style.display='none'">
- <h1>MIZHI ❤️</h1>
+ alt="THENNAl Logo" onerror="this.style.display='none'">
+ <h1>THENNAl ❤️</h1>
  <p>Connect Hearts • Find Your Soulmate</p>
 </header>
 
 <section id="auth" class="card">
- <h2 id="authTitle">Welcome to MIZHI ❤️</h2>
+ <h2 id="authTitle">Welcome to THENNAl ❤️</h2>
  <input id="email" type="email" placeholder="Email Address">
  <input id="password" type="password" placeholder="Password">
  <button onclick="login()">LOGIN</button>
@@ -190,7 +191,7 @@ video{
 <main>
 
 <section id="home" class="page card">
- <h2>Welcome to MIZHI ❤️</h2>
+ <h2>Welcome to THENNAl ❤️</h2>
  <p>Meet new people and connect hearts.</p>
  <div id="welcome"></div>
 </section>
@@ -454,7 +455,7 @@ async function loadPeople(){
    img.src=p.photoURL||"";
 
    const title=document.createElement("h3");
-   title.textContent=(p.name||"MIZHI Member")+(p.age?" • "+p.age:"");
+   title.textContent=(p.name||"THENNAl Member")+(p.age?" • "+p.age:"");
 
    const bio=document.createElement("p");
    bio.textContent=p.bio||"";
@@ -791,7 +792,8 @@ async function acceptCall(id,c){
 
  callPC=new RTCPeerConnection(rtcConfig);
 
- localStream.getTracks().forEach(t=>callPC.addTrack(t,callPC));
+ /* Corrected incoming-call media track handling */
+ localStream.getTracks().forEach(t=>callPC.addTrack(t,localStream));
 
  callPC.ontrack=e=>{
   $("remoteVideo").srcObject=e.streams[0];
