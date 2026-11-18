@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,40 +8,73 @@
 <title>THENNAL ❤️ Connect Hearts</title>
 <style>
 :root{--pink:#ff3d9a;--purple:#a855f7;--dark:#100719;--panel:#1b1028;--muted:#d8c5e7}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#351044,#100719 65%);color:#fff;font-family:Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top,#351044,#100719 65%);color:#fff;font-family:Arial,sans-serif}
 header{background:#170c22;padding:13px;text-align:center;border-bottom:1px solid var(--pink);box-shadow:0 0 22px #ff3d9a55}
 header h1{color:#ff65b0;letter-spacing:5px;text-shadow:0 0 12px #ff3d9a;margin:7px}
-header img{width:68px;height:68px;object-fit:contain}header p{color:#edc9ff;margin:6px}
-main{max-width:980px;margin:auto;padding:14px}.card{background:linear-gradient(145deg,#271633,#160d22);padding:18px;border:1px solid #873c89;border-radius:20px;margin:12px 0;box-shadow:0 0 18px #a855f722}
+header img{width:68px;height:68px;object-fit:contain}
+header p{color:#edc9ff;margin:6px}
+main{max-width:980px;margin:auto;padding:14px}
+.card{background:linear-gradient(145deg,#271633,#160d22);padding:18px;border:1px solid #873c89;border-radius:20px;margin:12px 0;box-shadow:0 0 18px #a855f722}
 input,textarea,select{width:100%;padding:13px;margin:7px 0;border-radius:12px;border:1px solid var(--purple);background:#100a1b;color:white}
-input::placeholder,textarea::placeholder{color:#bca7ca}button{padding:11px 16px;border:1px solid #ff8ac4;border-radius:25px;background:linear-gradient(100deg,#ff2789,#a43cff);color:white;font-weight:bold;margin:4px;cursor:pointer}
-button.secondary{background:#39264e;border-color:#76548e}button:disabled{opacity:.45;cursor:not-allowed}
-nav{display:flex;flex-wrap:wrap;justify-content:center;background:#100a1b;padding:8px;position:sticky;top:0;z-index:5;border-bottom:1px solid #51285e}nav button{font-size:12px;padding:9px 12px}
-.hidden{display:none!important}.small{color:var(--muted);font-size:13px}h2{color:#ff80bd}.profile{display:flex;gap:15px;align-items:center}
+input::placeholder,textarea::placeholder{color:#bca7ca}
+button{padding:11px 16px;border:1px solid #ff8ac4;border-radius:25px;background:linear-gradient(100deg,#ff2789,#a43cff);color:white;font-weight:bold;margin:4px;cursor:pointer}
+button.secondary{background:#39264e;border-color:#76548e}
+button:disabled{opacity:.45;cursor:not-allowed}
+nav{display:flex;flex-wrap:wrap;justify-content:center;background:#100a1b;padding:8px;position:sticky;top:0;z-index:5;border-bottom:1px solid #51285e}
+nav button{font-size:12px;padding:9px 12px}
+.hidden{display:none!important}
+.small{color:var(--muted);font-size:13px}
+h2{color:#ff80bd}
+.profile{display:flex;gap:15px;align-items:center}
 .avatar{width:85px;height:85px;border-radius:50%;object-fit:cover;border:2px solid var(--pink);background:#24132f}
-#auth{max-width:430px;margin:25px auto}#messages{height:300px;overflow:auto;background:#100a1b;padding:12px;border-radius:12px;border:1px solid #482753}
-.msg{padding:9px 12px;margin:6px;border-radius:14px;background:#392747;max-width:85%;overflow-wrap:anywhere}.mine{margin-left:auto;background:#922c72}
-video{width:100%;max-width:350px;background:black;border-radius:12px}.menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-top:20px}
-.menu-item{background:linear-gradient(145deg,#39204d,#1b1028);border:1px solid var(--purple);border-radius:17px;padding:17px 8px;text-align:center;cursor:pointer}
+#auth{max-width:430px;margin:25px auto}
+#messages{height:300px;overflow:auto;background:#100a1b;padding:12px;border-radius:12px;border:1px solid #482753}
+.msg{padding:9px 12px;margin:6px;border-radius:14px;background:#392747;max-width:85%;overflow-wrap:anywhere}
+.mine{margin-left:auto;background:#922c72}
+video{width:100%;max-width:350px;background:black;border-radius:12px}
+.menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-top:20px}
+.menu-item{background:linear-gradient(145deg,#39204d,#1b1028);border:1px solid var(--purple);border-radius:17px;padding:17px 8px;text-align:center}
 .menu-item strong{display:block;color:#ffb2d4;margin-top:8px;font-size:14px}
-.discover-tools{display:grid;grid-template-columns:1fr 1fr;gap:8px}#swipeCard{max-width:440px;margin:15px auto;padding:12px;background:linear-gradient(145deg,#39204d,#160d22);border:1px solid var(--pink);border-radius:22px;text-align:center;touch-action:pan-y}
-#swipeCard img{width:100%;height:390px;object-fit:cover;border-radius:16px;background:#24132f}.swipe-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:5px}
+.discover-tools{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#swipeCard{max-width:440px;margin:15px auto;padding:12px;background:linear-gradient(145deg,#39204d,#160d22);border:1px solid var(--pink);border-radius:22px;text-align:center;touch-action:pan-y}
+#swipeCard img{width:100%;height:390px;object-fit:cover;border-radius:16px;background:#24132f}
+.swipe-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:5px}
 .feature-note{border:1px dashed var(--purple);border-radius:14px;padding:14px;color:#e6c9f5;margin:10px 0}
 .section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .person-row{display:flex;gap:12px;align-items:center;padding:12px;margin:9px 0;border-radius:16px;background:#21132d;border:1px solid #563264}
-.person-row img{width:64px;height:64px;object-fit:cover;border-radius:14px;background:#34213e}.person-row .grow{flex:1;min-width:0}.person-row p{margin:4px 0}
+.person-row img{width:64px;height:64px;object-fit:cover;border-radius:14px;background:#34213e}
+.person-row .grow{flex:1;min-width:0}
+.person-row p{margin:4px 0}
 .badge{display:inline-block;border:1px solid #d9b66d;color:#f4d99e;padding:4px 8px;border-radius:20px;font-size:11px}
-textarea{min-height:90px;resize:vertical}#authMsg,#profileMsg{min-height:18px}
+textarea{min-height:90px;resize:vertical}
+#authMsg,#profileMsg{min-height:18px}
+.admin-stat{background:linear-gradient(145deg,#39204d,#1b1028);border:1px solid var(--purple);border-radius:17px;padding:16px 8px;text-align:center}
+.admin-stat strong{display:block;color:#ffb2d4;font-size:12px}
+.admin-stat h2{font-size:27px;margin:10px 0}
+.admin-user{display:flex;gap:12px;align-items:center;padding:12px;margin:9px 0;border-radius:16px;background:#21132d;border:1px solid #563264}
+.admin-user .grow{flex:1;min-width:0;overflow-wrap:anywhere}
+.status-active{color:#66e6a3}
+.status-blocked{color:#ff7777}
+@keyframes fade{0%,75%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden}}
 #splash{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;justify-content:center;align-items:center;background:radial-gradient(circle,#421052,#090514 70%);animation:fade 2.4s forwards;pointer-events:none}
-#splash img{width:150px;height:150px;object-fit:contain}#splash h1{color:#ff64b1;letter-spacing:8px}@keyframes fade{0%,75%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden}}
-@media(max-width:600px){.menu-grid{grid-template-columns:repeat(2,1fr)}#swipeCard img{height:340px}main{padding:9px}.card{padding:14px}.person-row{align-items:flex-start}}
+#splash img{width:150px;height:150px;object-fit:contain}
+#splash h1{color:#ff64b1;letter-spacing:8px}
+@media(max-width:600px){
+.menu-grid{grid-template-columns:repeat(2,1fr)}
+#swipeCard img{height:340px}
+main{padding:9px}
+.card{padding:14px}
+.person-row,.admin-user{align-items:flex-start}
+}
 </style>
 </head>
 <body>
 
 <div id="splash">
 <img src="ChatGPT%20Image%20Nov%205%2C%202026%2C%2005_09_05%20PM.png" onerror="this.style.display='none'">
-<h1>THENNAL</h1><p>CONNECT HEARTS ❤️</p>
+<h1>THENNAL</h1>
+<p>CONNECT HEARTS ❤️</p>
 </div>
 
 <header>
@@ -67,11 +101,12 @@ textarea{min-height:90px;resize:vertical}#authMsg,#profileMsg{min-height:18px}
 <button onclick="showPage('chat')">💬 Chats</button>
 <button onclick="showPage('profile')">👤 Profile</button>
 <button onclick="showPage('wallet')">🪙 Wallet</button>
-<button onclick="showPage('admin')">Admin</button>
+<button id="adminNav" class="hidden" onclick="showPage('admin')">👑 Admin</button>
 <button onclick="logout()">Logout</button>
 </nav>
 
 <main>
+
 <section id="home" class="page card">
 <h2>Welcome to THENNAL ❤️</h2>
 <div id="welcome"></div>
@@ -113,11 +148,13 @@ textarea{min-height:90px;resize:vertical}#authMsg,#profileMsg{min-height:18px}
 </section>
 
 <section id="likes" class="page hidden card">
-<h2>Likes ❤️</h2><div id="likesList"></div>
+<h2>Likes ❤️</h2>
+<div id="likesList"></div>
 </section>
 
 <section id="matches" class="page hidden card">
-<h2>Your Matches 💜</h2><div id="matchesList"></div>
+<h2>Your Matches 💜</h2>
+<div id="matchesList"></div>
 </section>
 
 <section id="chat" class="page hidden card">
@@ -131,7 +168,7 @@ textarea{min-height:90px;resize:vertical}#authMsg,#profileMsg{min-height:18px}
 <button onclick="startAudioCall()">🎙 AUDIO CALL</button>
 <button onclick="startVideoCall()">📹 VIDEO CALL</button>
 </div>
-<p class="small">Text chat is free. Call billing is not enabled in this version.</p>
+<p class="small">Text chat is free. Audio and video calls are free in this version.</p>
 </section>
 
 <section id="profile" class="page hidden card">
@@ -147,7 +184,9 @@ textarea{min-height:90px;resize:vertical}#authMsg,#profileMsg{min-height:18px}
 <label>Gender</label>
 <select id="gender">
 <option value="">Select Gender</option>
-<option>Male</option><option>Female</option><option>Other</option>
+<option>Male</option>
+<option>Female</option>
+<option>Other</option>
 </select>
 <label>Country</label>
 <input id="country" placeholder="Country">
@@ -171,8 +210,9 @@ textarea{min-height:90px;resize:vertical}#authMsg,#profileMsg{min-height:18px}
 </section>
 
 <section id="admin" class="page hidden card">
-<h2>Admin Dashboard</h2>
-<div id="adminContent">Admin access only.</div>
+<h2>👑 Owner Super Admin Dashboard</h2>
+<p class="small">Owner account: kproushal@gmail.com</p>
+<div id="adminContent">Loading Admin Dashboard...</div>
 </section>
 
 <section id="call" class="page hidden card">
@@ -182,13 +222,21 @@ textarea{min-height:90px;resize:vertical}#authMsg,#profileMsg{min-height:18px}
 <video id="localVideo" autoplay muted playsinline></video>
 <button onclick="endCall()">END CALL</button>
 </section>
+
 </main>
 </div>
 
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-import {getAuth,onAuthStateChanged,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-import {getFirestore,doc,setDoc,getDoc,collection,addDoc,getDocs,query,where,onSnapshot,serverTimestamp,updateDoc} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+import {
+getAuth,onAuthStateChanged,createUserWithEmailAndPassword,
+signInWithEmailAndPassword,signOut
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+import {
+getFirestore,doc,setDoc,getDoc,collection,addDoc,getDocs,
+query,where,onSnapshot,serverTimestamp,updateDoc,writeBatch
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 const firebaseConfig={
 apiKey:"AIzaSyBlmHvVRkcJ2DB6I6H3a-zsN1Zt0CKo94s",
@@ -205,7 +253,9 @@ const auth=getAuth(app);
 const db=getFirestore(app);
 const ADMIN="kproushal@gmail.com";
 
-let me=null,myProfile={},activeMatch=null,chatUnsub=null,discoverPeople=[],discoverIndex=0,lat=null,lng=null,pc=null,stream=null,activeCall=null,incomingUnsub=null,callUnsubs=[];
+let me=null,myProfile={},activeMatch=null,chatUnsub=null;
+let discoverPeople=[],discoverIndex=0,lat=null,lng=null;
+let pc=null,stream=null,activeCall=null,incomingUnsub=null,callUnsubs=[];
 
 const $=id=>document.getElementById(id);
 const msg=(id,s)=>{if($(id))$(id).textContent=s};
@@ -214,6 +264,7 @@ const err=e=>alert(e?.message||String(e));
 window.showPage=id=>{
 document.querySelectorAll(".page").forEach(x=>x.classList.add("hidden"));
 $(id)?.classList.remove("hidden");
+
 if(id==="discover")loadPeople();
 if(id==="likes")loadLikes();
 if(id==="matches")loadMatches();
@@ -225,7 +276,9 @@ if(id==="admin")loadAdmin();
 window.login=async()=>{
 try{
 await signInWithEmailAndPassword(auth,$("email").value.trim(),$("password").value);
-}catch(e){msg("authMsg",e.message)}
+}catch(e){
+msg("authMsg",e.message);
+}
 };
 
 window.register=async()=>{
@@ -233,37 +286,57 @@ try{
 const p=$("password").value;
 if(p.length<6)throw Error("Password must be at least 6 characters.");
 await createUserWithEmailAndPassword(auth,$("email").value.trim(),p);
-}catch(e){msg("authMsg",e.message)}
+}catch(e){
+msg("authMsg",e.message);
+}
 };
 
 window.logout=async()=>{
-try{await signOut(auth)}catch(e){err(e)}
+try{
+await signOut(auth);
+}catch(e){
+err(e);
+}
 };
 
 onAuthStateChanged(auth,async u=>{
 if(!u){
-me=null;myProfile={};
+me=null;
+myProfile={};
 $("auth").classList.remove("hidden");
 $("app").classList.add("hidden");
-chatUnsub?.();incomingUnsub?.();stopCall(false);
+$("adminNav").classList.add("hidden");
+chatUnsub?.();
+incomingUnsub?.();
+stopCall(false);
 return;
 }
+
 me=u;
 $("auth").classList.add("hidden");
 $("app").classList.remove("hidden");
+$("adminNav").classList.toggle("hidden",me.email!==ADMIN);
+
 try{
 await loadMyProfile();
 listenIncoming();
 window.showPage("home");
-}catch(e){err("Profile loading failed: "+e.message)}
+}catch(e){
+err("Profile loading failed: "+e.message);
+}
 });
 
 async function loadMyProfile(){
 const s=await getDoc(doc(db,"users",me.uid));
 myProfile=s.exists()?s.data():{};
-["name","age","gender","country","state","city","bio"].forEach(k=>$(k).value=myProfile[k]??"");
+
+["name","age","gender","country","state","city","bio"].forEach(k=>{
+$(k).value=myProfile[k]??"";
+});
+
 lat=Number.isFinite(myProfile.latitude)?myProfile.latitude:null;
 lng=Number.isFinite(myProfile.longitude)?myProfile.longitude:null;
+
 $("myPhoto").src=myProfile.photoURL||"";
 $("myDetails").textContent=myProfile.name||me.email;
 $("welcome").textContent="Hello "+(myProfile.name||me.email)+" ❤️";
@@ -271,6 +344,7 @@ $("welcome").textContent="Hello "+(myProfile.name||me.email)+" ❤️";
 
 async function compress(file){
 if(!file.type.startsWith("image/"))throw Error("Choose an image.");
+
 const im=await new Promise((ok,no)=>{
 const r=new FileReader();
 r.onload=()=>{
@@ -282,11 +356,13 @@ i.src=r.result;
 r.onerror=()=>no(Error("File read failed."));
 r.readAsDataURL(file);
 });
+
 const c=document.createElement("canvas");
 const scale=Math.min(1,720/Math.max(im.width,im.height));
 c.width=Math.round(im.width*scale);
 c.height=Math.round(im.height*scale);
 c.getContext("2d").drawImage(im,0,0,c.width,c.height);
+
 const out=c.toDataURL("image/jpeg",.62);
 if(out.length>650000)throw Error("Image too large. Choose a smaller photo.");
 return out;
@@ -309,15 +385,27 @@ let photoURL=myProfile.photoURL||"";
 if($("photo").files[0])photoURL=await compress($("photo").files[0]);
 
 const base={
-uid:me.uid,name,age,gender,country,
-state:$("state").value.trim(),city,
-bio:$("bio").value.trim(),photoURL,
+uid:me.uid,
+name,
+age,
+gender,
+country,
+state:$("state").value.trim(),
+city,
+bio:$("bio").value.trim(),
+photoURL,
 location:[$("city").value.trim(),$("state").value.trim(),country].filter(Boolean).join(", "),
-status:"active",latitude:lat,longitude:lng,
+status:"active",
+latitude:lat,
+longitude:lng,
 updatedAt:serverTimestamp()
 };
 
-await setDoc(doc(db,"users",me.uid),{...base,email:me.email||""},{merge:true});
+await setDoc(doc(db,"users",me.uid),{
+...base,
+email:me.email||""
+},{merge:true});
+
 await setDoc(doc(db,"publicProfiles",me.uid),{
 ...base,
 latitude:lat===null?null:Number(lat.toFixed(2)),
@@ -330,7 +418,10 @@ $("myDetails").textContent=name;
 $("welcome").textContent="Hello "+name+" ❤️";
 $("photo").value="";
 msg("profileMsg","Profile saved successfully ❤️");
-}catch(e){msg("profileMsg",e.message)}
+
+}catch(e){
+msg("profileMsg",e.message);
+}
 };
 
 window.getMyLocation=()=>{
@@ -338,7 +429,9 @@ if(!navigator.geolocation){
 msg("gpsStatus","GPS is not supported.");
 return;
 }
+
 msg("gpsStatus","Finding your location...");
+
 navigator.geolocation.getCurrentPosition(
 p=>{
 lat=p.coords.latitude;
@@ -359,9 +452,15 @@ return 2*R*Math.atan2(Math.sqrt(x),Math.sqrt(1-x));
 async function loadPeople(){
 const box=$("people");
 box.textContent="Loading profiles...";
+
 try{
-const s=await getDocs(query(collection(db,"publicProfiles"),where("status","==","active")));
+const s=await getDocs(query(
+collection(db,"publicProfiles"),
+where("status","==","active")
+));
+
 discoverPeople=[];
+
 const min=Number($("minAge").value)||18;
 const max=Number($("maxAge").value)||100;
 const country=$("countryFilter").value.trim().toLowerCase();
@@ -376,114 +475,173 @@ return;
 s.forEach(d=>{
 const p=d.data();
 if(p.uid===me.uid)return;
+
 const age=Number(p.age)||0;
 if(age<min||age>max)return;
+
 const pcountry=(p.country||"").toLowerCase();
 const pcity=(p.city||"").toLowerCase();
 const loc=(p.location||"").toLowerCase();
+
 if(country&&!pcountry.includes(country)&&!loc.includes(country))return;
 if(city&&!pcity.includes(city)&&!loc.includes(city))return;
+
 if(radius!=="all"){
 if(!Number.isFinite(p.latitude)||!Number.isFinite(p.longitude))return;
 const km=distance(lat,lng,p.latitude,p.longitude);
 if(km>Number(radius))return;
 p.distanceKM=Math.round(km);
 }
+
 discoverPeople.push(p);
 });
+
 discoverIndex=0;
 renderCard();
-}catch(e){box.textContent="Could not load profiles: "+e.message}
+
+}catch(e){
+box.textContent="Could not load profiles: "+e.message;
+}
 }
 
 function renderCard(){
 const box=$("people");
 box.replaceChildren();
+
 if(discoverIndex>=discoverPeople.length){
 box.textContent="No more profiles found. Try another filter ❤️";
 return;
 }
+
 const p=discoverPeople[discoverIndex];
 const card=document.createElement("div");
 card.id="swipeCard";
+
 const im=document.createElement("img");
 im.src=p.photoURL||"";
 im.alt="Profile photo";
+
 const h=document.createElement("h2");
 h.textContent=(p.name||"THENNAL Member")+(p.age?" • "+p.age:"");
+
 const place=document.createElement("p");
 place.className="small";
 place.textContent=[p.city,p.state,p.country].filter(Boolean).join(", ")||"Location not added";
+
 if(p.distanceKM!==undefined)place.textContent+=" • Approx. "+p.distanceKM+" KM away";
+
 const bio=document.createElement("p");
 bio.textContent=p.bio||"";
+
 const actions=document.createElement("div");
 actions.className="swipe-actions";
+
 const skip=document.createElement("button");
 skip.className="secondary";
 skip.textContent="❌ SKIP";
-skip.onclick=()=>{discoverIndex++;renderCard()};
+skip.onclick=()=>{
+discoverIndex++;
+renderCard();
+};
+
 const like=document.createElement("button");
 like.textContent="❤️ LIKE";
 like.onclick=()=>likeUser(p.uid);
+
 actions.append(skip,like);
 card.append(im,h,place,bio,actions);
 box.append(card);
+
 let x=0;
-card.addEventListener("touchstart",e=>x=e.touches[0].clientX,{passive:true});
+
+card.addEventListener("touchstart",e=>{
+x=e.touches[0].clientX;
+},{passive:true});
+
 card.addEventListener("touchend",e=>{
 const dx=e.changedTouches[0].clientX-x;
 if(dx>90)likeUser(p.uid);
-else if(dx< -90){discoverIndex++;renderCard()}
+else if(dx< -90){
+discoverIndex++;
+renderCard();
+}
 },{passive:true});
 }
 
 async function likeUser(uid){
 try{
 await setDoc(doc(db,"likes",me.uid+"_"+uid),{
-fromUid:me.uid,toUid:uid,createdAt:serverTimestamp()
+fromUid:me.uid,
+toUid:uid,
+createdAt:serverTimestamp()
 });
+
 const reverse=await getDoc(doc(db,"likes",uid+"_"+me.uid));
+
 if(reverse.exists()){
 const ids=[me.uid,uid].sort();
 await setDoc(doc(db,"matches",ids.join("_")),{
-user1:ids[0],user2:ids[1],createdAt:serverTimestamp()
+user1:ids[0],
+user2:ids[1],
+createdAt:serverTimestamp()
 });
 alert("It's a Match! ❤️");
-}else alert("Like sent ❤️");
+}else{
+alert("Like sent ❤️");
+}
+
 discoverIndex++;
 renderCard();
-}catch(e){err("Like failed: "+e.message)}
+
+}catch(e){
+err("Like failed: "+e.message);
+}
 }
 
 async function loadLikes(){
 const box=$("likesList");
 box.textContent="Loading...";
+
 try{
-const s=await getDocs(query(collection(db,"likes"),where("toUid","==",me.uid)));
+const s=await getDocs(query(
+collection(db,"likes"),
+where("toUid","==",me.uid)
+));
+
 box.replaceChildren();
+
 for(const d of s.docs){
 const l=d.data();
 const u=await getDoc(doc(db,"publicProfiles",l.fromUid));
 if(!u.exists())continue;
+
 const p=u.data();
 const row=document.createElement("div");
 row.className="person-row";
+
 const im=document.createElement("img");
 im.src=p.photoURL||"";
+
 const info=document.createElement("div");
 info.className="grow";
+
 const name=document.createElement("strong");
 name.textContent=(p.name||"Someone")+" likes you ❤️";
+
 const detail=document.createElement("p");
 detail.className="small";
 detail.textContent=p.location||"";
+
 info.append(name,detail);
 row.append(im,info);
 box.append(row);
 }
+
 if(!box.children.length)box.textContent="No likes yet.";
-}catch(e){box.textContent="Likes error: "+e.message}
+
+}catch(e){
+box.textContent="Likes error: "+e.message;
+}
 }
 
 async function matches(){
@@ -491,6 +649,7 @@ const [a,b]=await Promise.all([
 getDocs(query(collection(db,"matches"),where("user1","==",me.uid))),
 getDocs(query(collection(db,"matches"),where("user2","==",me.uid)))
 ]);
+
 const m=new Map();
 a.docs.concat(b.docs).forEach(d=>m.set(d.id,d));
 return [...m.values()];
@@ -498,24 +657,36 @@ return [...m.values()];
 
 async function renderMatches(box){
 box.replaceChildren();
+
 const list=await matches();
-if(!list.length){box.textContent="No matches yet.";return}
+
+if(!list.length){
+box.textContent="No matches yet.";
+return;
+}
+
 for(const d of list){
 const m=d.data();
 const other=m.user1===me.uid?m.user2:m.user1;
 const u=await getDoc(doc(db,"publicProfiles",other));
 const p=u.exists()?u.data():{};
+
 const row=document.createElement("div");
 row.className="person-row";
+
 const im=document.createElement("img");
 im.src=p.photoURL||"";
+
 const info=document.createElement("div");
 info.className="grow";
+
 const name=document.createElement("strong");
 name.textContent=p.name||"THENNAL Match";
+
 const b=document.createElement("button");
 b.textContent="OPEN CHAT";
 b.onclick=()=>openChat(d.id);
+
 info.append(name,b);
 row.append(im,info);
 box.append(row);
@@ -525,26 +696,41 @@ box.append(row);
 async function loadMatches(){
 const box=$("matchesList");
 box.textContent="Loading...";
-try{await renderMatches(box)}catch(e){box.textContent=e.message}
+try{
+await renderMatches(box);
+}catch(e){
+box.textContent=e.message;
+}
 }
 
 async function loadChatList(){
 const box=$("chatList");
 box.textContent="Your matched people:";
-try{await renderMatches(box)}catch(e){box.textContent=e.message}
+try{
+await renderMatches(box);
+}catch(e){
+box.textContent=e.message;
+}
 }
 
 async function openChat(id){
 activeMatch=id;
 window.showPage("chat");
+
 if(chatUnsub)chatUnsub();
+
 const box=$("messages");
 box.textContent="Loading messages...";
+
 chatUnsub=onSnapshot(
 query(collection(db,"chats",id,"messages")),
 s=>{
 box.replaceChildren();
-const docs=s.docs.sort((a,b)=>(a.data().createdAt?.seconds||0)-(b.data().createdAt?.seconds||0));
+
+const docs=s.docs.sort((a,b)=>
+(a.data().createdAt?.seconds||0)-(b.data().createdAt?.seconds||0)
+);
+
 docs.forEach(d=>{
 const m=d.data();
 const el=document.createElement("div");
@@ -552,6 +738,7 @@ el.className="msg "+(m.senderUid===me.uid?"mine":"");
 el.textContent=(m.senderUid===me.uid?"You: ":"")+m.text;
 box.append(el);
 });
+
 box.scrollTop=box.scrollHeight;
 },
 e=>err("Chat error: "+e.message)
@@ -561,12 +748,17 @@ e=>err("Chat error: "+e.message)
 window.sendMessage=async()=>{
 const text=$("chatText").value.trim();
 if(!text||!activeMatch)return;
+
 try{
 await addDoc(collection(db,"chats",activeMatch,"messages"),{
-senderUid:me.uid,text,createdAt:serverTimestamp()
+senderUid:me.uid,
+text,
+createdAt:serverTimestamp()
 });
 $("chatText").value="";
-}catch(e){err("Message failed: "+e.message)}
+}catch(e){
+err("Message failed: "+e.message);
+}
 };
 
 async function loadWallet(){
@@ -579,20 +771,188 @@ console.error(e);
 }
 }
 
+// OWNER SUPER ADMIN DASHBOARD
 async function loadAdmin(){
 const box=$("adminContent");
-if(me.email!==ADMIN){
-box.textContent="Access denied.";
+
+if(!me||me.email!==ADMIN){
+box.textContent="Access denied. Owner only.";
 return;
 }
-box.textContent="Admin account authenticated. Configure privileged admin actions with server-side authorization before enabling them.";
+
+box.textContent="Loading Admin Dashboard...";
+
+try{
+const [usersSnap,matchesSnap]=await Promise.all([
+getDocs(collection(db,"users")),
+getDocs(collection(db,"matches"))
+]);
+
+const users=usersSnap.docs.map(d=>({
+...d.data(),
+uid:d.id
+}));
+
+const active=users.filter(u=>u.status==="active").length;
+const blocked=users.filter(u=>u.status==="blocked").length;
+
+box.replaceChildren();
+
+const stats=document.createElement("div");
+stats.className="menu-grid";
+
+[
+["TOTAL USERS",users.length],
+["ACTIVE USERS",active],
+["BLOCKED USERS",blocked],
+["TOTAL MATCHES",matchesSnap.size]
+].forEach(([label,value])=>{
+const item=document.createElement("div");
+item.className="admin-stat";
+
+const strong=document.createElement("strong");
+strong.textContent=label;
+
+const number=document.createElement("h2");
+number.textContent=value;
+
+item.append(strong,number);
+stats.append(item);
+});
+
+const heading=document.createElement("h2");
+heading.textContent="👥 User Management";
+
+const refresh=document.createElement("button");
+refresh.textContent="🔄 REFRESH DASHBOARD";
+refresh.onclick=()=>loadAdmin();
+
+const search=document.createElement("input");
+search.type="search";
+search.placeholder="Search users by name, email or country";
+
+const userList=document.createElement("div");
+userList.id="adminUserList";
+
+function renderAdminUsers(){
+userList.replaceChildren();
+
+const term=search.value.trim().toLowerCase();
+
+const filtered=users.filter(u=>
+(u.name||"").toLowerCase().includes(term)||
+(u.email||"").toLowerCase().includes(term)||
+(u.country||"").toLowerCase().includes(term)||
+(u.city||"").toLowerCase().includes(term)
+);
+
+if(!filtered.length){
+userList.textContent="No users found.";
+return;
 }
 
-const rtc={iceServers:[{urls:"stun:stun.l.google.com:19302"}]};
+filtered.forEach(u=>{
+const row=document.createElement("div");
+row.className="admin-user";
+
+const info=document.createElement("div");
+info.className="grow";
+
+const name=document.createElement("strong");
+name.textContent=u.name||"Unnamed User";
+
+const details=document.createElement("p");
+details.className="small";
+details.textContent=
+(u.email||"No email")+" • "+
+(u.age||"Age N/A")+" • "+
+[u.city,u.country].filter(Boolean).join(", ");
+
+const status=document.createElement("p");
+status.className="small "+
+(u.status==="blocked"?"status-blocked":"status-active");
+
+status.textContent="Status: "+(u.status||"Unknown");
+
+const action=document.createElement("button");
+
+if(u.status==="blocked"){
+action.textContent="UNBLOCK USER";
+action.className="secondary";
+}else{
+action.textContent="BLOCK USER";
+}
+
+action.onclick=()=>window.adminToggleUser(
+u.uid,
+u.status==="blocked"?"active":"blocked"
+);
+
+info.append(name,details,status,action);
+row.append(info);
+userList.append(row);
+});
+}
+
+search.addEventListener("input",renderAdminUsers);
+
+box.append(stats,heading,refresh,search,userList);
+renderAdminUsers();
+
+}catch(e){
+box.textContent="Admin Dashboard Error: "+e.message;
+}
+}
+
+// OWNER-ONLY BLOCK / UNBLOCK
+window.adminToggleUser=async(uid,newStatus)=>{
+if(!me||me.email!==ADMIN){
+alert("Owner access only.");
+return;
+}
+
+const action=newStatus==="blocked"?"Block":"Unblock";
+
+if(!confirm(action+" this user?"))return;
+
+try{
+const userRef=doc(db,"users",uid);
+const publicRef=doc(db,"publicProfiles",uid);
+
+const publicSnap=await getDoc(publicRef);
+
+const batch=writeBatch(db);
+
+batch.update(userRef,{status:newStatus});
+
+if(publicSnap.exists()){
+batch.update(publicRef,{status:newStatus});
+}
+
+await batch.commit();
+
+alert("User "+newStatus+" successfully.");
+await loadAdmin();
+
+}catch(e){
+alert("Could not update user: "+e.message);
+}
+};
+
+const rtc={
+iceServers:[{urls:"stun:stun.l.google.com:19302"}]
+};
 
 async function media(type){
-if(!navigator.mediaDevices?.getUserMedia)throw Error("Use the HTTPS website and allow microphone/camera.");
-stream=await navigator.mediaDevices.getUserMedia({audio:true,video:type==="video"});
+if(!navigator.mediaDevices?.getUserMedia){
+throw Error("Use the HTTPS website and allow microphone/camera.");
+}
+
+stream=await navigator.mediaDevices.getUserMedia({
+audio:true,
+video:type==="video"
+});
+
 $("localVideo").srcObject=stream;
 }
 
@@ -609,7 +969,9 @@ function watchCandidates(id,sub){
 const un=onSnapshot(collection(db,"calls",id,sub),s=>{
 s.docChanges().forEach(ch=>{
 if(ch.type!=="added"||!pc)return;
+
 const d=ch.doc.data();
+
 if(d.ownerUid!==me.uid){
 pc.addIceCandidate(new RTCIceCandidate({
 candidate:d.candidate,
@@ -619,6 +981,7 @@ sdpMLineIndex:d.sdpMLineIndex
 }
 });
 });
+
 callUnsubs.push(un);
 }
 
@@ -627,20 +990,29 @@ if(!activeMatch){
 alert("Open a match chat first.");
 return;
 }
+
 try{
 const ms=await getDoc(doc(db,"matches",activeMatch));
 if(!ms.exists())throw Error("Match not found.");
+
 const m=ms.data();
 const other=m.user1===me.uid?m.user2:m.user1;
+
 await media(type);
+
 pc=new RTCPeerConnection(rtc);
 stream.getTracks().forEach(t=>pc.addTrack(t,stream));
 pc.ontrack=e=>$("remoteVideo").srcObject=e.streams[0];
+
 const ref=doc(collection(db,"calls"));
 activeCall=ref;
-pc.onicecandidate=e=>candidateWrite(ref.id,"callerCandidates",e.candidate).catch(console.error);
+
+pc.onicecandidate=e=>
+candidateWrite(ref.id,"callerCandidates",e.candidate).catch(console.error);
+
 const offer=await pc.createOffer();
 await pc.setLocalDescription(offer);
+
 await setDoc(ref,{
 callerUid:me.uid,
 calleeUid:other,
@@ -650,19 +1022,26 @@ offer:{type:offer.type,sdp:offer.sdp},
 status:"ringing",
 createdAt:serverTimestamp()
 });
+
 callUnsubs.push(onSnapshot(ref,async s=>{
 if(!s.exists())return;
+
 const d=s.data();
+
 if(d.answer&&pc&&!pc.currentRemoteDescription){
 await pc.setRemoteDescription(new RTCSessionDescription(d.answer));
 msg("callStatus","Connected");
 }
+
 if(["ended","rejected"].includes(d.status))stopCall();
 }));
+
 watchCandidates(ref.id,"calleeCandidates");
+
 $("callTitle").textContent=type.toUpperCase()+" CALL";
 msg("callStatus","Calling...");
 window.showPage("call");
+
 }catch(e){
 err("Call error: "+e.message);
 stopCall();
@@ -671,16 +1050,25 @@ stopCall();
 
 function listenIncoming(){
 incomingUnsub?.();
+
 incomingUnsub=onSnapshot(
-query(collection(db,"calls"),where("calleeUid","==",me.uid),where("status","==","ringing")),
+query(
+collection(db,"calls"),
+where("calleeUid","==",me.uid),
+where("status","==","ringing")
+),
 s=>s.docChanges().forEach(ch=>{
 if(ch.type!=="added")return;
+
 const d=ch.doc.data();
 if(activeCall?.id===ch.doc.id)return;
+
 if(confirm("Incoming "+d.type+" call. Accept?")){
 acceptCall(ch.doc.id,d).catch(err);
 }else{
-updateDoc(doc(db,"calls",ch.doc.id),{status:"rejected"}).catch(console.error);
+updateDoc(doc(db,"calls",ch.doc.id),{
+status:"rejected"
+}).catch(console.error);
 }
 }),
 console.error
@@ -691,22 +1079,32 @@ async function acceptCall(id,d){
 try{
 activeCall=doc(db,"calls",id);
 activeMatch=d.matchId;
+
 await media(d.type);
+
 pc=new RTCPeerConnection(rtc);
 stream.getTracks().forEach(t=>pc.addTrack(t,stream));
 pc.ontrack=e=>$("remoteVideo").srcObject=e.streams[0];
-pc.onicecandidate=e=>candidateWrite(id,"calleeCandidates",e.candidate).catch(console.error);
+
+pc.onicecandidate=e=>
+candidateWrite(id,"calleeCandidates",e.candidate).catch(console.error);
+
 await pc.setRemoteDescription(new RTCSessionDescription(d.offer));
+
 const answer=await pc.createAnswer();
 await pc.setLocalDescription(answer);
+
 await updateDoc(activeCall,{
 answer:{type:answer.type,sdp:answer.sdp},
 status:"accepted"
 });
+
 watchCandidates(id,"callerCandidates");
+
 $("callTitle").textContent=d.type.toUpperCase()+" CALL";
 msg("callStatus","Connected");
 window.showPage("call");
+
 }catch(e){
 err("Could not accept call: "+e.message);
 stopCall();
@@ -716,8 +1114,13 @@ stopCall();
 window.endCall=async()=>{
 if(activeCall){
 try{
-await updateDoc(activeCall,{status:"ended",endedAt:serverTimestamp()});
-}catch(e){console.error(e)}
+await updateDoc(activeCall,{
+status:"ended",
+endedAt:serverTimestamp()
+});
+}catch(e){
+console.error(e);
+}
 }
 stopCall();
 };
@@ -725,18 +1128,24 @@ stopCall();
 function stopCall(returnToChat=true){
 pc?.close();
 pc=null;
+
 stream?.getTracks().forEach(t=>t.stop());
 stream=null;
+
 callUnsubs.forEach(f=>f());
 callUnsubs=[];
+
 $("localVideo").srcObject=null;
 $("remoteVideo").srcObject=null;
+
 activeCall=null;
+
 if(returnToChat&&me)window.showPage("chat");
 }
 
 window.startAudioCall=()=>startCall("audio");
 window.startVideoCall=()=>startCall("video");
+
 </script>
 </body>
-   </html>
+</html>
