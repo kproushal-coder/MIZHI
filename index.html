@@ -8,38 +8,388 @@
 <title>THENNAL ❤️ Connect Hearts</title>
 <style>
 *{box-sizing:border-box}
-:root{--pink:#ff3d9a;--purple:#a855f7;--dark:#0b0613;--panel:#1b1028}
-body{margin:0;background:radial-gradient(ellipse at top,#351044,#100719 65%);color:white;font-family:Arial,sans-serif}
-header{background:#170c22;padding:15px;text-align:center;border-bottom:1px solid var(--pink);box-shadow:0 0 22px #ff3d9a55}
-header h1{color:#ff65b0;letter-spacing:6px;text-shadow:0 0 12px #ff3d9a;margin:8px}
-header img{width:75px;height:75px;object-fit:contain}
+:root{--pink:#ff3d9a;--purple:#a855f7;--dark:#100719;--panel:#21132e}
+body{margin:0;background:radial-gradient(ellipse at top,#351044,#100719 70%);color:white;font-family:Arial,sans-serif}
+header{text-align:center;padding:18px;background:#170c22;border-bottom:1px solid var(--pink)}
+header h1{color:#ff65b0;letter-spacing:5px;margin:5px}
 header p{color:#edc9ff}
-main{max-width:950px;margin:auto;padding:15px}
-.card{background:linear-gradient(145deg,#271633,#160d22);padding:20px;border:1px solid #873c89;border-radius:20px;margin:12px 0;box-shadow:0 0 18px #a855f722}
-input,textarea,select{width:100%;padding:14px;margin:7px 0;border-radius:12px;border:1px solid #a855f7;background:#100a1b;color:white}
-button{padding:12px 18px;border:1px solid #ff8ac4;border-radius:25px;background:linear-gradient(100deg,#ff2789,#a43cff);color:white;font-weight:bold;margin:5px;cursor:pointer}
+main{max-width:900px;margin:auto;padding:14px}
+.card{background:linear-gradient(145deg,#271633,#160d22);padding:18px;border:1px solid #873c89;border-radius:18px;margin:12px 0}
+input,textarea{width:100%;padding:13px;margin:7px 0;border-radius:10px;border:1px solid #a855f7;background:#100a1b;color:white}
+button{padding:12px 17px;border:0;border-radius:22px;background:linear-gradient(100deg,#ff2789,#a43cff);color:white;font-weight:bold;margin:5px;cursor:pointer}
 button.secondary{background:#39264e}
-nav{display:flex;flex-wrap:wrap;justify-content:center;background:#100a1b;padding:10px;position:sticky;top:0;z-index:5}
+button:disabled{opacity:.5}
+nav{display:flex;flex-wrap:wrap;justify-content:center;background:#100a1b;padding:8px;position:sticky;top:0;z-index:5}
 nav button{font-size:12px;padding:10px}
 .hidden{display:none!important}
 .small{color:#d5b8e8;font-size:13px}
 h2{color:#ff80bd}
-.profile{display:flex;gap:15px;align-items:center}
-.avatar{width:85px;height:85px;border-radius:50%;object-fit:cover;border:2px solid #ff3d9a}
-#auth{max-width:420px;margin:25px auto}
+.profile{text-align:center}
+.avatar{width:110px;height:110px;border-radius:50%;object-fit:cover;border:2px solid #ff3d9a}
+.person{display:flex;gap:14px;align-items:center}
+.person img{width:85px;height:85px;object-fit:cover;border-radius:50%}
+#auth{max-width:430px;margin:25px auto}
 #messages{height:300px;overflow:auto;background:#100a1b;padding:12px;border-radius:12px}
-.msg{padding:9px;margin:6px;border-radius:12px;background:#392747;max-width:85%;overflow-wrap:anywhere}
+.msg{padding:10px;margin:7px;border-radius:12px;background:#392747;max-width:85%;overflow-wrap:anywhere}
 .mine{margin-left:auto;background:#922c72}
-video{width:100%;max-width:350px;background:black;border-radius:12px}
-.menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
-.menu-item{background:linear-gradient(145deg,#39204d,#1b1028);border:1px solid #a855f7;border-radius:17px;padding:18px 8px;text-align:center;cursor:pointer}
-.menu-item strong{display:block;color:#ff80bd;margin-top:8px}
-.discover-tools{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-#swipeCard{max-width:430px;margin:15px auto;padding:12px;background:linear-gradient(145deg,#39204d,#160d22);border:1px solid #ff3d9a;border-radius:22px;text-align:center;touch-action:pan-y}
-#swipeCard img{width:100%;height:390px;object-fit:cover;border-radius:16px}
-.swipe-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:5px}
-.feature-note{border:1px dashed #a855f7;border-radius:14px;padding:15px;color:#e6c9f5}
-#splash{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;justify-content:center;align-items:center;background:radial-gradient(circle,#421052,#090514 70%);animation:splashFade 3s forwards}
-#splash img{width:170px;height:170px;object-fit:contain}
-#splash h1{color:#ff64b1;letter-spacing:8px}
-@keyframes splashFade{0%,75%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden;
+#status{color:#ff9fc9;text-align:center;white-space:pre-wrap}
+</style>
+</head>
+<body>
+
+<header>
+<h1>THENNAL ❤️</h1>
+<p>Connect Hearts • Malayalis Worldwide</p>
+</header>
+
+<div id="status"></div>
+
+<section id="auth" class="card">
+<h2>Welcome to THENNAL</h2>
+<div id="loginBox">
+<input id="email" type="email" placeholder="Email address">
+<input id="password" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
+<button class="secondary" onclick="register()">Create Account</button>
+</div>
+</section>
+
+<div id="app" class="hidden">
+<nav>
+<button onclick="showPage('discover')">Discover</button>
+<button onclick="showPage('likes')">Likes</button>
+<button onclick="showPage('matches')">Matches</button>
+<button onclick="showPage('profile')">Profile</button>
+<button onclick="logout()">Logout</button>
+</nav>
+
+<main>
+<section id="discover" class="page">
+<div class="card">
+<h2>Discover ❤️</h2>
+<p class="small">Meet Malayalis around the world.</p>
+<div id="people">Loading profiles...</div>
+</div>
+</section>
+
+<section id="likes" class="page hidden">
+<div class="card">
+<h2>People Who Liked You</h2>
+<div id="likesList">Loading...</div>
+</div>
+</section>
+
+<section id="matches" class="page hidden">
+<div class="card">
+<h2>Your Matches 💕</h2>
+<div id="matchesList">Loading...</div>
+</div>
+</section>
+
+<section id="profile" class="page hidden">
+<div class="card">
+<h2>My Profile</h2>
+<div id="myProfile"></div>
+<input id="pname" placeholder="Your name">
+<input id="page" type="number" placeholder="Your age">
+<input id="pgender" placeholder="Gender">
+<input id="pcity" placeholder="City / Country">
+<input id="pphoto" placeholder="Profile photo image URL (optional)">
+<textarea id="pbio" placeholder="About yourself"></textarea>
+<button onclick="saveProfile()">Save Profile</button>
+</div>
+</section>
+
+<section id="chat" class="page hidden">
+<div class="card">
+<h2 id="chatTitle">Chat</h2>
+<div id="messages"></div>
+<input id="messageText" placeholder="Type your message..." maxlength="1000">
+<button onclick="sendMessage()">Send Free Message</button>
+<button class="secondary" onclick="showPage('matches')">Back</button>
+<p class="small">Text chatting is always free.</p>
+</div>
+</section>
+</main>
+</div>
+
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import {
+ getAuth,onAuthStateChanged,createUserWithEmailAndPassword,
+ signInWithEmailAndPassword,signOut
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+import {
+ getFirestore,doc,setDoc,getDoc,getDocs,collection,
+ query,where,onSnapshot,serverTimestamp
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+const firebaseConfig={
+ apiKey:"AIzaSyBlmHvVRkcJ2DB6I6H3a-zsN1Zt0CKo94s",
+ authDomain:"mizhi-59e7e.firebaseapp.com",
+ projectId:"mizhi-59e7e",
+ storageBucket:"mizhi-59e7e.firebasestorage.app",
+ messagingSenderId:"109570780589",
+ appId:"1:109570780589:web:5a42cede76210ba8e5c524",
+ measurementId:"G-FG0P26JEXK"
+};
+
+const appFirebase=initializeApp(firebaseConfig);
+const auth=getAuth(appFirebase);
+const db=getFirestore(appFirebase);
+
+let me=null;
+let currentMatch=null;
+let currentOther=null;
+let stopMessages=null;
+
+const $=id=>document.getElementById(id);
+function status(message){$("status").textContent=message||""}
+function safe(value){return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function photo(url){return url||"https://placehold.co/200x200/271633/ffffff?text=THENNAL"}
+
+window.showPage=function(page){
+ document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
+ $(page).classList.remove("hidden");
+ if(page==="discover")loadPeople();
+ if(page==="likes")loadLikes();
+ if(page==="matches")loadMatches();
+ if(page==="profile")loadProfile();
+};
+
+window.login=async function(){
+ try{
+  status("Logging in...");
+  await signInWithEmailAndPassword(auth,$("email").value.trim(),$("password").value);
+  status("");
+ }catch(e){status("Login failed: "+e.message)}
+};
+
+window.register=async function(){
+ try{
+  const email=$("email").value.trim();
+  const password=$("password").value;
+  if(!email||password.length<6){status("Enter email and password (at least 6 characters).");return}
+  status("Creating account...");
+  await createUserWithEmailAndPassword(auth,email,password);
+  status("Account created. Complete your profile.");
+ }catch(e){status("Registration failed: "+e.message)}
+};
+
+window.logout=async function(){
+ if(stopMessages)stopMessages();
+ await signOut(auth);
+};
+
+onAuthStateChanged(auth,async user=>{
+ me=user;
+ if(user){
+  $("auth").classList.add("hidden");
+  $("app").classList.remove("hidden");
+  status("");
+  await ensureProfile();
+  await loadProfile();
+  showPage("discover");
+ }else{
+  $("auth").classList.remove("hidden");
+  $("app").classList.add("hidden");
+  status("");
+ }
+});
+
+async function ensureProfile(){
+ const r=doc(db,"users",me.uid);
+ const snap=await getDoc(r);
+ if(!snap.exists()){
+  const data={uid:me.uid,name:"",age:0,gender:"",city:"",bio:"",photoURL:"",status:"active"};
+  await setDoc(r,data);
+  await setDoc(doc(db,"publicProfiles",me.uid),data);
+ }
+}
+
+window.loadProfile=async function(){
+ try{
+  const snap=await getDoc(doc(db,"users",me.uid));
+  if(!snap.exists())return;
+  const p=snap.data();
+  $("pname").value=p.name||"";
+  $("page").value=p.age||"";
+  $("pgender").value=p.gender||"";
+  $("pcity").value=p.city||"";
+  $("pphoto").value=p.photoURL||"";
+  $("pbio").value=p.bio||"";
+  $("myProfile").innerHTML=`
+   <img class="avatar" src="${safe(photo(p.photoURL))}" onerror="this.src='https://placehold.co/200x200/271633/ffffff?text=THENNAL'">
+   <h3>${safe(p.name||"Your profile")}</h3>
+   <p class="small">${safe(p.city||"")}</p>`;
+ }catch(e){status("Profile error: "+e.message)}
+};
+
+window.saveProfile=async function(){
+ try{
+  const name=$("pname").value.trim();
+  const age=Number($("page").value);
+  if(!name||!age||age<18){status("Enter your name and valid age (18+).");return}
+  const data={
+   uid:me.uid,
+   name,
+   age,
+   gender:$("pgender").value.trim(),
+   city:$("pcity").value.trim(),
+   photoURL:$("pphoto").value.trim(),
+   bio:$("pbio").value.trim(),
+   status:"active"
+  };
+  await setDoc(doc(db,"users",me.uid),data,{merge:true});
+  await setDoc(doc(db,"publicProfiles",me.uid),data,{merge:true});
+  status("Profile saved successfully ❤️");
+  loadProfile();
+ }catch(e){status("Could not save profile: "+e.message)}
+};
+
+window.loadPeople=async function(){
+ const area=$("people");
+ area.textContent="Loading profiles...";
+ try{
+  const q=query(collection(db,"publicProfiles"),where("status","==","active"));
+  const snap=await getDocs(q);
+  area.innerHTML="";
+  let count=0;
+  snap.forEach(d=>{
+   const p=d.data();
+   if(d.id===me.uid)return;
+   count++;
+   const el=document.createElement("div");
+   el.className="card person";
+   el.innerHTML=`
+    <img src="${safe(photo(p.photoURL))}" onerror="this.src='https://placehold.co/200x200/271633/ffffff?text=THENNAL'">
+    <div>
+     <h3>${safe(p.name||"THENNAL Member")}</h3>
+     <p>${safe(p.age||"")} ${safe(p.gender||"")}</p>
+     <p class="small">${safe(p.city||"")}</p>
+     <p>${safe(p.bio||"")}</p>
+     <button>❤️ Like</button>
+    </div>`;
+   el.querySelector("button").onclick=()=>sendLike(d.id);
+   area.appendChild(el);
+  });
+  if(!count)area.textContent="No other active profiles found yet.";
+ }catch(e){area.textContent="Could not load profiles: "+e.message}
+};
+
+async function sendLike(targetUid){
+ try{
+  if(targetUid===me.uid)return;
+  const myLike=doc(db,"likes",me.uid+"_"+targetUid);
+  await setDoc(myLike,{fromUid:me.uid,toUid:targetUid,createdAt:serverTimestamp()});
+  const reciprocal=await getDoc(doc(db,"likes",targetUid+"_"+me.uid));
+  if(reciprocal.exists()){
+   const matchId=me.uid+"_"+targetUid;
+   const matchRef=doc(db,"matches",matchId);
+   const existing=await getDoc(matchRef);
+   if(!existing.exists()){
+    await setDoc(matchRef,{
+     user1:me.uid,user2:targetUid,createdAt:serverTimestamp()
+    });
+   }
+   status("It's a match! ❤️");
+  }else status("Like sent ❤️");
+ }catch(e){status("Like failed: "+e.message)}
+}
+
+window.loadLikes=async function(){
+ const area=$("likesList");
+ area.textContent="Loading...";
+ try{
+  const q=query(collection(db,"likes"),where("toUid","==",me.uid));
+  const snap=await getDocs(q);
+  area.innerHTML="";
+  let count=0;
+  for(const d of snap.docs){
+   const uid=d.data().fromUid;
+   const p=await getDoc(doc(db,"publicProfiles",uid));
+   if(!p.exists())continue;
+   count++;
+   const data=p.data();
+   const el=document.createElement("div");
+   el.className="card person";
+   el.innerHTML=`<img src="${safe(photo(data.photoURL))}"><div><h3>${safe(data.name)}</h3><p>${safe(data.city)}</p><button>Like Back ❤️</button></div>`;
+   el.querySelector("button").onclick=()=>sendLike(uid);
+   area.appendChild(el);
+  }
+  if(!count)area.textContent="No likes yet.";
+ }catch(e){area.textContent="Could not load likes: "+e.message}
+};
+
+window.loadMatches=async function(){
+ const area=$("matchesList");
+ area.textContent="Loading...";
+ try{
+  const [a,b]=await Promise.all([
+   getDocs(query(collection(db,"matches"),where("user1","==",me.uid))),
+   getDocs(query(collection(db,"matches"),where("user2","==",me.uid)))
+  ]);
+  const all=[...a.docs,...b.docs];
+  area.innerHTML="";
+  let count=0;
+  for(const d of all){
+   const m=d.data();
+   const other=m.user1===me.uid?m.user2:m.user1;
+   const p=await getDoc(doc(db,"publicProfiles",other));
+   if(!p.exists())continue;
+   count++;
+   const data=p.data();
+   const el=document.createElement("div");
+   el.className="card person";
+   el.innerHTML=`<img src="${safe(photo(data.photoURL))}"><div><h3>${safe(data.name)}</h3><p>${safe(data.city)}</p><button>Open Free Chat</button></div>`;
+   el.querySelector("button").onclick=()=>openChat(d.id,other,data.name||"Match");
+   area.appendChild(el);
+  }
+  if(!count)area.textContent="No matches yet. Keep discovering!";
+ }catch(e){area.textContent="Could not load matches: "+e.message}
+};
+
+async function openChat(matchId,otherUid,name){
+ currentMatch=matchId;
+ currentOther=otherUid;
+ $("chatTitle").textContent="Chat with "+name;
+ $("messages").innerHTML="Loading messages...";
+ showPage("chat");
+ const parent=doc(db,"chats",matchId);
+ const parentSnap=await getDoc(parent);
+ if(!parentSnap.exists()){
+  await setDoc(parent,{matchId,createdAt:serverTimestamp()});
+ }
+ if(stopMessages)stopMessages();
+ const messages=collection(db,"chats",matchId,"messages");
+ stopMessages=onSnapshot(messages,snap=>{
+  const rows=snap.docs.map(d=>({id:d.id,...d.data()}));
+  rows.sort((x,y)=>(x.createdAt?.seconds||0)-(y.createdAt?.seconds||0));
+  $("messages").innerHTML="";
+  rows.forEach(m=>{
+   const div=document.createElement("div");
+   div.className="msg "+(m.senderUid===me.uid?"mine":"");
+   div.textContent=m.text||"";
+   $("messages").appendChild(div);
+  });
+  $("messages").scrollTop=$("messages").scrollHeight;
+ },e=>status("Chat error: "+e.message));
+}
+
+window.sendMessage=async function(){
+ const text=$("messageText").value.trim();
+ if(!text||!currentMatch)return;
+ try{
+  await setDoc(doc(collection(db,"chats",currentMatch,"messages")),{
+   senderUid:me.uid,text,createdAt:serverTimestamp()
+  });
+  $("messageText").value="";
+ }catch(e){status("Message failed: "+e.message)}
+};
+
+$("messageText").addEventListener("keydown",e=>{
+ if(e.key==="Enter")sendMessage();
+});
+</script>
+</body>
+</html>
