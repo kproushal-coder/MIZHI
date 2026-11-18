@@ -5,67 +5,56 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#100719">
-<title>THENNAL ❤️ Connect Hearts</title>
-
+<title>THENNAl ❤️ Connect Hearts</title>
 <style>
 *{box-sizing:border-box}
 :root{--pink:#ff3d9a;--purple:#a855f7;--dark:#0b0613;--panel:#1b1028}
 body{margin:0;background:radial-gradient(ellipse at top,#351044,#100719 65%);color:white;font-family:Arial,sans-serif}
 header{background:#170c22;padding:15px;text-align:center;border-bottom:1px solid var(--pink);box-shadow:0 0 22px #ff3d9a55}
-header h1{color:#ff65b0;letter-spacing:6px;text-shadow:0 0 12px #ff3d9a,0 0 28px #a855f7;margin:8px}
-header img{width:75px;height:75px;object-fit:contain;filter:drop-shadow(0 0 12px #ff3d9a)}
-header p{color:#edc9ff;letter-spacing:2px}
+header h1{color:#ff65b0;letter-spacing:6px;text-shadow:0 0 12px #ff3d9a;margin:8px}
+header img{width:75px;height:75px;object-fit:contain}
+header p{color:#edc9ff}
 main{max-width:950px;margin:auto;padding:15px}
 .card{background:linear-gradient(145deg,#271633,#160d22);padding:20px;border:1px solid #873c89;border-radius:20px;margin:12px 0;box-shadow:0 0 18px #a855f722}
-input,textarea,select{width:100%;padding:14px;margin:7px 0;border-radius:12px;border:1px solid #a855f7;background:#100a1b;color:white;outline:none}
-input:focus,textarea:focus,select:focus{border-color:#ff3d9a;box-shadow:0 0 12px #ff3d9a88}
-button{padding:12px 18px;border:1px solid #ff8ac4;border-radius:25px;background:linear-gradient(100deg,#ff2789,#a43cff);color:white;font-weight:bold;margin:5px;cursor:pointer;box-shadow:0 0 12px #ff3d9a55}
-button:hover{filter:brightness(1.12)}
+input,textarea,select{width:100%;padding:14px;margin:7px 0;border-radius:12px;border:1px solid #a855f7;background:#100a1b;color:white}
+button{padding:12px 18px;border:1px solid #ff8ac4;border-radius:25px;background:linear-gradient(100deg,#ff2789,#a43cff);color:white;font-weight:bold;margin:5px;cursor:pointer}
 button.secondary{background:#39264e}
-button:disabled{opacity:.5}
-nav{display:flex;flex-wrap:wrap;justify-content:center;background:#100a1b;padding:10px;position:sticky;top:0;z-index:5;border-bottom:1px solid #a855f7}
-nav button{font-size:12px;padding:10px 13px}
+nav{display:flex;flex-wrap:wrap;justify-content:center;background:#100a1b;padding:10px;position:sticky;top:0;z-index:5}
+nav button{font-size:12px;padding:10px}
 .hidden{display:none!important}
-.profile{display:flex;gap:15px;align-items:center}
-.avatar{width:85px;height:85px;border-radius:50%;object-fit:cover;border:2px solid #ff3d9a;box-shadow:0 0 15px #ff3d9a}
-.person{display:inline-block;width:220px;vertical-align:top;margin:8px}
-.person img{width:100%;height:180px;object-fit:cover;border-radius:14px;border:1px solid #ff3d9a}
 .small{color:#d5b8e8;font-size:13px}
-h2{color:#ff80bd;text-shadow:0 0 8px #ff3d9a55}
-#messages{height:300px;overflow:auto;background:#100a1b;padding:12px;border-radius:12px;border:1px solid #873c89}
+h2{color:#ff80bd}
+.profile{display:flex;gap:15px;align-items:center}
+.avatar{width:85px;height:85px;border-radius:50%;object-fit:cover;border:2px solid #ff3d9a}
+#auth{max-width:420px;margin:25px auto}
+#messages{height:300px;overflow:auto;background:#100a1b;padding:12px;border-radius:12px}
 .msg{padding:9px;margin:6px;border-radius:12px;background:#392747;max-width:85%;overflow-wrap:anywhere}
 .mine{margin-left:auto;background:#922c72}
 video{width:100%;max-width:350px;background:black;border-radius:12px}
-#auth{max-width:420px;margin:25px auto;border:1px solid #ff3d9a;box-shadow:0 0 25px #ff3d9a33}
-#splash{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;justify-content:center;align-items:center;background:radial-gradient(circle,#421052,#090514 70%);animation:splashFade 4s forwards}
-#splash img{width:190px;height:190px;object-fit:contain;filter:drop-shadow(0 0 18px #ff3d9a);animation:heartReveal 1.5s ease-in-out infinite alternate}
-#splash h1{color:#ff64b1;letter-spacing:9px;text-shadow:0 0 15px #ff3d9a,0 0 30px #a855f7}
-#splash p{color:#edc4ff;letter-spacing:3px}
-@keyframes heartReveal{from{transform:scale(.8)}to{transform:scale(1.12)}}
-@keyframes splashFade{0%,75%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden;pointer-events:none}}
 .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
-.menu-item{background:linear-gradient(145deg,#39204d,#1b1028);border:1px solid #a855f7;border-radius:17px;padding:18px 8px;text-align:center;cursor:pointer;min-height:90px}
-.menu-item strong{display:block;color:#ff80bd;margin-top:8px;font-size:14px}
-.menu-item span{font-size:25px}
-.menu-item:hover{border-color:#ff3d9a;box-shadow:0 0 15px #ff3d9a55}
-.feature-note{border:1px dashed #a855f7;border-radius:14px;padding:15px;color:#e6c9f5;background:#190f25}
-@media(max-width:600px){
- nav button{font-size:10px;padding:9px}
- .person{width:100%;margin:5px 0}
- .profile{flex-wrap:wrap}
- .menu-grid{grid-template-columns:repeat(2,1fr)}
-}
+.menu-item{background:linear-gradient(145deg,#39204d,#1b1028);border:1px solid #a855f7;border-radius:17px;padding:18px 8px;text-align:center;cursor:pointer}
+.menu-item strong{display:block;color:#ff80bd;margin-top:8px}
+.discover-tools{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#swipeCard{max-width:430px;margin:15px auto;padding:12px;background:linear-gradient(145deg,#39204d,#160d22);border:1px solid #ff3d9a;border-radius:22px;text-align:center;touch-action:pan-y}
+#swipeCard img{width:100%;height:390px;object-fit:cover;border-radius:16px}
+.swipe-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:5px}
+.feature-note{border:1px dashed #a855f7;border-radius:14px;padding:15px;color:#e6c9f5}
+#splash{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;justify-content:center;align-items:center;background:radial-gradient(circle,#421052,#090514 70%);animation:splashFade 3s forwards}
+#splash img{width:170px;height:170px;object-fit:contain}
+#splash h1{color:#ff64b1;letter-spacing:8px}
+@keyframes splashFade{0%,75%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden;pointer-events:none}}
+@media(max-width:600px){.menu-grid{grid-template-columns:repeat(2,1fr)}.discover-tools{grid-template-columns:1fr 1fr}#swipeCard img{height:340px}}
 </style>
 </head>
 <body>
 
 <div id="splash">
-<img src="ChatGPT%20Image%20Nov%205%2C%202026%2C%2005_09_05%20PM.png" alt="THENNAL Logo" onerror="this.style.display='none'">
+<img src="ChatGPT%20Image%20Nov%205%2C%202026%2C%2005_09_05%20PM.png" onerror="this.style.display='none'">
 <h1>THENNAL</h1><p>CONNECT HEARTS ❤️</p>
 </div>
 
 <header>
-<img src="ChatGPT%20Image%20Nov%205%2C%202026%2C%2005_09_05%20PM.png" alt="THENNAL Logo" onerror="this.style.display='none'">
+<img src="ChatGPT%20Image%20Nov%205%2C%202026%2C%2005_09_05%20PM.png" onerror="this.style.display='none'">
 <h1>THENNAL ❤️</h1>
 <p>Connect Hearts • Find Your Soulmate</p>
 </header>
@@ -84,13 +73,13 @@ video{width:100%;max-width:350px;background:black;border-radius:12px}
 <button onclick="show('home')">🏠 Home</button>
 <button onclick="show('discover')">🔎 Discover</button>
 <button onclick="show('interested')">❤️ Interested</button>
-<button onclick="show('likes')">💌 Likes & Notes</button>
+<button onclick="show('likes')">💌 Likes</button>
 <button onclick="show('matches')">💕 Matches</button>
 <button onclick="show('chat')">💬 Chats</button>
 <button onclick="show('select')">⭐ Select</button>
 <button onclick="show('premium')">👑 Premium</button>
 <button onclick="show('wallet')">🪙 Wallet</button>
-<button onclick="show('profile')">👤 My Profile</button>
+<button onclick="show('profile')">👤 Profile</button>
 <button onclick="show('settings')">⚙️ Settings</button>
 <button onclick="show('admin')">Admin</button>
 <button onclick="logout()">Logout</button>
@@ -99,52 +88,49 @@ video{width:100%;max-width:350px;background:black;border-radius:12px}
 <main>
 <section id="home" class="page card">
 <h2>Welcome to THENNAL ❤️</h2>
-<p>Meet Malayalis around the world. Connect hearts and find your soulmate.</p>
+<p>Meet Malayalis around the world.</p>
 <div id="welcome"></div>
 <div class="menu-grid">
-<div class="menu-item" onclick="show('discover')"><span>🔎</span><strong>Discover People</strong></div>
-<div class="menu-item" onclick="show('interested')"><span>❤️</span><strong>Interested in You</strong></div>
-<div class="menu-item" onclick="show('likes')"><span>💌</span><strong>Likes & Notes</strong></div>
-<div class="menu-item" onclick="show('matches')"><span>💕</span><strong>Your Matches</strong></div>
-<div class="menu-item" onclick="show('chat')"><span>💬</span><strong>Chats</strong></div>
-<div class="menu-item" onclick="show('select')"><span>⭐</span><strong>THENNAL Select</strong></div>
-<div class="menu-item" onclick="show('premium')"><span>👑</span><strong>Premium</strong></div>
-<div class="menu-item" onclick="show('wallet')"><span>🪙</span><strong>My Wallet</strong></div>
-<div class="menu-item" onclick="show('profile')"><span>👤</span><strong>My Profile</strong></div>
-<div class="menu-item" onclick="show('settings')"><span>⚙️</span><strong>Settings & Help</strong></div>
+<div class="menu-item" onclick="show('discover')">🔎<strong>Discover People</strong></div>
+<div class="menu-item" onclick="show('interested')">❤️<strong>Interested in You</strong></div>
+<div class="menu-item" onclick="show('likes')">💌<strong>Likes & Notes</strong></div>
+<div class="menu-item" onclick="show('matches')">💕<strong>Your Matches</strong></div>
+<div class="menu-item" onclick="show('chat')">💬<strong>Chats</strong></div>
+<div class="menu-item" onclick="show('select')">⭐<strong>THENNAL Select</strong></div>
+<div class="menu-item" onclick="show('premium')">👑<strong>Premium</strong></div>
+<div class="menu-item" onclick="show('wallet')">🪙<strong>My Wallet</strong></div>
+<div class="menu-item" onclick="show('profile')">👤<strong>My Profile</strong></div>
+<div class="menu-item" onclick="show('settings')">⚙️<strong>Settings</strong></div>
 </div>
 </section>
 
 <section id="discover" class="page hidden">
 <h2>Discover People 💕</h2>
-<p class="small">Discover Malayali members from around the world.</p>
+<p class="small">Discover Malayali members around the world.</p>
+<div class="discover-tools">
+<input id="minAge" type="number" placeholder="Minimum age" value="18">
+<input id="maxAge" type="number" placeholder="Maximum age" value="100">
+<input id="locationFilter" placeholder="Country or City">
+<button onclick="loadPeople()">🔎 APPLY FILTER</button>
+</div>
 <div id="people"></div>
 </section>
 
 <section id="interested" class="page hidden card">
-<h2>Interested in You ❤️</h2>
-<p>People who have liked your profile.</p>
-<div id="interestedList"></div>
+<h2>Interested in You ❤️</h2><div id="interestedList"></div>
 </section>
 
 <section id="likes" class="page hidden card">
-<h2>Likes & Notes 💌</h2>
-<p>See who likes you and connect with your matches.</p>
-<div id="likesList"></div>
-<div class="feature-note">
-<strong>Send a Note</strong>
-<p class="small">Personal notes will be enabled after the secure messaging feature is added.</p>
-</div>
+<h2>Likes & Notes 💌</h2><div id="likesList"></div>
+<div class="feature-note">Personal notes will be enabled after secure messaging is added.</div>
 </section>
 
 <section id="matches" class="page hidden card">
-<h2>Your Matches 💜</h2>
-<div id="matchesList"></div>
+<h2>Your Matches 💜</h2><div id="matchesList"></div>
 </section>
 
 <section id="chat" class="page hidden card">
-<h2>Chat 💬</h2>
-<div id="chatList"></div>
+<h2>Chat 💬</h2><div id="chatList"></div>
 <div id="messages"></div>
 <input id="chatText" placeholder="Write a message...">
 <button onclick="sendMessage()">SEND</button>
@@ -156,26 +142,12 @@ video{width:100%;max-width:350px;background:black;border-radius:12px}
 
 <section id="select" class="page hidden card">
 <h2>THENNAL Select ⭐</h2>
-<p>Discover selected profiles and make meaningful connections.</p>
-<div class="feature-note">
-<strong>Coming Soon</strong>
-<p class="small">Select membership, profile verification and special recommendations will be activated in a future update.</p>
-</div>
+<div class="feature-note">Select membership and special recommendations are coming soon.</div>
 </section>
 
 <section id="premium" class="page hidden card">
 <h2>THENNAL Premium 👑</h2>
-<p>Enjoy more ways to connect with people.</p>
-<div class="feature-note">
-<strong>Premium membership</strong>
-<ul>
-<li>Premium profile features</li>
-<li>More ways to connect</li>
-<li>Special profile visibility</li>
-<li>Additional member benefits</li>
-</ul>
-<p class="small">Premium subscriptions are not active yet. Secure payment integration is required before purchases can be accepted.</p>
-</div>
+<div class="feature-note">Premium subscriptions are not active yet. Secure payment integration is required.</div>
 </section>
 
 <section id="profile" class="page hidden card">
@@ -188,10 +160,9 @@ video{width:100%;max-width:350px;background:black;border-radius:12px}
 <input id="age" type="number" placeholder="Age">
 <select id="gender">
 <option value="">Select Gender</option>
-<option>Male</option>
-<option>Female</option>
-<option>Other</option>
+<option>Male</option><option>Female</option><option>Other</option>
 </select>
+<input id="location" placeholder="City, Country">
 <textarea id="bio" placeholder="About yourself"></textarea>
 <label>Profile Photo</label>
 <input id="photo" type="file" accept="image/*">
@@ -204,32 +175,22 @@ video{width:100%;max-width:350px;background:black;border-radius:12px}
 <h1 id="coinBalance">0 Coins</h1>
 <p>Audio call rate: <span id="audioRate">5</span> coins/min</p>
 <p>Video call rate: <span id="videoRate">10</span> coins/min</p>
-<div class="feature-note">
-Coin purchases and secure deductions are not active yet. Server-side payment and billing integration is required.
-</div>
+<div class="feature-note">Coin purchases and deductions are not active yet.</div>
 </section>
 
 <section id="settings" class="page hidden card">
 <h2>Settings & Help ⚙️</h2>
-<h3>Account</h3>
-<p class="small">Your account is connected using Firebase Authentication.</p>
-<button onclick="show('profile')">EDIT MY PROFILE</button>
-<button class="secondary" onclick="logout()">LOG OUT</button>
-<h3>Help & Support</h3>
-<p class="small">For help with your account, profile or app features, contact the THENNAL support team.</p>
-<p class="small">Support email: kproushal@gmail.com</p>
-<h3>Privacy</h3>
-<p class="small">Do not share your password or private information with anyone. Privacy and account deletion tools will be added in a future update.</p>
+<button onclick="show('profile')">EDIT PROFILE</button>
+<button onclick="logout()">LOG OUT</button>
+<p class="small">Support: kproushal@gmail.com</p>
 </section>
 
 <section id="admin" class="page hidden card">
-<h2>Admin Dashboard</h2>
-<div id="adminContent">Admin access only.</div>
+<h2>Admin Dashboard</h2><div id="adminContent">Admin access only.</div>
 </section>
 
 <section id="call" class="page hidden card">
-<h2 id="callTitle">Call</h2>
-<p id="callStatus">Waiting...</p>
+<h2 id="callTitle">Call</h2><p id="callStatus">Waiting...</p>
 <video id="remoteVideo" autoplay playsinline></video>
 <video id="localVideo" autoplay muted playsinline></video>
 <button onclick="endCall()">END CALL</button>
@@ -239,17 +200,9 @@ Coin purchases and secure deductions are not active yet. Server-side payment and
 
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-import {
- getAuth,onAuthStateChanged,createUserWithEmailAndPassword,
- signInWithEmailAndPassword,signOut
-} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-import {
- getFirestore,doc,setDoc,getDoc,collection,addDoc,getDocs,
- query,where,onSnapshot,serverTimestamp,updateDoc
-} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-import {
- getStorage,ref,uploadBytes,getDownloadURL
-} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
+import {getAuth,onAuthStateChanged,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+import {getFirestore,doc,setDoc,getDoc,collection,addDoc,getDocs,query,where,onSnapshot,serverTimestamp,updateDoc} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+import {getStorage,ref,uploadBytes,getDownloadURL} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
 
 const firebaseConfig={
 apiKey:"AIzaSyBlmHvVRkcJ2DB6I6H3a-zsN1Zt0CKo94s",
@@ -269,6 +222,7 @@ const ADMIN="kproushal@gmail.com";
 
 let me=null,myProfile={},activeMatch=null,chatUnsub=null;
 let callPC=null,localStream=null,activeCall=null,incomingUnsub=null,callUnsubs=[];
+let discoverPeople=[],discoverIndex=0;
 
 const $=id=>document.getElementById(id);
 const say=(id,msg)=>$(id).textContent=msg;
@@ -276,10 +230,8 @@ const showError=msg=>alert(msg||"Something went wrong");
 
 window.show=id=>{
 document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
-const page=$(id);
-if(!page)return;
+const page=$(id);if(!page)return;
 page.classList.remove("hidden");
-
 if(id==="discover")loadPeople();
 if(id==="likes"||id==="interested")loadLikes();
 if(id==="matches")loadMatches();
@@ -290,8 +242,7 @@ if(id==="chat")loadChatList();
 
 window.login=async()=>{
 try{
-const email=$("email").value.trim();
-const password=$("password").value;
+const email=$("email").value.trim(),password=$("password").value;
 if(!email||!password)throw Error("Enter email and password.");
 await signInWithEmailAndPassword(auth,email,password);
 }catch(e){say("authMsg",e.message);}
@@ -299,39 +250,27 @@ await signInWithEmailAndPassword(auth,email,password);
 
 window.register=async()=>{
 try{
-const email=$("email").value.trim();
-const password=$("password").value;
+const email=$("email").value.trim(),password=$("password").value;
 if(!email||!password)throw Error("Enter email and password.");
 if(password.length<6)throw Error("Password must be at least 6 characters.");
 await createUserWithEmailAndPassword(auth,email,password);
 }catch(e){say("authMsg",e.message);}
 };
 
-window.logout=async()=>{
-try{await signOut(auth);}
-catch(e){showError(e.message);}
-};
+window.logout=async()=>{try{await signOut(auth);}catch(e){showError(e.message);}};
 
 onAuthStateChanged(auth,async user=>{
 if(!user){
-me=null;
-myProfile={};
-activeMatch=null;
-$("auth").classList.remove("hidden");
-$("app").classList.add("hidden");
+me=null;myProfile={};activeMatch=null;
+$("auth").classList.remove("hidden");$("app").classList.add("hidden");
 if(incomingUnsub){incomingUnsub();incomingUnsub=null;}
 if(chatUnsub){chatUnsub();chatUnsub=null;}
-endCallLocal(false);
-return;
+endCallLocal(false);return;
 }
 me=user;
-$("auth").classList.add("hidden");
-$("app").classList.remove("hidden");
-try{
-await loadMyProfile();
-listenIncomingCalls();
-show("home");
-}catch(e){showError("Loading error: "+e.message);}
+$("auth").classList.add("hidden");$("app").classList.remove("hidden");
+try{await loadMyProfile();listenIncomingCalls();show("home");}
+catch(e){showError("Loading error: "+e.message);}
 });
 
 async function loadMyProfile(){
@@ -340,6 +279,7 @@ myProfile=snap.exists()?snap.data():{};
 $("name").value=myProfile.name||"";
 $("age").value=myProfile.age||"";
 $("gender").value=myProfile.gender||"";
+$("location").value=myProfile.location||"";
 $("bio").value=myProfile.bio||"";
 $("myPhoto").src=myProfile.photoURL||"";
 $("myDetails").textContent=myProfile.name||me.email;
@@ -351,171 +291,123 @@ try{
 const name=$("name").value.trim();
 const age=Number($("age").value);
 const gender=$("gender").value;
-
+const location=$("location").value.trim();
 if(!name)throw Error("Please enter your name.");
 if(!age||age<18||age>100)throw Error("Age must be between 18 and 100.");
 if(!gender)throw Error("Please select your gender.");
 
 let photoURL=myProfile.photoURL||"";
 const file=$("photo").files[0];
-
 if(file){
 if(!file.type.startsWith("image/"))throw Error("Please choose an image file.");
-if(file.size>5*1024*1024)throw Error("Please choose an image smaller than 5 MB.");
-
+if(file.size>5*1024*1024)throw Error("Choose an image smaller than 5 MB.");
 const imageRef=ref(storage,"profilePhotos/"+me.uid+"/"+Date.now());
 await uploadBytes(imageRef,file);
 photoURL=await getDownloadURL(imageRef);
 }
-
 const profile={
-uid:me.uid,
-email:me.email||"",
-name,
-age,
-gender,
-bio:$("bio").value.trim(),
-photoURL,
-status:"active",
+uid:me.uid,email:me.email||"",name,age,gender,location,
+bio:$("bio").value.trim(),photoURL,status:"active",
 updatedAt:serverTimestamp()
 };
-
 await setDoc(doc(db,"users",me.uid),profile,{merge:true});
 await setDoc(doc(db,"publicProfiles",me.uid),profile,{merge:true});
-
 myProfile={...profile};
-$("myPhoto").src=photoURL;
-$("myDetails").textContent=name;
+$("myPhoto").src=photoURL;$("myDetails").textContent=name;
 $("welcome").textContent="Hello "+name+" ❤️";
 $("photo").value="";
 say("profileMsg","Profile saved successfully ❤️");
-}catch(e){
-say("profileMsg",e.message);
-}
+}catch(e){say("profileMsg",e.message);}
 };
 
+/* DISCOVER + FILTER + SWIPE */
 async function loadPeople(){
-const area=$("people");
-area.textContent="Loading people...";
-
+const area=$("people");area.textContent="Loading profiles...";
 try{
-const snap=await getDocs(
-query(collection(db,"publicProfiles"),where("status","==","active"))
-);
-area.innerHTML="";
-let count=0;
-
+const snap=await getDocs(query(collection(db,"publicProfiles"),where("status","==","active")));
+discoverPeople=[];
 snap.forEach(d=>{
-const p=d.data();
-if(p.uid===me.uid)return;
-count++;
-
-const card=document.createElement("div");
-card.className="card person";
-
-const img=document.createElement("img");
-img.src=p.photoURL||"";
-img.alt=p.name||"THENNAL Member";
-
-const title=document.createElement("h3");
-title.textContent=(p.name||"THENNAL Member")+(p.age?" • "+p.age:"");
-
-const gender=document.createElement("p");
-gender.className="small";
-gender.textContent=p.gender||"";
-
-const bio=document.createElement("p");
-bio.textContent=p.bio||"";
-
-const btn=document.createElement("button");
-btn.textContent="❤️ LIKE";
-btn.onclick=()=>sendLike(p.uid);
-
-card.append(img,title,gender,bio,btn);
-area.append(card);
+const p=d.data();if(p.uid!==me.uid)discoverPeople.push(p);
 });
+const min=Number($("minAge").value)||18;
+const max=Number($("maxAge").value)||100;
+const loc=$("locationFilter").value.trim().toLowerCase();
+discoverPeople=discoverPeople.filter(p=>{
+const age=Number(p.age)||0;
+const place=(p.location||"").toLowerCase();
+return age>=min&&age<=max&&(!loc||place.includes(loc));
+});
+discoverIndex=0;renderDiscoverCard();
+}catch(e){area.textContent="Could not load profiles: "+e.message;}
+}
 
-if(count===0){
-area.textContent="No profiles found yet. Ask other members to save their profiles.";
+function renderDiscoverCard(){
+const area=$("people");area.innerHTML="";
+if(discoverIndex>=discoverPeople.length){
+area.textContent="No more profiles found. Try another filter ❤️";return;
 }
-}catch(e){
-area.textContent="Could not load profiles: "+e.message;
+const p=discoverPeople[discoverIndex];
+const card=document.createElement("div");card.id="swipeCard";
+const img=document.createElement("img");img.src=p.photoURL||"";img.alt=p.name||"Member";
+const title=document.createElement("h2");
+title.textContent=(p.name||"THENNAL Member")+(p.age?" • "+p.age:"");
+const place=document.createElement("p");place.className="small";place.textContent=p.location||"Location not added";
+const gender=document.createElement("p");gender.className="small";gender.textContent=p.gender||"";
+const bio=document.createElement("p");bio.textContent=p.bio||"";
+const actions=document.createElement("div");actions.className="swipe-actions";
+const skip=document.createElement("button");skip.className="secondary";skip.textContent="❌ SKIP";skip.onclick=skipProfile;
+const like=document.createElement("button");like.textContent="❤️ LIKE";like.onclick=()=>likeProfile(p.uid);
+const superLike=document.createElement("button");superLike.textContent="⭐ SUPER LIKE";superLike.onclick=()=>likeProfile(p.uid);
+actions.append(skip,like,superLike);
+card.append(img,title,place,gender,bio,actions);area.append(card);
+let startX=0;
+card.addEventListener("touchstart",e=>{startX=e.touches[0].clientX;},{passive:true});
+card.addEventListener("touchend",e=>{
+const diff=e.changedTouches[0].clientX-startX;
+if(diff>90)likeProfile(p.uid);
+else if(diff< -90)skipProfile();
+},{passive:true});
 }
+
+function skipProfile(){discoverIndex++;renderDiscoverCard();}
+async function likeProfile(uid){
+await sendLike(uid);discoverIndex++;renderDiscoverCard();
 }
 
 async function sendLike(toUid){
 try{
 if(!toUid||toUid===me.uid)return;
-
 await setDoc(doc(db,"likes",me.uid+"_"+toUid),{
-fromUid:me.uid,
-toUid,
-createdAt:serverTimestamp()
+fromUid:me.uid,toUid,createdAt:serverTimestamp()
 });
-
 const reverse=await getDoc(doc(db,"likes",toUid+"_"+me.uid));
-
 if(reverse.exists()){
 const ids=[me.uid,toUid].sort();
-const matchId=ids.join("_");
-await setDoc(doc(db,"matches",matchId),{
-user1:ids[0],
-user2:ids[1],
-createdAt:serverTimestamp()
+await setDoc(doc(db,"matches",ids.join("_")),{
+user1:ids[0],user2:ids[1],createdAt:serverTimestamp()
 });
 alert("It's a Match! ❤️");
-}else{
-alert("Like sent ❤️");
-}
-}catch(e){
-showError("Like error: "+e.message);
-}
+}else{alert("Like sent ❤️");}
+}catch(e){showError("Like error: "+e.message);}
 }
 
 async function loadLikes(){
-const area=$("likesList");
-const interested=$("interestedList");
-area.textContent="Loading...";
-interested.textContent="Loading...";
-
+const area=$("likesList"),interested=$("interestedList");
+area.textContent="Loading...";interested.textContent="Loading...";
 try{
-const snap=await getDocs(
-query(collection(db,"likes"),where("toUid","==",me.uid))
-);
-
-area.innerHTML="";
-interested.innerHTML="";
-
+const snap=await getDocs(query(collection(db,"likes"),where("toUid","==",me.uid)));
+area.innerHTML="";interested.innerHTML="";
 for(const d of snap.docs){
-const like=d.data();
-const u=await getDoc(doc(db,"publicProfiles",like.fromUid));
+const like=d.data();const u=await getDoc(doc(db,"publicProfiles",like.fromUid));
 if(!u.exists())continue;
-
-const p=u.data();
-const div=document.createElement("div");
-div.className="card";
-
-const title=document.createElement("strong");
-title.textContent=(p.name||"Someone")+" likes you ❤️";
-
-const button=document.createElement("button");
-button.textContent="View Matches";
-button.onclick=()=>show("matches");
-
-div.append(title,button);
-area.append(div);
-
-const item=div.cloneNode(true);
-item.querySelector("button").onclick=()=>show("matches");
-interested.append(item);
+const p=u.data();const div=document.createElement("div");div.className="card";
+const title=document.createElement("strong");title.textContent=(p.name||"Someone")+" likes you ❤️";
+const button=document.createElement("button");button.textContent="View Matches";button.onclick=()=>show("matches");
+div.append(title,button);area.append(div);interested.append(div.cloneNode(true));
 }
-
 if(!area.innerHTML)area.textContent="No likes yet.";
 if(!interested.innerHTML)interested.textContent="No one has liked your profile yet.";
-}catch(e){
-area.textContent="Likes error: "+e.message;
-interested.textContent="Could not load interested members: "+e.message;
-}
+}catch(e){area.textContent="Likes error: "+e.message;interested.textContent=e.message;}
 }
 
 async function getMyMatches(){
@@ -523,376 +415,190 @@ const [one,two]=await Promise.all([
 getDocs(query(collection(db,"matches"),where("user1","==",me.uid))),
 getDocs(query(collection(db,"matches"),where("user2","==",me.uid)))
 ]);
-
-const all=new Map();
-one.docs.forEach(d=>all.set(d.id,d));
-two.docs.forEach(d=>all.set(d.id,d));
+const all=new Map();one.docs.forEach(d=>all.set(d.id,d));two.docs.forEach(d=>all.set(d.id,d));
 return [...all.values()];
 }
 
 async function renderMatchButtons(container){
-container.innerHTML="";
-const matches=await getMyMatches();
-
-if(matches.length===0){
-container.textContent="No matches yet. Like someone to find a match.";
-return;
-}
-
+container.innerHTML="";const matches=await getMyMatches();
+if(!matches.length){container.textContent="No matches yet.";return;}
 for(const d of matches){
-const match=d.data();
-const other=match.user1===me.uid?match.user2:match.user1;
-const u=await getDoc(doc(db,"publicProfiles",other));
-const p=u.exists()?u.data():{};
-
-const b=document.createElement("button");
-b.textContent="Chat with "+(p.name||"Match");
-b.onclick=()=>openChat(d.id);
-container.append(b);
+const m=d.data(),other=m.user1===me.uid?m.user2:m.user1;
+const u=await getDoc(doc(db,"publicProfiles",other));const p=u.exists()?u.data():{};
+const b=document.createElement("button");b.textContent="Chat with "+(p.name||"Match");
+b.onclick=()=>openChat(d.id);container.append(b);
 }
 }
-
 async function loadMatches(){
-const area=$("matchesList");
-area.textContent="Loading...";
-try{await renderMatchButtons(area);}
-catch(e){area.textContent="Matches error: "+e.message;}
+const area=$("matchesList");area.textContent="Loading...";
+try{await renderMatchButtons(area);}catch(e){area.textContent=e.message;}
 }
-
 async function loadChatList(){
-const area=$("chatList");
-area.innerHTML="<p class='small'>Your matched people:</p>";
-try{await renderMatchButtons(area);}
-catch(e){area.textContent="Chat list error: "+e.message;}
+const area=$("chatList");area.innerHTML="<p class='small'>Your matched people:</p>";
+try{await renderMatchButtons(area);}catch(e){area.textContent=e.message;}
 }
 
 async function openChat(matchId){
-activeMatch=matchId;
-show("chat");
-
-if(chatUnsub){
-chatUnsub();
-chatUnsub=null;
-}
-
-const messages=$("messages");
-messages.innerHTML="Loading messages...";
-
-chatUnsub=onSnapshot(
-query(collection(db,"chats",matchId,"messages")),
-snap=>{
+activeMatch=matchId;show("chat");
+if(chatUnsub){chatUnsub();chatUnsub=null;}
+const messages=$("messages");messages.innerHTML="Loading messages...";
+chatUnsub=onSnapshot(query(collection(db,"chats",matchId,"messages")),snap=>{
 messages.innerHTML="";
-const docs=snap.docs.sort(
-(a,b)=>(a.data().createdAt?.seconds||0)-(b.data().createdAt?.seconds||0)
-);
-
+const docs=snap.docs.sort((a,b)=>(a.data().createdAt?.seconds||0)-(b.data().createdAt?.seconds||0));
 docs.forEach(d=>{
-const m=d.data();
-const mine=m.senderUid===me.uid;
-const div=document.createElement("div");
-div.className="msg "+(mine?"mine":"");
-div.textContent=(mine?"You: ":"")+m.text;
-messages.append(div);
+const m=d.data(),mine=m.senderUid===me.uid;
+const div=document.createElement("div");div.className="msg "+(mine?"mine":"");
+div.textContent=(mine?"You: ":"")+m.text;messages.append(div);
 });
-
 messages.scrollTop=messages.scrollHeight;
-},
-e=>showError("Chat error: "+e.message)
-);
+},e=>showError("Chat error: "+e.message));
 }
 
 window.sendMessage=async()=>{
-const text=$("chatText").value.trim();
-if(!text||!activeMatch)return;
-
+const text=$("chatText").value.trim();if(!text||!activeMatch)return;
 try{
 await addDoc(collection(db,"chats",activeMatch,"messages"),{
-senderUid:me.uid,
-text,
-createdAt:serverTimestamp()
+senderUid:me.uid,text,createdAt:serverTimestamp()
 });
 $("chatText").value="";
-}catch(e){
-showError("Message error: "+e.message);
-}
+}catch(e){showError("Message error: "+e.message);}
 };
 
 async function loadWallet(){
 try{
 const snap=await getDoc(doc(db,"wallets",me.uid));
 $("coinBalance").textContent=(snap.exists()?snap.data().coins||0:0)+" Coins";
-
 const rates=await getDoc(doc(db,"settings","rates"));
 if(rates.exists()){
 $("audioRate").textContent=rates.data().audio||5;
 $("videoRate").textContent=rates.data().video||10;
 }
-}catch(e){
-showError("Wallet error: "+e.message);
-}
+}catch(e){showError("Wallet error: "+e.message);}
 }
 
 async function loadAdmin(){
 const area=$("adminContent");
-
-if(me.email!==ADMIN){
-area.textContent="Access denied.";
-return;
-}
-
+if(me.email!==ADMIN){area.textContent="Access denied.";return;}
 try{
 const rates=await getDoc(doc(db,"settings","rates"));
 const r=rates.exists()?rates.data():{audio:5,video:10};
-
-area.innerHTML=`
-<p>Admin: ${ADMIN}</p>
-<label>Audio coins per minute</label>
-<input id="adminAudio" type="number" min="1" value="${r.audio||5}">
-<label>Video coins per minute</label>
-<input id="adminVideo" type="number" min="1" value="${r.video||10}">
-<button id="saveRates">SAVE RATES</button>
-<p class="small">Admin authorization must also be enforced in Firestore rules.</p>`;
-
+area.innerHTML=`<p>Admin: ${ADMIN}</p>
+<label>Audio coins per minute</label><input id="adminAudio" type="number" min="1" value="${r.audio||5}">
+<label>Video coins per minute</label><input id="adminVideo" type="number" min="1" value="${r.video||10}">
+<button id="saveRates">SAVE RATES</button>`;
 $("saveRates").onclick=async()=>{
 try{
 const audio=Math.max(1,Number($("adminAudio").value));
 const video=Math.max(1,Number($("adminVideo").value));
-await setDoc(doc(db,"settings","rates"),{audio,video});
-alert("Rates saved");
+await setDoc(doc(db,"settings","rates"),{audio,video});alert("Rates saved");
 }catch(e){showError(e.message);}
 };
-}catch(e){
-area.textContent=e.message;
-}
+}catch(e){area.textContent=e.message;}
 }
 
-/* AUDIO AND VIDEO CALLS */
-const rtcConfig={
-iceServers:[{urls:"stun:stun.l.google.com:19302"}]
-};
-
+/* AUDIO / VIDEO CALLS */
+const rtcConfig={iceServers:[{urls:"stun:stun.l.google.com:19302"}]};
 async function prepareMedia(type){
-if(!navigator.mediaDevices?.getUserMedia){
-throw Error("Camera and microphone are not available. Open this site using HTTPS.");
-}
-localStream=await navigator.mediaDevices.getUserMedia({
-audio:true,
-video:type==="video"
-});
+if(!navigator.mediaDevices?.getUserMedia)throw Error("Open this site using HTTPS.");
+localStream=await navigator.mediaDevices.getUserMedia({audio:true,video:type==="video"});
 $("localVideo").srcObject=localStream;
 }
-
 function addCallCandidate(callId,subcollection,candidate){
 if(!candidate)return;
-
 return addDoc(collection(db,"calls",callId,subcollection),{
-candidate:candidate.candidate,
-sdpMid:candidate.sdpMid||null,
+candidate:candidate.candidate,sdpMid:candidate.sdpMid||null,
 sdpMLineIndex:candidate.sdpMLineIndex??null,
-usernameFragment:candidate.usernameFragment||null,
-ownerUid:me.uid
+usernameFragment:candidate.usernameFragment||null,ownerUid:me.uid
 });
 }
-
 function listenForCandidates(callId,subcollection){
-const unsub=onSnapshot(
-collection(db,"calls",callId,subcollection),
-snap=>{
+const unsub=onSnapshot(collection(db,"calls",callId,subcollection),snap=>{
 snap.docChanges().forEach(change=>{
 if(change.type!=="added"||!callPC)return;
-
-const data=change.doc.data();
-if(data.ownerUid===me.uid)return;
-
+const data=change.doc.data();if(data.ownerUid===me.uid)return;
 callPC.addIceCandidate(new RTCIceCandidate({
-candidate:data.candidate,
-sdpMid:data.sdpMid,
+candidate:data.candidate,sdpMid:data.sdpMid,
 sdpMLineIndex:data.sdpMLineIndex,
 usernameFragment:data.usernameFragment||undefined
 })).catch(console.error);
 });
-},
-e=>console.error("Candidate listener:",e)
-);
+},console.error);
 callUnsubs.push(unsub);
 }
 
 async function startCall(type){
-if(!activeMatch){
-alert("Open a match chat first.");
-return;
-}
-
+if(!activeMatch){alert("Open a match chat first.");return;}
 try{
 const matchSnap=await getDoc(doc(db,"matches",activeMatch));
 if(!matchSnap.exists())throw Error("Match not found.");
-
-const match=matchSnap.data();
-const other=match.user1===me.uid?match.user2:match.user1;
-if(!other)throw Error("Could not find the other match member.");
-
+const match=matchSnap.data(),other=match.user1===me.uid?match.user2:match.user1;
 await prepareMedia(type);
-
 callPC=new RTCPeerConnection(rtcConfig);
 localStream.getTracks().forEach(t=>callPC.addTrack(t,localStream));
 callPC.ontrack=e=>$("remoteVideo").srcObject=e.streams[0];
-
-const callRef=doc(collection(db,"calls"));
-activeCall=callRef;
-
-callPC.onicecandidate=e=>{
-if(e.candidate){
-addCallCandidate(callRef.id,"callerCandidates",e.candidate.toJSON()).catch(console.error);
-}
-};
-
-const offer=await callPC.createOffer();
-await callPC.setLocalDescription(offer);
-
+const callRef=doc(collection(db,"calls"));activeCall=callRef;
+callPC.onicecandidate=e=>{if(e.candidate)addCallCandidate(callRef.id,"callerCandidates",e.candidate.toJSON()).catch(console.error);};
+const offer=await callPC.createOffer();await callPC.setLocalDescription(offer);
 await setDoc(callRef,{
-callerUid:me.uid,
-calleeUid:other,
-matchId:activeMatch,
-type,
-offer:{type:offer.type,sdp:offer.sdp},
-status:"ringing",
-createdAt:serverTimestamp()
+callerUid:me.uid,calleeUid:other,matchId:activeMatch,type,
+offer:{type:offer.type,sdp:offer.sdp},status:"ringing",createdAt:serverTimestamp()
 });
-
 callUnsubs.push(onSnapshot(callRef,async snap=>{
-if(!snap.exists())return;
-const data=snap.data();
-
+if(!snap.exists())return;const data=snap.data();
 if(data?.answer&&callPC&&!callPC.currentRemoteDescription){
-await callPC.setRemoteDescription(new RTCSessionDescription(data.answer));
-say("callStatus","Connected");
+await callPC.setRemoteDescription(new RTCSessionDescription(data.answer));say("callStatus","Connected");
 }
-
-if(data?.status==="ended"||data?.status==="rejected"){
-endCallLocal();
-}
+if(data?.status==="ended"||data?.status==="rejected")endCallLocal();
 }));
-
 listenForCandidates(callRef.id,"calleeCandidates");
-$("callTitle").textContent=type.toUpperCase()+" CALL";
-say("callStatus","Calling... Waiting for the other person.");
+$("callTitle").textContent=type.toUpperCase()+" CALL";say("callStatus","Calling...");
 show("call");
-
-}catch(e){
-showError("Call error: "+e.message);
-endCallLocal();
-}
+}catch(e){showError("Call error: "+e.message);endCallLocal();}
 }
 
 function listenIncomingCalls(){
 if(incomingUnsub)incomingUnsub();
-
-incomingUnsub=onSnapshot(
-query(
-collection(db,"calls"),
-where("calleeUid","==",me.uid),
-where("status","==","ringing")
-),
-snap=>{
+incomingUnsub=onSnapshot(query(collection(db,"calls"),where("calleeUid","==",me.uid),where("status","==","ringing")),snap=>{
 snap.docChanges().forEach(change=>{
 if(change.type!=="added")return;
-
 const c=change.doc.data();
 if(activeCall&&activeCall.id===change.doc.id)return;
-
-if(confirm("Incoming "+c.type+" call. Accept?")){
-acceptCall(change.doc.id,c).catch(e=>showError(e.message));
-}else{
-updateDoc(doc(db,"calls",change.doc.id),{
-status:"rejected",
-answeredAt:serverTimestamp()
-}).catch(e=>console.error(e));
-}
+if(confirm("Incoming "+c.type+" call. Accept?"))acceptCall(change.doc.id,c).catch(e=>showError(e.message));
+else updateDoc(doc(db,"calls",change.doc.id),{status:"rejected",answeredAt:serverTimestamp()}).catch(console.error);
 });
-},
-e=>console.error("Incoming call listener:",e)
-);
+},console.error);
 }
 
 async function acceptCall(id,c){
 try{
-activeCall=doc(db,"calls",id);
-activeMatch=c.matchId;
-
+activeCall=doc(db,"calls",id);activeMatch=c.matchId;
 await prepareMedia(c.type);
-
 callPC=new RTCPeerConnection(rtcConfig);
 localStream.getTracks().forEach(t=>callPC.addTrack(t,localStream));
 callPC.ontrack=e=>$("remoteVideo").srcObject=e.streams[0];
-
-callPC.onicecandidate=e=>{
-if(e.candidate){
-addCallCandidate(id,"calleeCandidates",e.candidate.toJSON()).catch(console.error);
-}
-};
-
+callPC.onicecandidate=e=>{if(e.candidate)addCallCandidate(id,"calleeCandidates",e.candidate.toJSON()).catch(console.error);};
 await callPC.setRemoteDescription(new RTCSessionDescription(c.offer));
-
-const answer=await callPC.createAnswer();
-await callPC.setLocalDescription(answer);
-
-await updateDoc(activeCall,{
-answer:{type:answer.type,sdp:answer.sdp},
-status:"accepted",
-answeredAt:serverTimestamp()
-});
-
+const answer=await callPC.createAnswer();await callPC.setLocalDescription(answer);
+await updateDoc(activeCall,{answer:{type:answer.type,sdp:answer.sdp},status:"accepted",answeredAt:serverTimestamp()});
 listenForCandidates(id,"callerCandidates");
-$("callTitle").textContent=c.type.toUpperCase()+" CALL";
-say("callStatus","Connected");
-show("call");
-
-}catch(e){
-showError("Could not accept call: "+e.message);
-endCallLocal();
-}
+$("callTitle").textContent=c.type.toUpperCase()+" CALL";say("callStatus","Connected");show("call");
+}catch(e){showError("Could not accept call: "+e.message);endCallLocal();}
 }
 
 window.endCall=async()=>{
 const call=activeCall;
-
-if(call){
-try{
-await updateDoc(call,{
-status:"ended",
-endedAt:serverTimestamp()
-});
-}catch(e){
-console.error("Could not update call status:",e);
-}
-}
-
+if(call){try{await updateDoc(call,{status:"ended",endedAt:serverTimestamp()});}catch(e){console.error(e);}}
 endCallLocal();
 };
 
 function endCallLocal(returnToChat=true){
-if(callPC){
-callPC.close();
-callPC=null;
-}
-
-if(localStream){
-localStream.getTracks().forEach(t=>t.stop());
-localStream=null;
-}
-
-callUnsubs.forEach(unsub=>{
-try{unsub();}catch(e){}
-});
-callUnsubs=[];
-
-$("localVideo").srcObject=null;
-$("remoteVideo").srcObject=null;
+if(callPC){callPC.close();callPC=null;}
+if(localStream){localStream.getTracks().forEach(t=>t.stop());localStream=null;}
+callUnsubs.forEach(unsub=>{try{unsub();}catch(e){}});
+callUnsubs=[];$("localVideo").srcObject=null;$("remoteVideo").srcObject=null;
 activeCall=null;
-
 if(returnToChat&&me)show("chat");
 }
-
 window.startAudioCall=()=>startCall("audio");
 window.startVideoCall=()=>startCall("video");
 </script>
