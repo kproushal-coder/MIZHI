@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -71,43 +72,104 @@ textarea{min-height:90px;resize:vertical}
 
 <div id="app" class="hidden">
 <nav>
-<button onclick="show('home')">🏠 Home</button><button onclick="show('discover')">🔎 Discover</button><button onclick="show('interested')">❤️ Interested</button><button onclick="show('likes')">💌 Likes</button><button onclick="show('matches')">💕 Matches</button><button onclick="show('chat')">💬 Chats</button><button onclick="show('select')">⭐ Select</button><button onclick="show('premium')">👑 Premium</button><button onclick="show('wallet')">🪙 Wallet</button><button onclick="show('profile')">👤 Profile</button><button onclick="show('settings')">⚙️ Settings</button><button onclick="show('admin')">Admin</button><button onclick="logout()">Logout</button>
+<button onclick="show('home')">🏠 Home</button>
+<button onclick="show('discover')">🔎 Discover</button>
+<button onclick="show('interested')">❤️ Interested</button>
+<button onclick="show('likes')">💌 Likes</button>
+<button onclick="show('matches')">💕 Matches</button>
+<button onclick="show('chat')">💬 Chats</button>
+<button onclick="show('select')">⭐ Select</button>
+<button onclick="show('premium')">👑 Premium</button>
+<button onclick="show('wallet')">🪙 Wallet</button>
+<button onclick="show('profile')">👤 Profile</button>
+<button onclick="show('settings')">⚙️ Settings</button>
+<button onclick="show('admin')">Admin</button>
+<button onclick="logout()">Logout</button>
 </nav>
 <main>
 <section id="home" class="page card">
-<h2>Welcome to THENNAL ❤️</h2><p>Meet Malayalis around the world and build meaningful connections.</p><div id="welcome"></div>
+<h2>Welcome to THENNAL ❤️</h2>
+<p>Meet Malayalis around the world and build meaningful connections.</p>
+<div id="welcome"></div>
 <div class="menu-grid">
-<div class="menu-item" onclick="show('discover')">🔎<strong>Discover People</strong></div><div class="menu-item" onclick="show('interested')">❤️<strong>Interested in You</strong></div><div class="menu-item" onclick="show('likes')">💌<strong>Likes & Notes</strong></div><div class="menu-item" onclick="show('matches')">💕<strong>Your Matches</strong></div><div class="menu-item" onclick="show('chat')">💬<strong>Chats</strong></div><div class="menu-item" onclick="show('select')">⭐<strong>THENNAL Select</strong></div><div class="menu-item" onclick="show('premium')">👑<strong>Premium</strong></div><div class="menu-item" onclick="show('wallet')">🪙<strong>My Wallet</strong></div><div class="menu-item" onclick="show('profile')">👤<strong>My Profile</strong></div><div class="menu-item" onclick="show('settings')">⚙️<strong>Settings</strong></div>
+<div class="menu-item" onclick="show('discover')">🔎<strong>Discover People</strong></div>
+<div class="menu-item" onclick="show('interested')">❤️<strong>Interested in You</strong></div>
+<div class="menu-item" onclick="show('likes')">💌<strong>Likes & Notes</strong></div>
+<div class="menu-item" onclick="show('matches')">💕<strong>Your Matches</strong></div>
+<div class="menu-item" onclick="show('chat')">💬<strong>Chats</strong></div>
+<div class="menu-item" onclick="show('select')">⭐<strong>THENNAL Select</strong></div>
+<div class="menu-item" onclick="show('premium')">👑<strong>Premium</strong></div>
+<div class="menu-item" onclick="show('wallet')">🪙<strong>My Wallet</strong></div>
+<div class="menu-item" onclick="show('profile')">👤<strong>My Profile</strong></div>
+<div class="menu-item" onclick="show('settings')">⚙️<strong>Settings</strong></div>
 </div>
 </section>
 
 <section id="discover" class="page hidden">
 <div class="section-head"><h2>Discover People 💕</h2><span class="badge">Malayalis Worldwide</span></div>
-<p class="small">Swipe right to like, left to skip. Use filters to find people.</p>
-<div class="discover-tools"><input id="minAge" type="number" min="18" max="100" placeholder="Minimum age" value="18"><input id="maxAge" type="number" min="18" max="100" placeholder="Maximum age" value="100"><input id="locationFilter" placeholder="Country or City"><button onclick="loadPeople()">🔎 APPLY FILTER</button></div><div id="people"></div>
+<p class="small">Swipe right to like, left to skip. Find people nearby or worldwide.</p>
+<div class="discover-tools">
+<input id="minAge" type="number" min="18" max="100" value="18" placeholder="Minimum age">
+<input id="maxAge" type="number" min="18" max="100" value="100" placeholder="Maximum age">
+<input id="countryFilter" placeholder="Country">
+<input id="cityFilter" placeholder="City">
+<select id="distanceFilter">
+<option value="all">🌍 Worldwide</option>
+<option value="5">Within 5 KM</option>
+<option value="10">Within 10 KM</option>
+<option value="25">Within 25 KM</option>
+<option value="50">Within 50 KM</option>
+<option value="100">Within 100 KM</option>
+</select>
+<button onclick="getMyLocation()">📍 USE MY GPS</button>
+</div>
+<p id="discoverGpsStatus" class="small">GPS is optional. Choose Worldwide to browse all locations.</p>
+<button onclick="loadPeople()">🔎 APPLY FILTER</button>
+<div id="people"></div>
 </section>
 
 <section id="interested" class="page hidden card"><h2>Interested in You ❤️</h2><div id="interestedList"></div></section>
 <section id="likes" class="page hidden card"><h2>Likes & Notes 💌</h2><div id="likesList"></div><div class="feature-note">You can see people who liked your profile here. Personal notes feature needs a dedicated secure database workflow before activation.</div></section>
 <section id="matches" class="page hidden card"><h2>Your Matches 💜</h2><div id="matchesList"></div></section>
-<section id="chat" class="page hidden card"><h2>Chat 💬</h2><div id="chatList"></div><div id="chatPartner" class="small">Choose a match to start chatting. Text chat is free.</div><div id="messages"></div><input id="chatText" placeholder="Write a message..." maxlength="1000"><button onclick="sendMessage()">SEND</button><div><button onclick="startAudioCall()">🎙 AUDIO CALL</button><button onclick="startVideoCall()">📹 VIDEO CALL</button></div><p class="small">Calls require microphone/camera permission. Coin billing is not enabled in this client-only version.</p></section>
+<section id="chat" class="page hidden card">
+<h2>Chat 💬</h2><div id="chatList"></div>
+<div id="chatPartner" class="small">Choose a match to start chatting. Text chat is free.</div>
+<div id="messages"></div>
+<input id="chatText" placeholder="Write a message..." maxlength="1000">
+<button onclick="sendMessage()">SEND</button>
+<div><button onclick="startAudioCall()">🎙 AUDIO CALL</button><button onclick="startVideoCall()">📹 VIDEO CALL</button></div>
+<p class="small">Calls require microphone/camera permission. Coin billing is not enabled in this client-only version.</p>
+</section>
 <section id="select" class="page hidden card"><h2>THENNAL Select ⭐</h2><div class="feature-note">Curated recommendations and Select membership are planned. Membership activation requires a secure payment setup.</div></section>
 <section id="premium" class="page hidden card"><h2>THENNAL Premium 👑</h2><div class="feature-note">Premium plans are displayed as coming soon. No payment will be taken until a verified payment provider is connected.</div></section>
+
 <section id="profile" class="page hidden card">
-<h2>My Profile</h2><div class="profile"><img id="myPhoto" class="avatar" alt="Profile photo"><div id="myDetails"></div></div>
-<input id="name" placeholder="Your Name" maxlength="60"><input id="age" type="number" min="18" max="100" placeholder="Age">
+<h2>My Profile</h2>
+<div class="profile"><img id="myPhoto" class="avatar" alt="Profile photo"><div id="myDetails"></div></div>
+<label>Your Name</label><input id="name" placeholder="Your Name" maxlength="60">
+<label>Age (18+)</label><input id="age" type="number" min="18" max="100" placeholder="Age">
+<label>Gender</label>
 <select id="gender"><option value="">Select Gender</option><option>Male</option><option>Female</option><option>Other</option></select>
-<input id="location" placeholder="City, Country"><textarea id="bio" maxlength="500" placeholder="About yourself"></textarea>
-<label>Profile Photo (image compressed before saving)</label><input id="photo" type="file" accept="image/*">
-<button onclick="saveProfile()">SAVE PROFILE</button><p id="profileMsg" class="small"></p>
+<label>Country</label><input id="country" placeholder="Country">
+<label>State / Province</label><input id="state" placeholder="State or Province">
+<label>City</label><input id="city" placeholder="City">
+<button type="button" class="secondary" onclick="getMyLocation()">📍 DETECT MY GPS LOCATION</button>
+<p id="profileGpsStatus" class="small">GPS is optional. You can enter your location manually.</p>
+<textarea id="bio" maxlength="500" placeholder="About yourself"></textarea>
+<label>Profile Photo (image compressed before saving)</label>
+<input id="photo" type="file" accept="image/*">
+<button onclick="saveProfile()">SAVE PROFILE</button>
+<p id="profileMsg" class="small"></p>
 <div class="prompt-card"><strong>Voice Prompt 🎙</strong><p class="small">Add a short voice introduction: this UI is prepared, but audio upload/storage is not connected yet.</p><button class="secondary" disabled>ADD VOICE PROMPT — COMING SOON</button></div>
 <div class="prompt-card"><strong>Profile Verification ✓</strong><p class="small">Verification requires a secure review process. Do not display a verified badge until an administrator verifies the account.</p><button class="secondary" disabled>REQUEST VERIFICATION — COMING SOON</button></div>
 </section>
+
 <section id="wallet" class="page hidden card"><h2>My Wallet 🪙</h2><h1 id="coinBalance">0 Coins</h1><p>Audio call rate: <span id="audioRate">5</span> coins/min</p><p>Video call rate: <span id="videoRate">10</span> coins/min</p><div class="feature-note">Wallet balance is read-only here. Coin purchase and secure call deductions are not active because they need trusted server-side payment and billing logic.</div></section>
 <section id="settings" class="page hidden card"><h2>Settings & Help ⚙️</h2><button onclick="show('profile')">EDIT PROFILE</button><button onclick="logout()">LOG OUT</button><p class="small">Support: kproushal@gmail.com</p><p class="small">Please report suspicious accounts. Never share passwords or payment details in chat.</p></section>
 <section id="admin" class="page hidden card"><h2>Admin Dashboard</h2><div id="adminContent">Admin access only.</div></section>
 <section id="call" class="page hidden card"><h2 id="callTitle">Call</h2><p id="callStatus">Waiting...</p><video id="remoteVideo" autoplay playsinline></video><video id="localVideo" autoplay muted playsinline></video><button onclick="endCall()">END CALL</button></section>
-</main></div>
+</main>
+</div>
 
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
@@ -123,176 +185,692 @@ messagingSenderId:"109570780589",
 appId:"1:109570780589:web:5a42cede76210ba8e5c524",
 measurementId:"G-FG0P26JEXK"
 };
+
 const firebase=initializeApp(firebaseConfig),auth=getAuth(firebase),db=getFirestore(firebase);
 const ADMIN="kproushal@gmail.com";
+
 let me=null,myProfile={},activeMatch=null,chatUnsub=null,callPC=null,localStream=null,activeCall=null,incomingUnsub=null,callUnsubs=[],discoverPeople=[],discoverIndex=0;
-const $=id=>document.getElementById(id),say=(id,msg)=>$(id).textContent=msg,showError=msg=>alert(msg||"Something went wrong");
+let myLatitude=null,myLongitude=null;
+
+const $=id=>document.getElementById(id);
+const say=(id,msg)=>{if($(id))$(id).textContent=msg;};
+const showError=msg=>alert(msg||"Something went wrong");
+
 window.show=id=>{
 document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
-const page=$(id);if(!page)return;page.classList.remove("hidden");
-if(id==="discover")loadPeople();if(id==="likes"||id==="interested")loadLikes();if(id==="matches")loadMatches();if(id==="wallet")loadWallet();if(id==="admin")loadAdmin();if(id==="chat")loadChatList();
+const page=$(id);
+if(!page)return;
+page.classList.remove("hidden");
+if(id==="discover")loadPeople();
+if(id==="likes"||id==="interested")loadLikes();
+if(id==="matches")loadMatches();
+if(id==="wallet")loadWallet();
+if(id==="admin")loadAdmin();
+if(id==="chat")loadChatList();
 };
-window.login=async()=>{try{const email=$("email").value.trim(),password=$("password").value;if(!email||!password)throw Error("Enter email and password.");await signInWithEmailAndPassword(auth,email,password);}catch(e){say("authMsg",e.message);}};
-window.register=async()=>{try{const email=$("email").value.trim(),password=$("password").value;if(!email||!password)throw Error("Enter email and password.");if(password.length<6)throw Error("Password must be at least 6 characters.");await createUserWithEmailAndPassword(auth,email,password);}catch(e){say("authMsg",e.message);}};
-window.logout=async()=>{try{await signOut(auth);}catch(e){showError(e.message);}};
+
+window.login=async()=>{
+try{
+const email=$("email").value.trim(),password=$("password").value;
+if(!email||!password)throw Error("Enter email and password.");
+await signInWithEmailAndPassword(auth,email,password);
+}catch(e){say("authMsg",e.message);}
+};
+
+window.register=async()=>{
+try{
+const email=$("email").value.trim(),password=$("password").value;
+if(!email||!password)throw Error("Enter email and password.");
+if(password.length<6)throw Error("Password must be at least 6 characters.");
+await createUserWithEmailAndPassword(auth,email,password);
+}catch(e){say("authMsg",e.message);}
+};
+
+window.logout=async()=>{
+try{await signOut(auth);}catch(e){showError(e.message);}
+};
+
 onAuthStateChanged(auth,async user=>{
-if(!user){me=null;myProfile={};activeMatch=null;$("auth").classList.remove("hidden");$("app").classList.add("hidden");if(incomingUnsub){incomingUnsub();incomingUnsub=null;}if(chatUnsub){chatUnsub();chatUnsub=null;}endCallLocal(false);return;}
-me=user;$("auth").classList.add("hidden");$("app").classList.remove("hidden");
-try{await loadMyProfile();listenIncomingCalls();show("home");}catch(e){showError("Loading error: "+e.message);}
-});
-async function loadMyProfile(){
-const snap=await getDoc(doc(db,"users",me.uid));myProfile=snap.exists()?snap.data():{};
-$("name").value=myProfile.name||"";$("age").value=myProfile.age||"";$("gender").value=myProfile.gender||"";
-$("location").value=myProfile.location||myProfile.city||"";$("bio").value=myProfile.bio||"";
-$("myPhoto").src=myProfile.photoURL||"";$("myDetails").textContent=myProfile.name||me.email;
-$("welcome").textContent="Hello "+(myProfile.name||me.email)+" ❤️";
+if(!user){
+me=null;myProfile={};activeMatch=null;
+$("auth").classList.remove("hidden");
+$("app").classList.add("hidden");
+if(incomingUnsub){incomingUnsub();incomingUnsub=null;}
+if(chatUnsub){chatUnsub();chatUnsub=null;}
+endCallLocal(false);
+return;
 }
+me=user;
+$("auth").classList.add("hidden");
+$("app").classList.remove("hidden");
+try{
+await loadMyProfile();
+listenIncomingCalls();
+show("home");
+}catch(e){showError("Loading error: "+e.message);}
+});
+
+async function loadMyProfile(){
+const snap=await getDoc(doc(db,"users",me.uid));
+myProfile=snap.exists()?snap.data():{};
+
+$("name").value=myProfile.name||"";
+$("age").value=myProfile.age||"";
+$("gender").value=myProfile.gender||"";
+$("country").value=myProfile.country||"";
+$("state").value=myProfile.state||"";
+$("city").value=myProfile.city||"";
+$("bio").value=myProfile.bio||"";
+
+myLatitude=Number.isFinite(myProfile.latitude)?myProfile.latitude:null;
+myLongitude=Number.isFinite(myProfile.longitude)?myProfile.longitude:null;
+
+$("myPhoto").src=myProfile.photoURL||"";
+$("myDetails").textContent=myProfile.name||me.email;
+$("welcome").textContent="Hello "+(myProfile.name||me.email)+" ❤️";
+
+if(myLatitude!==null&&myLongitude!==null){
+say("profileGpsStatus","Your GPS coordinates are saved privately.");
+}else{
+say("profileGpsStatus","GPS not saved. You can detect it or enter your location manually.");
+}
+}
+
 async function compressImage(file){
 if(!file.type.startsWith("image/"))throw Error("Please choose an image file.");
-const image=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(Error("Could not read image."));img.src=reader.result;};reader.onerror=()=>reject(Error("Could not read selected photo."));reader.readAsDataURL(file);});
+const image=await new Promise((resolve,reject)=>{
+const reader=new FileReader();
+reader.onload=()=>{
+const img=new Image();
+img.onload=()=>resolve(img);
+img.onerror=()=>reject(Error("Could not read image."));
+img.src=reader.result;
+};
+reader.onerror=()=>reject(Error("Could not read selected photo."));
+reader.readAsDataURL(file);
+});
 const canvas=document.createElement("canvas"),max=720,scale=Math.min(1,max/Math.max(image.width,image.height));
-canvas.width=Math.round(image.width*scale);canvas.height=Math.round(image.height*scale);
+canvas.width=Math.round(image.width*scale);
+canvas.height=Math.round(image.height*scale);
 canvas.getContext("2d").drawImage(image,0,0,canvas.width,canvas.height);
 const data=canvas.toDataURL("image/jpeg",.62);
 if(data.length>650000)throw Error("Photo is still too large. Please choose a smaller image.");
 return data;
 }
+
+/* GPS: exact coordinates are kept in the signed-in user's private users document.
+   Only rounded coordinates are published for approximate distance filtering. */
+window.getMyLocation=()=>{
+if(!navigator.geolocation){
+say("profileGpsStatus","GPS is not supported by this browser.");
+say("discoverGpsStatus","GPS is not supported by this browser.");
+return;
+}
+say("profileGpsStatus","Finding your location...");
+say("discoverGpsStatus","Finding your location...");
+navigator.geolocation.getCurrentPosition(
+position=>{
+myLatitude=position.coords.latitude;
+myLongitude=position.coords.longitude;
+say("profileGpsStatus","Location detected. Save your profile to update your location. 📍");
+say("discoverGpsStatus","GPS detected. You can now apply a distance filter. 📍");
+},
+error=>{
+let message="Could not get location. Allow location permission or enter your city manually.";
+if(error.code===1)message="Location permission denied. Enable location permission in your browser.";
+say("profileGpsStatus",message);
+say("discoverGpsStatus",message);
+},
+{enableHighAccuracy:false,timeout:15000,maximumAge:300000}
+);
+};
+
 window.saveProfile=async()=>{
 try{
-const name=$("name").value.trim(),age=Number($("age").value),gender=$("gender").value,location=$("location").value.trim();
-if(!name)throw Error("Please enter your name.");if(!age||age<18||age>100)throw Error("Age must be between 18 and 100.");if(!gender)throw Error("Please select your gender.");
-let photoURL=myProfile.photoURL||"";const file=$("photo").files[0];if(file)photoURL=await compressImage(file);
-const profile={uid:me.uid,email:me.email||"",name,age,gender,location,city:location,bio:$("bio").value.trim(),photoURL,status:"active",updatedAt:serverTimestamp()};
-await setDoc(doc(db,"users",me.uid),profile,{merge:true});
-await setDoc(doc(db,"publicProfiles",me.uid),profile,{merge:true});
-myProfile={...profile};$("myPhoto").src=photoURL;$("myDetails").textContent=name;$("welcome").textContent="Hello "+name+" ❤️";$("photo").value="";
-say("profileMsg","Profile saved successfully ❤️");
-}catch(e){say("profileMsg",e.message);}
+const name=$("name").value.trim();
+const age=Number($("age").value);
+const gender=$("gender").value;
+const country=$("country").value.trim();
+const state=$("state").value.trim();
+const city=$("city").value.trim();
+
+if(!name)throw Error("Please enter your name.");
+if(!age||age<18||age>100)throw Error("Age must be between 18 and 100.");
+if(!gender)throw Error("Please select your gender.");
+if(!country||!city)throw Error("Please enter your country and city.");
+
+let photoURL=myProfile.photoURL||"";
+const file=$("photo").files[0];
+if(file)photoURL=await compressImage(file);
+
+const location=[city,state,country].filter(Boolean).join(", ");
+
+const privateProfile={
+uid:me.uid,
+email:me.email||"",
+name,age,gender,country,state,city,location,
+bio:$("bio").value.trim(),
+photoURL,
+status:"active",
+latitude:myLatitude,
+longitude:myLongitude,
+updatedAt:serverTimestamp()
 };
+
+const publicProfile={
+uid:me.uid,
+name,age,gender,country,state,city,location,
+bio:privateProfile.bio,
+photoURL,
+status:"active",
+latitude:myLatitude===null?null:Number(myLatitude.toFixed(2)),
+longitude:myLongitude===null?null:Number(myLongitude.toFixed(2)),
+updatedAt:serverTimestamp()
+};
+
+await setDoc(doc(db,"users",me.uid),privateProfile,{merge:true});
+await setDoc(doc(db,"publicProfiles",me.uid),publicProfile,{merge:true});
+
+myProfile=privateProfile;
+$("myPhoto").src=photoURL;
+$("myDetails").textContent=name;
+$("welcome").textContent="Hello "+name+" ❤️";
+$("photo").value="";
+say("profileMsg","Profile saved successfully ❤️");
+}catch(e){
+say("profileMsg",e.message);
+}
+};
+
+/* Haversine distance calculation */
+function distanceKM(lat1,lon1,lat2,lon2){
+const R=6371;
+const rad=x=>x*Math.PI/180;
+const dLat=rad(lat2-lat1);
+const dLon=rad(lon2-lon1);
+const a=Math.sin(dLat/2)**2+
+Math.cos(rad(lat1))*Math.cos(rad(lat2))*Math.sin(dLon/2)**2;
+return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+}
+
 async function loadPeople(){
-const area=$("people");area.textContent="Loading profiles...";
+const area=$("people");
+area.textContent="Loading profiles...";
 try{
-const snap=await getDocs(query(collection(db,"publicProfiles"),where("status","==","active")));discoverPeople=[];
-snap.forEach(d=>{const p=d.data();if(p.uid!==me.uid)discoverPeople.push(p);});
-const min=Number($("minAge").value)||18,max=Number($("maxAge").value)||100,loc=$("locationFilter").value.trim().toLowerCase();
-discoverPeople=discoverPeople.filter(p=>{const age=Number(p.age)||0,place=(p.location||p.city||"").toLowerCase();return age>=min&&age<=max&&(!loc||place.includes(loc));});
-discoverIndex=0;renderDiscoverCard();
-}catch(e){area.textContent="Could not load profiles: "+e.message;}
+const snap=await getDocs(query(collection(db,"publicProfiles"),where("status","==","active")));
+discoverPeople=[];
+
+const min=Number($("minAge").value)||18;
+const max=Number($("maxAge").value)||100;
+const country=$("countryFilter").value.trim().toLowerCase();
+const city=$("cityFilter").value.trim().toLowerCase();
+const radius=$("distanceFilter").value;
+
+if(radius!=="all"&&(myLatitude===null||myLongitude===null)){
+area.textContent="Please use GPS first to find nearby profiles.";
+return;
 }
+
+snap.forEach(d=>{
+const p=d.data();
+if(p.uid===me.uid)return;
+
+const age=Number(p.age)||0;
+if(age<min||age>max)return;
+
+const profileCountry=(p.country||"").toLowerCase();
+const profileCity=(p.city||"").toLowerCase();
+const legacyLocation=(p.location||"").toLowerCase();
+
+if(country&&!profileCountry.includes(country)&&!legacyLocation.includes(country))return;
+if(city&&!profileCity.includes(city)&&!legacyLocation.includes(city))return;
+
+if(radius!=="all"){
+if(!Number.isFinite(p.latitude)||!Number.isFinite(p.longitude))return;
+const km=distanceKM(myLatitude,myLongitude,p.latitude,p.longitude);
+if(km>Number(radius))return;
+p.distanceKM=Math.round(km);
+}
+discoverPeople.push(p);
+});
+
+discoverIndex=0;
+renderDiscoverCard();
+}catch(e){
+area.textContent="Could not load profiles: "+e.message;
+}
+}
+
 function renderDiscoverCard(){
-const area=$("people");area.innerHTML="";
-if(discoverIndex>=discoverPeople.length){area.textContent="No more profiles found. Try another filter ❤️";return;}
-const p=discoverPeople[discoverIndex],card=document.createElement("div");card.id="swipeCard";
-const img=document.createElement("img");img.src=p.photoURL||"";img.alt=p.name||"Member";
-const title=document.createElement("h2");title.textContent=(p.name||"THENNAL Member")+(p.age?" • "+p.age:"");
-const place=document.createElement("p");place.className="small";place.textContent=p.location||p.city||"Location not added";
-const gender=document.createElement("p");gender.className="small";gender.textContent=p.gender||"";
-const bio=document.createElement("p");bio.textContent=p.bio||"";
-const actions=document.createElement("div");actions.className="swipe-actions";
-const skip=document.createElement("button");skip.className="secondary";skip.textContent="❌ SKIP";skip.onclick=skipProfile;
-const like=document.createElement("button");like.textContent="❤️ LIKE";like.onclick=()=>likeProfile(p.uid);
-const superLike=document.createElement("button");superLike.className="gold";superLike.textContent="⭐ SUPER LIKE";superLike.onclick=()=>likeProfile(p.uid);
-actions.append(skip,like,superLike);card.append(img,title,place,gender,bio,actions);area.append(card);
-let startX=0;card.addEventListener("touchstart",e=>{startX=e.touches[0].clientX;},{passive:true});
-card.addEventListener("touchend",e=>{const diff=e.changedTouches[0].clientX-startX;if(diff>90)likeProfile(p.uid);else if(diff< -90)skipProfile();},{passive:true});
+const area=$("people");
+area.innerHTML="";
+if(discoverIndex>=discoverPeople.length){
+area.textContent="No more profiles found. Try another filter ❤️";
+return;
 }
-function skipProfile(){discoverIndex++;renderDiscoverCard();}
-async function likeProfile(uid){await sendLike(uid);discoverIndex++;renderDiscoverCard();}
+
+const p=discoverPeople[discoverIndex],card=document.createElement("div");
+card.id="swipeCard";
+
+const img=document.createElement("img");
+img.src=p.photoURL||"";
+img.alt=p.name||"Member";
+
+const title=document.createElement("h2");
+title.textContent=(p.name||"THENNAL Member")+(p.age?" • "+p.age:"");
+
+const place=document.createElement("p");
+place.className="small";
+place.textContent=[p.city,p.state,p.country].filter(Boolean).join(", ")||p.location||"Location not added";
+if(p.distanceKM!==undefined)place.textContent+=" • Approx. "+p.distanceKM+" KM away";
+
+const gender=document.createElement("p");
+gender.className="small";
+gender.textContent=p.gender||"";
+
+const bio=document.createElement("p");
+bio.textContent=p.bio||"";
+
+const actions=document.createElement("div");
+actions.className="swipe-actions";
+
+const skip=document.createElement("button");
+skip.className="secondary";
+skip.textContent="❌ SKIP";
+skip.onclick=skipProfile;
+
+const like=document.createElement("button");
+like.textContent="❤️ LIKE";
+like.onclick=()=>likeProfile(p.uid);
+
+const superLike=document.createElement("button");
+superLike.className="gold";
+superLike.textContent="⭐ SUPER LIKE";
+superLike.onclick=()=>likeProfile(p.uid);
+
+actions.append(skip,like,superLike);
+card.append(img,title,place,gender,bio,actions);
+area.append(card);
+
+let startX=0;
+card.addEventListener("touchstart",e=>{startX=e.touches[0].clientX;},{passive:true});
+card.addEventListener("touchend",e=>{
+const diff=e.changedTouches[0].clientX-startX;
+if(diff>90)likeProfile(p.uid);
+else if(diff< -90)skipProfile();
+},{passive:true});
+}
+
+function skipProfile(){
+discoverIndex++;
+renderDiscoverCard();
+}
+
+async function likeProfile(uid){
+await sendLike(uid);
+discoverIndex++;
+renderDiscoverCard();
+}
+
 async function sendLike(toUid){
-try{if(!toUid||toUid===me.uid)return;await setDoc(doc(db,"likes",me.uid+"_"+toUid),{fromUid:me.uid,toUid,createdAt:serverTimestamp()});
-const reverse=await getDoc(doc(db,"likes",toUid+"_"+me.uid));if(reverse.exists()){const ids=[me.uid,toUid].sort();await setDoc(doc(db,"matches",ids.join("_")),{user1:ids[0],user2:ids[1],createdAt:serverTimestamp()});alert("It's a Match! ❤️");}else alert("Like sent ❤️");
-}catch(e){showError("Like error: "+e.message);}
-}
-async function loadLikes(){
-const area=$("likesList"),interested=$("interestedList");area.textContent="Loading...";interested.textContent="Loading...";
 try{
-const snap=await getDocs(query(collection(db,"likes"),where("toUid","==",me.uid)));area.innerHTML="";interested.innerHTML="";
-for(const d of snap.docs){const like=d.data(),u=await getDoc(doc(db,"publicProfiles",like.fromUid));if(!u.exists())continue;const p=u.data();
-const row=document.createElement("div");row.className="person-row";const img=document.createElement("img");img.src=p.photoURL||"";const info=document.createElement("div");info.className="grow";
-const name=document.createElement("strong");name.textContent=(p.name||"Someone")+" likes you ❤️";const detail=document.createElement("p");detail.className="small";detail.textContent=(p.age?p.age+" • ":"")+(p.location||p.city||"");
-const btn=document.createElement("button");btn.textContent="View Matches";btn.onclick=()=>show("matches");info.append(name,detail,btn);row.append(img,info);area.append(row);
-const row2=row.cloneNode(true);row2.querySelector("button").addEventListener("click",()=>show("matches"));interested.append(row2);
+if(!toUid||toUid===me.uid)return;
+await setDoc(doc(db,"likes",me.uid+"_"+toUid),{
+fromUid:me.uid,toUid,createdAt:serverTimestamp()
+});
+const reverse=await getDoc(doc(db,"likes",toUid+"_"+me.uid));
+if(reverse.exists()){
+const ids=[me.uid,toUid].sort();
+await setDoc(doc(db,"matches",ids.join("_")),{
+user1:ids[0],user2:ids[1],createdAt:serverTimestamp()
+});
+alert("It's a Match! ❤️");
+}else{
+alert("Like sent ❤️");
 }
-if(!area.children.length)area.textContent="No likes yet.";if(!interested.children.length)interested.textContent="No one has liked your profile yet.";
-}catch(e){area.textContent="Likes error: "+e.message;interested.textContent=e.message;}
+}catch(e){
+showError("Like error: "+e.message);
 }
+}
+
+async function loadLikes(){
+const area=$("likesList"),interested=$("interestedList");
+area.textContent="Loading...";
+interested.textContent="Loading...";
+try{
+const snap=await getDocs(query(collection(db,"likes"),where("toUid","==",me.uid)));
+area.innerHTML="";
+interested.innerHTML="";
+for(const d of snap.docs){
+const like=d.data();
+const u=await getDoc(doc(db,"publicProfiles",like.fromUid));
+if(!u.exists())continue;
+const p=u.data();
+
+const row=document.createElement("div");
+row.className="person-row";
+const img=document.createElement("img");
+img.src=p.photoURL||"";
+const info=document.createElement("div");
+info.className="grow";
+const name=document.createElement("strong");
+name.textContent=(p.name||"Someone")+" likes you ❤️";
+const detail=document.createElement("p");
+detail.className="small";
+detail.textContent=(p.age?p.age+" • ":"")+(p.location||p.city||"");
+const btn=document.createElement("button");
+btn.textContent="View Matches";
+btn.onclick=()=>show("matches");
+info.append(name,detail,btn);
+row.append(img,info);
+area.append(row);
+
+const row2=row.cloneNode(true);
+row2.querySelector("button").addEventListener("click",()=>show("matches"));
+interested.append(row2);
+}
+if(!area.children.length)area.textContent="No likes yet.";
+if(!interested.children.length)interested.textContent="No one has liked your profile yet.";
+}catch(e){
+area.textContent="Likes error: "+e.message;
+interested.textContent=e.message;
+}
+}
+
 async function getMyMatches(){
-const [one,two]=await Promise.all([getDocs(query(collection(db,"matches"),where("user1","==",me.uid))),getDocs(query(collection(db,"matches"),where("user2","==",me.uid)))]);
-const all=new Map();one.docs.forEach(d=>all.set(d.id,d));two.docs.forEach(d=>all.set(d.id,d));return [...all.values()];
+const [one,two]=await Promise.all([
+getDocs(query(collection(db,"matches"),where("user1","==",me.uid))),
+getDocs(query(collection(db,"matches"),where("user2","==",me.uid)))
+]);
+const all=new Map();
+one.docs.forEach(d=>all.set(d.id,d));
+two.docs.forEach(d=>all.set(d.id,d));
+return [...all.values()];
 }
+
 async function renderMatchButtons(container){
-container.innerHTML="";const matches=await getMyMatches();if(!matches.length){container.textContent="No matches yet.";return;}
-for(const d of matches){const m=d.data(),other=m.user1===me.uid?m.user2:m.user1,u=await getDoc(doc(db,"publicProfiles",other)),p=u.exists()?u.data():{};
-const row=document.createElement("div");row.className="person-row";const img=document.createElement("img");img.src=p.photoURL||"";const info=document.createElement("div");info.className="grow";
-const name=document.createElement("strong");name.textContent=p.name||"THENNAL Match";const detail=document.createElement("p");detail.className="small";detail.textContent=p.location||p.city||"";
-const b=document.createElement("button");b.textContent="OPEN CHAT";b.onclick=()=>openChat(d.id);info.append(name,detail,b);row.append(img,info);container.append(row);}
+container.innerHTML="";
+const matches=await getMyMatches();
+if(!matches.length){
+container.textContent="No matches yet.";
+return;
 }
-async function loadMatches(){const area=$("matchesList");area.textContent="Loading...";try{await renderMatchButtons(area);}catch(e){area.textContent=e.message;}}
-async function loadChatList(){const area=$("chatList");area.innerHTML="<p class='small'>Your matched people:</p>";try{await renderMatchButtons(area);}catch(e){area.textContent=e.message;}}
+for(const d of matches){
+const m=d.data(),other=m.user1===me.uid?m.user2:m.user1;
+const u=await getDoc(doc(db,"publicProfiles",other));
+const p=u.exists()?u.data():{};
+
+const row=document.createElement("div");
+row.className="person-row";
+const img=document.createElement("img");
+img.src=p.photoURL||"";
+const info=document.createElement("div");
+info.className="grow";
+const name=document.createElement("strong");
+name.textContent=p.name||"THENNAL Match";
+const detail=document.createElement("p");
+detail.className="small";
+detail.textContent=p.location||p.city||"";
+const b=document.createElement("button");
+b.textContent="OPEN CHAT";
+b.onclick=()=>openChat(d.id);
+info.append(name,detail,b);
+row.append(img,info);
+container.append(row);
+}
+}
+
+async function loadMatches(){
+const area=$("matchesList");
+area.textContent="Loading...";
+try{await renderMatchButtons(area);}
+catch(e){area.textContent=e.message;}
+}
+
+async function loadChatList(){
+const area=$("chatList");
+area.innerHTML="<p class='small'>Your matched people:</p>";
+try{await renderMatchButtons(area);}
+catch(e){area.textContent=e.message;}
+}
+
 async function openChat(matchId){
-activeMatch=matchId;show("chat");if(chatUnsub){chatUnsub();chatUnsub=null;}
-const messages=$("messages");messages.innerHTML="Loading messages...";
+activeMatch=matchId;
+show("chat");
+if(chatUnsub){chatUnsub();chatUnsub=null;}
+const messages=$("messages");
+messages.innerHTML="Loading messages...";
 chatUnsub=onSnapshot(query(collection(db,"chats",matchId,"messages")),snap=>{
-messages.innerHTML="";const docs=snap.docs.sort((a,b)=>(a.data().createdAt?.seconds||0)-(b.data().createdAt?.seconds||0));
-docs.forEach(d=>{const m=d.data(),mine=m.senderUid===me.uid,div=document.createElement("div");div.className="msg "+(mine?"mine":"");div.textContent=(mine?"You: ":"")+m.text;messages.append(div);});messages.scrollTop=messages.scrollHeight;
+messages.innerHTML="";
+const docs=snap.docs.sort((a,b)=>(a.data().createdAt?.seconds||0)-(b.data().createdAt?.seconds||0));
+docs.forEach(d=>{
+const m=d.data(),mine=m.senderUid===me.uid;
+const div=document.createElement("div");
+div.className="msg "+(mine?"mine":"");
+div.textContent=(mine?"You: ":"")+m.text;
+messages.append(div);
+});
+messages.scrollTop=messages.scrollHeight;
 },e=>showError("Chat error: "+e.message));
 }
+
 window.sendMessage=async()=>{
-const text=$("chatText").value.trim();if(!text||!activeMatch)return;
-try{await addDoc(collection(db,"chats",activeMatch,"messages"),{senderUid:me.uid,text,createdAt:serverTimestamp()});$("chatText").value="";}
-catch(e){showError("Message error: "+e.message);}
+const text=$("chatText").value.trim();
+if(!text||!activeMatch)return;
+try{
+await addDoc(collection(db,"chats",activeMatch,"messages"),{
+senderUid:me.uid,text,createdAt:serverTimestamp()
+});
+$("chatText").value="";
+}catch(e){showError("Message error: "+e.message);}
 };
+
 async function loadWallet(){
-try{const snap=await getDoc(doc(db,"wallets",me.uid));$("coinBalance").textContent=(snap.exists()?snap.data().coins||0:0)+" Coins";
-const rates=await getDoc(doc(db,"settings","rates"));if(rates.exists()){$("audioRate").textContent=rates.data().audio||5;$("videoRate").textContent=rates.data().video||10;}
-}catch(e){showError("Wallet unavailable under current Firestore permissions: "+e.message);}
+try{
+const snap=await getDoc(doc(db,"wallets",me.uid));
+$("coinBalance").textContent=(snap.exists()?snap.data().coins||0:0)+" Coins";
+const rates=await getDoc(doc(db,"settings","rates"));
+if(rates.exists()){
+$("audioRate").textContent=rates.data().audio||5;
+$("videoRate").textContent=rates.data().video||10;
 }
+}catch(e){
+showError("Wallet unavailable under current Firestore permissions: "+e.message);
+}
+}
+
 async function loadAdmin(){
-const area=$("adminContent");if(me.email!==ADMIN){area.textContent="Access denied.";return;}
-try{const rates=await getDoc(doc(db,"settings","rates")),r=rates.exists()?rates.data():{audio:5,video:10};
-area.innerHTML=`<p>Admin: ${ADMIN}</p><p class="small">Rate editor requires matching Firestore settings permissions.</p><label>Audio coins per minute</label><input id="adminAudio" type="number" min="1" value="${r.audio||5}"><label>Video coins per minute</label><input id="adminVideo" type="number" min="1" value="${r.video||10}"><button id="saveRates">SAVE RATES</button>`;
-$("saveRates").onclick=async()=>{try{const audio=Math.max(1,Number($("adminAudio").value)),video=Math.max(1,Number($("adminVideo").value));await setDoc(doc(db,"settings","rates"),{audio,video});alert("Rates saved");}catch(e){showError("Could not save rates: "+e.message);}};
-}catch(e){area.textContent="Admin data is not available with the current Firestore Rules: "+e.message;}
+const area=$("adminContent");
+if(me.email!==ADMIN){
+area.textContent="Access denied.";
+return;
 }
+try{
+const rates=await getDoc(doc(db,"settings","rates"));
+const r=rates.exists()?rates.data():{audio:5,video:10};
+area.innerHTML=`<p>Admin: ${ADMIN}</p><p class="small">Rate editor requires matching Firestore settings permissions.</p><label>Audio coins per minute</label><input id="adminAudio" type="number" min="1" value="${r.audio||5}"><label>Video coins per minute</label><input id="adminVideo" type="number" min="1" value="${r.video||10}"><button id="saveRates">SAVE RATES</button>`;
+$("saveRates").onclick=async()=>{
+try{
+const audio=Math.max(1,Number($("adminAudio").value));
+const video=Math.max(1,Number($("adminVideo").value));
+await setDoc(doc(db,"settings","rates"),{audio,video});
+alert("Rates saved");
+}catch(e){showError("Could not save rates: "+e.message);}
+};
+}catch(e){
+area.textContent="Admin data is not available with the current Firestore Rules: "+e.message;
+}
+}
+
 /* WebRTC: Google STUN only. Some networks require a TURN relay for reliable calls. */
 const rtcConfig={iceServers:[{urls:"stun:stun.l.google.com:19302"}]};
-async function prepareMedia(type){if(!navigator.mediaDevices?.getUserMedia)throw Error("Open this site using HTTPS.");localStream=await navigator.mediaDevices.getUserMedia({audio:true,video:type==="video"});$("localVideo").srcObject=localStream;}
-function addCallCandidate(callId,subcollection,candidate){if(!candidate)return;return addDoc(collection(db,"calls",callId,subcollection),{candidate:candidate.candidate,sdpMid:candidate.sdpMid||null,sdpMLineIndex:candidate.sdpMLineIndex??null,usernameFragment:candidate.usernameFragment||null,ownerUid:me.uid});}
+
+async function prepareMedia(type){
+if(!navigator.mediaDevices?.getUserMedia)throw Error("Open this site using HTTPS.");
+localStream=await navigator.mediaDevices.getUserMedia({audio:true,video:type==="video"});
+$("localVideo").srcObject=localStream;
+}
+
+function addCallCandidate(callId,subcollection,candidate){
+if(!candidate)return;
+return addDoc(collection(db,"calls",callId,subcollection),{
+candidate:candidate.candidate,
+sdpMid:candidate.sdpMid||null,
+sdpMLineIndex:candidate.sdpMLineIndex??null,
+usernameFragment:candidate.usernameFragment||null,
+ownerUid:me.uid
+});
+}
+
 function listenForCandidates(callId,subcollection){
-const unsub=onSnapshot(collection(db,"calls",callId,subcollection),snap=>{snap.docChanges().forEach(change=>{if(change.type!=="added"||!callPC)return;const data=change.doc.data();if(data.ownerUid===me.uid)return;
-callPC.addIceCandidate(new RTCIceCandidate({candidate:data.candidate,sdpMid:data.sdpMid,sdpMLineIndex:data.sdpMLineIndex,usernameFragment:data.usernameFragment||undefined})).catch(console.error);});},console.error);callUnsubs.push(unsub);
+const unsub=onSnapshot(collection(db,"calls",callId,subcollection),snap=>{
+snap.docChanges().forEach(change=>{
+if(change.type!=="added"||!callPC)return;
+const data=change.doc.data();
+if(data.ownerUid===me.uid)return;
+callPC.addIceCandidate(new RTCIceCandidate({
+candidate:data.candidate,
+sdpMid:data.sdpMid,
+sdpMLineIndex:data.sdpMLineIndex,
+usernameFragment:data.usernameFragment||undefined
+})).catch(console.error);
+});
+},console.error);
+callUnsubs.push(unsub);
 }
+
 async function startCall(type){
-if(!activeMatch){alert("Open a match chat first.");return;}
-try{const matchSnap=await getDoc(doc(db,"matches",activeMatch));if(!matchSnap.exists())throw Error("Match not found.");const match=matchSnap.data(),other=match.user1===me.uid?match.user2:match.user1;
-await prepareMedia(type);callPC=new RTCPeerConnection(rtcConfig);localStream.getTracks().forEach(t=>callPC.addTrack(t,localStream));callPC.ontrack=e=>$("remoteVideo").srcObject=e.streams[0];
-const callRef=doc(collection(db,"calls"));activeCall=callRef;callPC.onicecandidate=e=>{if(e.candidate)addCallCandidate(callRef.id,"callerCandidates",e.candidate.toJSON()).catch(console.error);};
-const offer=await callPC.createOffer();await callPC.setLocalDescription(offer);
-await setDoc(callRef,{callerUid:me.uid,calleeUid:other,matchId:activeMatch,type,offer:{type:offer.type,sdp:offer.sdp},status:"ringing",createdAt:serverTimestamp()});
-callUnsubs.push(onSnapshot(callRef,async snap=>{if(!snap.exists())return;const data=snap.data();if(data?.answer&&callPC&&!callPC.currentRemoteDescription){await callPC.setRemoteDescription(new RTCSessionDescription(data.answer));say("callStatus","Connected");}if(data?.status==="ended"||data?.status==="rejected")endCallLocal();}));
-listenForCandidates(callRef.id,"calleeCandidates");$("callTitle").textContent=type.toUpperCase()+" CALL";say("callStatus","Calling...");show("call");
-}catch(e){showError("Call error: "+e.message);endCallLocal();}
+if(!activeMatch){
+alert("Open a match chat first.");
+return;
 }
+try{
+const matchSnap=await getDoc(doc(db,"matches",activeMatch));
+if(!matchSnap.exists())throw Error("Match not found.");
+const match=matchSnap.data();
+const other=match.user1===me.uid?match.user2:match.user1;
+
+await prepareMedia(type);
+callPC=new RTCPeerConnection(rtcConfig);
+localStream.getTracks().forEach(t=>callPC.addTrack(t,localStream));
+callPC.ontrack=e=>$("remoteVideo").srcObject=e.streams[0];
+
+const callRef=doc(collection(db,"calls"));
+activeCall=callRef;
+callPC.onicecandidate=e=>{
+if(e.candidate)addCallCandidate(callRef.id,"callerCandidates",e.candidate.toJSON()).catch(console.error);
+};
+
+const offer=await callPC.createOffer();
+await callPC.setLocalDescription(offer);
+await setDoc(callRef,{
+callerUid:me.uid,
+calleeUid:other,
+matchId:activeMatch,
+type,
+offer:{type:offer.type,sdp:offer.sdp},
+status:"ringing",
+createdAt:serverTimestamp()
+});
+
+callUnsubs.push(onSnapshot(callRef,async snap=>{
+if(!snap.exists())return;
+const data=snap.data();
+if(data?.answer&&callPC&&!callPC.currentRemoteDescription){
+await callPC.setRemoteDescription(new RTCSessionDescription(data.answer));
+say("callStatus","Connected");
+}
+if(data?.status==="ended"||data?.status==="rejected")endCallLocal();
+}));
+
+listenForCandidates(callRef.id,"calleeCandidates");
+$("callTitle").textContent=type.toUpperCase()+" CALL";
+say("callStatus","Calling...");
+show("call");
+}catch(e){
+showError("Call error: "+e.message);
+endCallLocal();
+}
+}
+
 function listenIncomingCalls(){
-if(incomingUnsub)incomingUnsub();incomingUnsub=onSnapshot(query(collection(db,"calls"),where("calleeUid","==",me.uid),where("status","==","ringing")),snap=>{
-snap.docChanges().forEach(change=>{if(change.type!=="added")return;const c=change.doc.data();if(activeCall&&activeCall.id===change.doc.id)return;
-if(confirm("Incoming "+c.type+" call. Accept?"))acceptCall(change.doc.id,c).catch(e=>showError(e.message));
-else updateDoc(doc(db,"calls",change.doc.id),{status:"rejected",answeredAt:serverTimestamp()}).catch(console.error);});
+if(incomingUnsub)incomingUnsub();
+incomingUnsub=onSnapshot(query(
+collection(db,"calls"),
+where("calleeUid","==",me.uid),
+where("status","==","ringing")
+),snap=>{
+snap.docChanges().forEach(change=>{
+if(change.type!=="added")return;
+const c=change.doc.data();
+if(activeCall&&activeCall.id===change.doc.id)return;
+if(confirm("Incoming "+c.type+" call. Accept?")){
+acceptCall(change.doc.id,c).catch(e=>showError(e.message));
+}else{
+updateDoc(doc(db,"calls",change.doc.id),{
+status:"rejected",answeredAt:serverTimestamp()
+}).catch(console.error);
+}
+});
 },console.error);
 }
+
 async function acceptCall(id,c){
-try{activeCall=doc(db,"calls",id);activeMatch=c.matchId;await prepareMedia(c.type);callPC=new RTCPeerConnection(rtcConfig);localStream.getTracks().forEach(t=>callPC.addTrack(t,localStream));callPC.ontrack=e=>$("remoteVideo").srcObject=e.streams[0];
-callPC.onicecandidate=e=>{if(e.candidate)addCallCandidate(id,"calleeCandidates",e.candidate.toJSON()).catch(console.error);};
-await callPC.setRemoteDescription(new RTCSessionDescription(c.offer));const answer=await callPC.createAnswer();await callPC.setLocalDescription(answer);
-await updateDoc(activeCall,{answer:{type:answer.type,sdp:answer.sdp},status:"accepted",answeredAt:serverTimestamp()});listenForCandidates(id,"callerCandidates");$("callTitle").textContent=c.type.toUpperCase()+" CALL";say("callStatus","Connected");show("call");
-}catch(e){showError("Could not accept call: "+e.message);endCallLocal();}
+try{
+activeCall=doc(db,"calls",id);
+activeMatch=c.matchId;
+await prepareMedia(c.type);
+callPC=new RTCPeerConnection(rtcConfig);
+localStream.getTracks().forEach(t=>callPC.addTrack(t,localStream));
+callPC.ontrack=e=>$("remoteVideo").srcObject=e.streams[0];
+
+callPC.onicecandidate=e=>{
+if(e.candidate)addCallCandidate(id,"calleeCandidates",e.candidate.toJSON()).catch(console.error);
+};
+
+await callPC.setRemoteDescription(new RTCSessionDescription(c.offer));
+const answer=await callPC.createAnswer();
+await callPC.setLocalDescription(answer);
+await updateDoc(activeCall,{
+answer:{type:answer.type,sdp:answer.sdp},
+status:"accepted",
+answeredAt:serverTimestamp()
+});
+listenForCandidates(id,"callerCandidates");
+$("callTitle").textContent=c.type.toUpperCase()+" CALL";
+say("callStatus","Connected");
+show("call");
+}catch(e){
+showError("Could not accept call: "+e.message);
+endCallLocal();
 }
-window.endCall=async()=>{const call=activeCall;if(call){try{await updateDoc(call,{status:"ended",endedAt:serverTimestamp()});}catch(e){console.error(e);}}endCallLocal();};
+}
+
+window.endCall=async()=>{
+const call=activeCall;
+if(call){
+try{await updateDoc(call,{status:"ended",endedAt:serverTimestamp()});}
+catch(e){console.error(e);}
+}
+endCallLocal();
+};
+
 function endCallLocal(returnToChat=true){
-if(callPC){callPC.close();callPC=null;}if(localStream){localStream.getTracks().forEach(t=>t.stop());localStream=null;}
-callUnsubs.forEach(unsub=>{try{unsub();}catch(e){}});callUnsubs=[];$("localVideo").srcObject=null;$("remoteVideo").srcObject=null;activeCall=null;if(returnToChat&&me)show("chat");
+if(callPC){callPC.close();callPC=null;}
+if(localStream){
+localStream.getTracks().forEach(t=>t.stop());
+localStream=null;
 }
-window.startAudioCall=()=>startCall("audio");window.startVideoCall=()=>startCall("video");
+callUnsubs.forEach(unsub=>{try{unsub();}catch(e){}});
+callUnsubs=[];
+$("localVideo").srcObject=null;
+$("remoteVideo").srcObject=null;
+activeCall=null;
+if(returnToChat&&me)show("chat");
+}
+
+window.startAudioCall=()=>startCall("audio");
+window.startVideoCall=()=>startCall("video");
 </script>
 </body>
 </html>
