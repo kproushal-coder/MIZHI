@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,7 +37,7 @@ nav button.active{color:var(--pink);background:#2a1738}
 .userrow p{margin:4px 0}
 .pill{display:inline-block;background:#382448;padding:5px 9px;border-radius:30px;font-size:11px;color:#e9c9ff}
 .online{color:var(--green)}
-#toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:20;background:#352044;padding:12px 18px;border-radius:12px;display:none;max-width:90%;box-shadow:0 5px 25px #0008}
+#toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:40;background:#352044;padding:12px 18px;border-radius:12px;display:none;max-width:90%;box-shadow:0 5px 25px #0008}
 #messages{height:55vh;overflow:auto;background:#120c1b;padding:12px;border-radius:12px}
 .msg{max-width:82%;padding:10px 12px;border-radius:13px;margin:8px 0;background:#382448;overflow-wrap:anywhere}
 .msg.mine{margin-left:auto;background:#803a8e}
@@ -48,14 +47,23 @@ video{width:100%;max-height:38vh;background:#241532;border-radius:15px;object-fi
 .stat b{font-size:23px;color:var(--pink);display:block}
 hr{border:0;border-top:1px solid #49345e;margin:15px 0}
 a{color:#f3a6d0}
+.legal-links{display:flex;gap:14px;flex-wrap:wrap;margin-top:16px;font-size:13px}
+.legal-links a{cursor:pointer}
+.legal-content{line-height:1.65;color:#eee}
+.legal-content h3{color:#ff9bc9;margin-top:22px}
+.legal-content p,.legal-content li{color:#d8cadd;font-size:14px}
+.checkline{display:flex;align-items:flex-start;gap:9px;margin:12px 0;color:#e8d9ef;font-size:13px;line-height:1.5}
+.checkline input{width:18px;height:18px;flex:0 0 18px;margin:1px 0}
 </style>
 </head>
 <body>
+
 <header>
   <div class="logo">THENNAL ❤️</div>
   <div id="headerUser" class="muted">Connect Hearts</div>
 </header>
 <div id="toast"></div>
+
 <main>
   <section id="authPage">
     <div class="card">
@@ -65,20 +73,53 @@ a{color:#f3a6d0}
         <button id="loginTab" onclick="showAuth('login')">Login</button>
         <button class="secondary" id="registerTab" onclick="showAuth('register')">Create account</button>
       </div>
+
       <div id="loginForm">
-        <label>Email</label><input id="loginEmail" type="email" autocomplete="email" placeholder="Email address">
-        <label>Password</label><input id="loginPassword" type="password" autocomplete="current-password" placeholder="Password">
+        <label>Email</label>
+        <input id="loginEmail" type="email" autocomplete="email" placeholder="Email address">
+        <label>Password</label>
+        <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Password">
         <button style="width:100%" onclick="login()">Login</button>
       </div>
+
       <div id="registerForm" class="hidden">
-        <label>Email</label><input id="regEmail" type="email" placeholder="Email address">
-        <label>Password</label><input id="regPassword" type="password" placeholder="At least 6 characters">
+        <label>Email</label>
+        <input id="regEmail" type="email" autocomplete="email" placeholder="Email address">
+        <label>Password</label>
+        <input id="regPassword" type="password" autocomplete="new-password" placeholder="At least 6 characters">
+
+        <label class="checkline">
+          <input type="checkbox" id="regAgeConfirm">
+          <span>I confirm that I am 18 years of age or older.</span>
+        </label>
+
+        <label class="checkline">
+          <input type="checkbox" id="regTermsConfirm">
+          <span>I have read and agree to the Terms & Conditions and Privacy Policy.</span>
+        </label>
+
         <button style="width:100%" onclick="register()">Create account</button>
+      </div>
+
+      <div class="legal-links">
+        <a onclick="showLegal('privacy')">Privacy Policy</a>
+        <a onclick="showLegal('terms')">Terms & Conditions</a>
       </div>
     </div>
   </section>
 
+  <!-- LEGAL PAGES -->
+  <section id="legalPage" class="hidden">
+    <div class="card">
+      <button class="secondary" onclick="closeLegal()">← Back</button>
+      <div id="legalContent" class="legal-content"></div>
+      <hr>
+      <button class="secondary" onclick="closeLegal()">Back</button>
+    </div>
+  </section>
+
   <section id="appPage" class="hidden">
+
     <section id="discoverPage">
       <div class="card">
         <h2>Discover ❤️</h2>
@@ -141,6 +182,12 @@ a{color:#f3a6d0}
         <button class="secondary" onclick="requestVerification()">Request verification</button>
         <p id="verifyStatus" class="muted"></p>
         <hr>
+        <h3>Legal information</h3>
+        <div class="legal-links">
+          <a onclick="showLegal('privacy')">Privacy Policy</a>
+          <a onclick="showLegal('terms')">Terms & Conditions</a>
+        </div>
+        <hr>
         <button class="danger" onclick="logout()">Logout</button>
       </div>
     </section>
@@ -174,6 +221,7 @@ a{color:#f3a6d0}
       <div class="card"><h3>Reports & Complaints</h3><div id="adminReports"></div></div>
       <div class="card"><h3>Matches</h3><div id="adminMatches"></div></div>
     </section>
+
   </section>
 </main>
 
@@ -229,10 +277,14 @@ let allUsers=[],allMatches=[],allReports=[],allVerifications=[];
 let unsubs=[],chatUnsub=null,incomingUnsub=null;
 let pc=null,localStream=null,currentCallId=null,currentCallType="audio",callRole="";
 let pendingOffer=null,callCandidateUnsubs=[];
+let legalReturnPage="auth";
+let currentPage="discover";
 
 const $=id=>document.getElementById(id);
+
 function toast(message){
- $("toast").textContent=message;$("toast").style.display="block";
+ $("toast").textContent=message;
+ $("toast").style.display="block";
  setTimeout(()=>$("toast").style.display="none",3000);
 }
 function esc(v=""){
@@ -246,12 +298,134 @@ function clearListeners(){
  if(chatUnsub){chatUnsub();chatUnsub=null;}
  if(incomingUnsub){incomingUnsub();incomingUnsub=null;}
 }
+
+/* PRIVACY POLICY AND TERMS */
+const privacyHTML=`
+<h2>Privacy Policy</h2>
+<p class="muted">Effective date: 18 November 2026</p>
+<p>THENNAL respects your privacy. This Privacy Policy explains what information may be collected and how it may be used when you use the THENNAL application.</p>
+
+<h3>1. Eligibility</h3>
+<p>THENNAL is intended only for adults aged 18 years and above. People under 18 are not permitted to create or use an account. We may restrict accounts that appear to belong to minors.</p>
+
+<h3>2. Information we collect</h3>
+<p>Depending on how you use the app, information may include:</p>
+<ul>
+<li>Name, email address, age and gender.</li>
+<li>Country, state and city information you provide.</li>
+<li>Profile photos and biography.</li>
+<li>Likes, matches and chat messages.</li>
+<li>Reports, complaints and verification requests.</li>
+<li>Account status and wallet coin balance, where applicable.</li>
+<li>Technical information needed to operate authentication, messaging and calls.</li>
+</ul>
+
+<h3>3. How information is used</h3>
+<p>Information may be used to operate your account, display profiles, provide discovery and matching features, enable messaging and calls, respond to reports, review verification requests, maintain safety and improve the service.</p>
+
+<h3>4. Profiles and visibility</h3>
+<p>Your profile information and photo may be displayed to other THENNAL users. Do not include information in your public profile that you do not want other users to see.</p>
+
+<h3>5. Chats and calls</h3>
+<p>Chat messages are stored using the app's database so that conversations can be displayed. Audio and video calls use WebRTC connection technology. The app is not designed to record calls. However, we cannot control whether another participant independently records or captures a call using another device or software.</p>
+
+<h3>6. Service providers</h3>
+<p>THENNAL currently uses Firebase services for authentication and database functionality. Information may be processed or stored on infrastructure operated by Google and its service providers, subject to their applicable terms and privacy practices.</p>
+
+<h3>7. Reports and verification</h3>
+<p>Reports, complaints and verification requests may be reviewed by authorised THENNAL administrators for safety and account-management purposes. A verification label is not a guarantee of a person's identity, intentions or conduct.</p>
+
+<h3>8. Sharing of information</h3>
+<p>We do not intend to sell your personal information. Information may be processed by service providers that help operate the app, or disclosed when required by law or when reasonably necessary to protect users, the service or legal rights.</p>
+
+<h3>9. Security</h3>
+<p>We use third-party infrastructure and reasonable operational measures to support the service. No online service or data transmission can be guaranteed to be completely secure.</p>
+
+<h3>10. Retention and deletion requests</h3>
+<p>Information may be retained while your account is active and for a reasonable period afterwards where needed for safety, legal, dispute-resolution or operational purposes. You may contact us to request account or data deletion. Some information may need to be retained where legally required or reasonably necessary for safety and security.</p>
+
+<h3>11. Changes to this policy</h3>
+<p>This policy may be updated as THENNAL develops. Updated wording will be published in the app with a revised effective date where appropriate.</p>
+
+<h3>12. Contact</h3>
+<p>For privacy questions or requests, contact: <a href="mailto:kproushal@gmail.com">kproushal@gmail.com</a></p>
+`;
+
+const termsHTML=`
+<h2>Terms & Conditions</h2>
+<p class="muted">Effective date: 18 November 2026</p>
+<p>By creating an account or using THENNAL, you agree to these Terms & Conditions. If you do not agree, do not use the service.</p>
+
+<h3>1. Age requirement</h3>
+<p>THENNAL is strictly for people aged 18 years and above. You must be at least 18 years old to register and use the app. You must provide accurate age information. Do not create an account for a minor or allow a minor to use your account.</p>
+
+<h3>2. Your account</h3>
+<p>You are responsible for maintaining the confidentiality of your login details and for activity carried out through your account. You must provide accurate information and must not impersonate another person or create misleading or duplicate accounts.</p>
+
+<h3>3. Respectful conduct</h3>
+<p>You must not use THENNAL to harass, threaten, bully, exploit, defraud or harm another person. You must not share illegal, abusive, hateful, sexually exploitative or otherwise harmful content. You must not misuse the app, attempt unauthorised access or interfere with its operation.</p>
+
+<h3>4. Profile information and content</h3>
+<p>You are responsible for the information, photos and messages you submit. You should only upload content that you have the right to use. Do not share another person's private information without their permission.</p>
+
+<h3>5. Matches, chats and calls</h3>
+<p>A match does not guarantee that another user is genuine, trustworthy or suitable for you. Use care when communicating and meeting people. Do not record, publish or distribute another person's private calls or communications without appropriate consent and legal permission.</p>
+
+<h3>6. Safety, reports and blocking</h3>
+<p>You may report profiles or conduct that concerns you. Administrators may review reports and take appropriate action, including restricting or blocking accounts. We cannot guarantee that every report will result in a particular outcome or that all harmful conduct will be detected.</p>
+
+<h3>7. Verification</h3>
+<p>Verification requests may be reviewed by the THENNAL team. A verification label does not guarantee a user's identity, background, behaviour or intentions.</p>
+
+<h3>8. Calls and availability</h3>
+<p>Audio and video call features depend on device permissions, internet connectivity and network compatibility. Call quality and availability are not guaranteed. Calls are currently offered free in this version of the app. Future features or pricing may be introduced with appropriate notice.</p>
+
+<h3>9. Account restriction or termination</h3>
+<p>THENNAL may restrict, suspend or block accounts that violate these Terms, create safety concerns or misuse the service. Where appropriate, content or access may be limited.</p>
+
+<h3>10. Service availability</h3>
+<p>We aim to keep the service available but do not guarantee uninterrupted access, error-free operation or permanent availability of any feature.</p>
+
+<h3>11. Personal interactions</h3>
+<p>You are responsible for your interactions with other users, both online and offline. Use caution when sharing personal information or arranging meetings. To the extent permitted by applicable law, THENNAL is not responsible for the independent actions or conduct of users.</p>
+
+<h3>12. Changes to these terms</h3>
+<p>These Terms may be updated as the app changes. Continued use after updated terms are published may constitute acceptance where permitted by applicable law.</p>
+
+<h3>13. Contact</h3>
+<p>For questions about these Terms, contact: <a href="mailto:kproushal@gmail.com">kproushal@gmail.com</a></p>
+`;
+
+window.showLegal=function(which){
+ legalReturnPage=me?"app":"auth";
+ if(me)legalReturnPage="app";
+ $("authPage").classList.add("hidden");
+ $("appPage").classList.add("hidden");
+ $("bottomNav").classList.add("hidden");
+ $("legalPage").classList.remove("hidden");
+ $("legalContent").innerHTML=which==="privacy"?privacyHTML:termsHTML;
+ window.scrollTo(0,0);
+};
+window.closeLegal=function(){
+ $("legalPage").classList.add("hidden");
+ if(me){
+  $("appPage").classList.remove("hidden");
+  $("bottomNav").classList.remove("hidden");
+  showPage(currentPage||"discover");
+ }else{
+  $("authPage").classList.remove("hidden");
+  $("bottomNav").classList.add("hidden");
+ }
+ window.scrollTo(0,0);
+};
+
 window.showAuth=function(which){
  $("loginForm").classList.toggle("hidden",which!=="login");
  $("registerForm").classList.toggle("hidden",which!=="register");
  $("loginTab").classList.toggle("secondary",which!=="login");
  $("registerTab").classList.toggle("secondary",which!=="register");
 };
+
 window.login=async function(){
  try{
   const email=$("loginEmail").value.trim(),password=$("loginPassword").value;
@@ -259,31 +433,49 @@ window.login=async function(){
   await signInWithEmailAndPassword(auth,email,password);
  }catch(e){toast(e.message);}
 };
+
 window.register=async function(){
  try{
   const email=$("regEmail").value.trim(),password=$("regPassword").value;
-  if(!email||password.length<6)return toast("Enter a valid email and password (minimum 6 characters)");
+  if(!email||password.length<6)
+   return toast("Enter a valid email and password (minimum 6 characters)");
+  if(!$("regAgeConfirm").checked)
+   return toast("You must confirm that you are 18 or older.");
+  if(!$("regTermsConfirm").checked)
+   return toast("Please agree to the Terms & Conditions and Privacy Policy.");
   await createUserWithEmailAndPassword(auth,email,password);
   toast("Account created. Complete your profile.");
  }catch(e){toast(e.message);}
 };
+
 window.logout=async function(){
  clearListeners();await signOut(auth);
 };
+
 onAuthStateChanged(auth,async user=>{
  clearListeners();me=user;myProfile=null;
  if(!user){
-  $("authPage").classList.remove("hidden");$("appPage").classList.add("hidden");
-  $("bottomNav").classList.add("hidden");$("headerUser").textContent="Connect Hearts";
+  $("legalPage").classList.add("hidden");
+  $("authPage").classList.remove("hidden");
+  $("appPage").classList.add("hidden");
+  $("bottomNav").classList.add("hidden");
+  $("headerUser").textContent="Connect Hearts";
+  showAuth("login");
   return;
  }
- $("authPage").classList.add("hidden");$("appPage").classList.remove("hidden");
- $("bottomNav").classList.remove("hidden");$("headerUser").textContent=user.email||"Member";
+ $("legalPage").classList.add("hidden");
+ $("authPage").classList.add("hidden");
+ $("appPage").classList.remove("hidden");
+ $("bottomNav").classList.remove("hidden");
+ $("headerUser").textContent=user.email||"Member";
  try{
   const snap=await getDoc(doc(db,"users",user.uid));
   if(snap.exists()){
    myProfile=snap.data();
-   if(myProfile.status==="blocked"){toast("Your account is blocked. Contact support.");await signOut(auth);return;}
+   if(myProfile.status==="blocked"){
+    toast("Your account is blocked. Contact support.");
+    await signOut(auth);return;
+   }
    fillProfile();
   }else{
    showPage("profile");toast("Please complete your profile first.");
@@ -293,6 +485,7 @@ onAuthStateChanged(auth,async user=>{
   if(user.email===ADMIN)loadAdmin();
  }catch(e){toast("Unable to load account: "+e.message);}
 });
+
 function fillProfile(){
  if(!myProfile)return;
  $("pName").value=myProfile.name||"";
@@ -305,15 +498,19 @@ function fillProfile(){
  $("photoPreview").src=safePhoto(myProfile.photoURL);
  $("verifyStatus").textContent="Verification: "+(myProfile.verificationStatus||"Not requested");
 }
+
 window.showPage=function(page){
+ currentPage=page;
  ["discover","likes","matches","chat","profile","wallet","admin"].forEach(p=>{
   $(p+"Page").classList.toggle("hidden",p!==page);
  });
  ["Discover","Likes","Matches","Profile","Wallet","Admin"].forEach(p=>{
-  const btn=$("nav"+p);if(btn)btn.classList.toggle("active",p.toLowerCase()===page);
+  const btn=$("nav"+p);
+  if(btn)btn.classList.toggle("active",p.toLowerCase()===page);
  });
  if(page==="admin"&&me?.email===ADMIN)loadAdmin();
 };
+
 $("pPhoto").addEventListener("change",async e=>{
  const file=e.target.files?.[0];if(!file)return;
  if(!file.type.startsWith("image/"))return toast("Choose an image");
@@ -324,21 +521,25 @@ $("pPhoto").addEventListener("change",async e=>{
    img.onload=()=>{
     const canvas=document.createElement("canvas");
     const scale=Math.min(900/img.width,900/img.height,1);
-    canvas.width=Math.round(img.width*scale);canvas.height=Math.round(img.height*scale);
+    canvas.width=Math.round(img.width*scale);
+    canvas.height=Math.round(img.height*scale);
     canvas.getContext("2d").drawImage(img,0,0,canvas.width,canvas.height);
     resolve(canvas.toDataURL("image/jpeg",.72));
    };
    img.onerror=reject;reader.readAsDataURL(file);
   });
   if(data.length>650000)return toast("Image is too large. Choose a smaller photo.");
-  $("photoPreview").src=data;$("photoPreview").dataset.newphoto=data;
+  $("photoPreview").src=data;
+  $("photoPreview").dataset.newphoto=data;
  }catch(err){toast("Could not process image");}
 });
+
 window.saveProfile=async function(){
  try{
   if(!me)return;
   const name=$("pName").value.trim(),age=Number($("pAge").value),gender=$("pGender").value;
-  if(name.length<2||age<18||age>100||!gender)return toast("Enter name, age 18+ and gender");
+  if(name.length<2||age<18||age>100||!gender)
+   return toast("Enter name, age 18+ and gender");
   let photoURL=$("photoPreview").dataset.newphoto||myProfile?.photoURL||"";
   const data={
    uid:me.uid,name,age,gender,
@@ -351,10 +552,12 @@ window.saveProfile=async function(){
   };
   await setDoc(doc(db,"users",me.uid),{...data,email:me.email},{merge:true});
   await setDoc(doc(db,"publicProfiles",me.uid),data,{merge:true});
-  myProfile={...myProfile,...data};delete $("photoPreview").dataset.newphoto;
+  myProfile={...myProfile,...data};
+  delete $("photoPreview").dataset.newphoto;
   toast("Profile saved successfully");fillProfile();loadDiscover();
  }catch(e){toast("Profile save failed: "+e.message);}
 };
+
 window.requestVerification=async function(){
  try{
   if(!myProfile)return toast("Save your profile first");
@@ -368,13 +571,15 @@ window.requestVerification=async function(){
   toast("Verification request submitted");
  }catch(e){toast("Request failed: "+e.message);}
 };
+
 window.loadDiscover=async function(){
  if(!me||!myProfile)return;
  try{
   const snap=await getDocs(query(collection(db,"publicProfiles"),where("status","==","active"),limit(100)));
   let users=snap.docs.map(d=>d.data()).filter(u=>u.uid!==me.uid);
   const min=Number($("minAge").value||18),max=Number($("maxAge").value||100);
-  const country=$("filterCountry").value.trim().toLowerCase(),city=$("filterCity").value.trim().toLowerCase();
+  const country=$("filterCountry").value.trim().toLowerCase();
+  const city=$("filterCity").value.trim().toLowerCase();
   users=users.filter(u=>Number(u.age)>=min&&Number(u.age)<=max);
   if(country)users=users.filter(u=>(u.country||"").toLowerCase().includes(country));
   if(city)users=users.filter(u=>(u.city||"").toLowerCase().includes(city));
@@ -394,20 +599,26 @@ window.loadDiscover=async function(){
    </div>`).join(""):'<div class="card muted">No profiles found. Try changing your filters.</div>';
  }catch(e){toast("Discover error: "+e.message);}
 };
+
 window.likeUser=async function(uid){
  try{
   if(!myProfile)return toast("Complete your profile first");
   const likeId=me.uid+"_"+uid;
-  await setDoc(doc(db,"likes",likeId),{fromUid:me.uid,toUid:uid,createdAt:serverTimestamp()});
+  await setDoc(doc(db,"likes",likeId),{
+   fromUid:me.uid,toUid:uid,createdAt:serverTimestamp()
+  });
   const reverse=await getDoc(doc(db,"likes",uid+"_"+me.uid));
   if(reverse.exists()){
    const ids=[me.uid,uid].sort(),matchId=ids[0]+"_"+ids[1];
-   await setDoc(doc(db,"matches",matchId),{user1:ids[0],user2:ids[1],createdAt:serverTimestamp()},{merge:true});
+   await setDoc(doc(db,"matches",matchId),{
+    user1:ids[0],user2:ids[1],createdAt:serverTimestamp()
+   },{merge:true});
    toast("It's a match! ❤️");loadMatches();
   }else toast("Like sent ❤️");
   loadDiscover();loadLikes();
  }catch(e){toast("Like failed: "+e.message);}
 };
+
 window.loadLikes=async function(){
  if(!me)return;
  try{
@@ -417,12 +628,19 @@ window.loadLikes=async function(){
    const u=await getDoc(doc(db,"publicProfiles",d.data().fromUid));
    if(u.exists())list.push(u.data());
   }
-  $("likesList").innerHTML=list.length?list.map(u=>userRow(u,`<button onclick="likeUser('${esc(u.uid)}')">Like back</button>`)).join(""):'<p class="muted">No likes yet.</p>';
+  $("likesList").innerHTML=list.length?
+   list.map(u=>userRow(u,`<button onclick="likeUser('${esc(u.uid)}')">Like back</button>`)).join("") :
+   '<p class="muted">No likes yet.</p>';
  }catch(e){toast("Could not load likes: "+e.message);}
 };
+
 function userRow(u,actions=""){
- return `<div class="userrow"><img class="small-photo" src="${esc(safePhoto(u.photoURL))}"><div class="grow"><b>${esc(u.name||"Member")}</b><p class="muted">${esc([u.city,u.country].filter(Boolean).join(", "))}</p></div>${actions}</div>`;
+ return `<div class="userrow">
+ <img class="small-photo" src="${esc(safePhoto(u.photoURL))}">
+ <div class="grow"><b>${esc(u.name||"Member")}</b>
+ <p class="muted">${esc([u.city,u.country].filter(Boolean).join(", "))}</p></div>${actions}</div>`;
 }
+
 window.loadMatches=async function(){
  if(!me)return;
  try{
@@ -433,7 +651,8 @@ window.loadMatches=async function(){
   const docs=[...a.docs,...b.docs],seen=new Set();
   allMatches=[];
   for(const d of docs){
-   if(seen.has(d.id))continue;seen.add(d.id);
+   if(seen.has(d.id))continue;
+   seen.add(d.id);
    const m=d.data(),uid=m.user1===me.uid?m.user2:m.user1;
    const p=await getDoc(doc(db,"publicProfiles",uid));
    if(p.exists())allMatches.push({id:d.id,partner:p.data()});
@@ -443,18 +662,22 @@ window.loadMatches=async function(){
    <button class="secondary" onclick="reportUser('${esc(m.partner.uid)}','${esc(m.partner.name||"Member")}')">Report</button>`)).join(""):'<p class="muted">Your matches will appear here.</p>';
  }catch(e){toast("Could not load matches: "+e.message);}
 };
+
 window.openChat=function(matchId,uid,name){
- activeMatch=matchId;activePartner=uid;$("chatTitle").textContent="Chat with "+name;
+ activeMatch=matchId;activePartner=uid;
+ $("chatTitle").textContent="Chat with "+name;
  showPage("chat");
  if(chatUnsub)chatUnsub();
  const q=query(collection(db,"chats",matchId,"messages"),orderBy("createdAt","asc"),limit(200));
  chatUnsub=onSnapshot(q,snap=>{
   $("messages").innerHTML=snap.docs.map(d=>{
-   const m=d.data();return `<div class="msg ${m.senderUid===me.uid?"mine":""}">${esc(m.text||"")}</div>`;
+   const m=d.data();
+   return `<div class="msg ${m.senderUid===me.uid?"mine":""}">${esc(m.text||"")}</div>`;
   }).join("");
   $("messages").scrollTop=$("messages").scrollHeight;
  },e=>toast("Chat error: "+e.message));
 };
+
 window.sendMessage=async function(){
  const text=$("chatInput").value.trim();
  if(!text||!activeMatch)return;
@@ -466,6 +689,7 @@ window.sendMessage=async function(){
   });
  }catch(e){toast("Message failed: "+e.message);}
 };
+
 window.reportUser=async function(uid,name){
  const reason=prompt("Why are you reporting this profile?\n1. Fake profile\n2. Harassment\n3. Inappropriate content\n4. Other");
  if(!reason)return;
@@ -479,6 +703,7 @@ window.reportUser=async function(uid,name){
   toast("Report submitted. Thank you.");
  }catch(e){toast("Report failed: "+e.message);}
 };
+
 async function loadWallet(){
  if(!me)return;
  try{
@@ -510,16 +735,19 @@ window.loadAdmin=async function(){
   renderAdminUsers();renderAdminReports();renderAdminVerifications();renderAdminMatches();
  }catch(e){toast("Admin dashboard error: "+e.message);}
 };
+
 window.renderAdminUsers=function(){
  const term=($("adminSearch").value||"").toLowerCase();
  const users=allUsers.filter(u=>[u.name,u.email,u.city,u.country,u.uid].join(" ").toLowerCase().includes(term));
  $("adminUsers").innerHTML=users.map(u=>`
   <div class="userrow">
-   <div class="grow"><b>${esc(u.name||"Unnamed user")}</b><p class="muted">${esc(u.email||u.uid)} · ${esc(u.status||"unknown")}</p>
+   <div class="grow"><b>${esc(u.name||"Unnamed user")}</b>
+   <p class="muted">${esc(u.email||u.uid)} · ${esc(u.status||"unknown")}</p>
    <p class="muted">Verification: ${esc(u.verificationStatus||"not requested")}</p></div>
    <button class="${u.status==="blocked"?"success":"danger"}" onclick="toggleBlock('${esc(u.uid)}','${u.status==="blocked"?"active":"blocked"}')">${u.status==="blocked"?"Unblock":"Block"}</button>
   </div>`).join("")||'<p class="muted">No users found.</p>';
 };
+
 window.toggleBlock=async function(uid,status){
  if(me?.email!==ADMIN)return;
  if(!confirm(status==="blocked"?"Block this user?":"Unblock this user?"))return;
@@ -530,14 +758,18 @@ window.toggleBlock=async function(uid,status){
   await batch.commit();toast("User status updated");loadAdmin();
  }catch(e){toast("Update failed: "+e.message);}
 };
+
 function renderAdminVerifications(){
  $("adminVerifications").innerHTML=allVerifications.length?allVerifications.map(v=>`
   <div class="card">
    <b>${esc(v.name||v.uid)}</b><p class="muted">${esc(v.email||"")}</p>
    <p>${esc(v.note||"No note")}</p><span class="pill">${esc(v.status||"pending")}</span>
-   ${v.status==="pending"?`<div class="row" style="margin-top:10px"><button class="success" onclick="reviewVerification('${esc(v.uid)}','verified')">Approve</button><button class="danger" onclick="reviewVerification('${esc(v.uid)}','rejected')">Reject</button></div>`:""}
+   ${v.status==="pending"?`<div class="row" style="margin-top:10px">
+   <button class="success" onclick="reviewVerification('${esc(v.uid)}','verified')">Approve</button>
+   <button class="danger" onclick="reviewVerification('${esc(v.uid)}','rejected')">Reject</button></div>`:""}
   </div>`).join(""):'<p class="muted">No verification requests.</p>';
 }
+
 window.reviewVerification=async function(uid,status){
  if(me?.email!==ADMIN)return;
  try{
@@ -548,6 +780,7 @@ window.reviewVerification=async function(uid,status){
   await batch.commit();toast("Verification updated");loadAdmin();
  }catch(e){toast("Verification update failed: "+e.message);}
 };
+
 function renderAdminReports(){
  $("adminReports").innerHTML=allReports.length?allReports.map(r=>`
   <div class="card">
@@ -555,9 +788,13 @@ function renderAdminReports(){
    <p class="muted">Reason: ${esc(r.reason)} · Status: ${esc(r.status)}</p>
    <p>${esc(r.details||"")}</p>
    <p class="muted">Reporter: ${esc(r.reporterUid)}</p>
-   ${r.status!=="resolved"?`<div class="row"><button class="success" onclick="updateReport('${esc(r.id)}','resolved')">Resolve</button><button class="secondary" onclick="updateReport('${esc(r.id)}','reviewed')">Mark reviewed</button><button class="danger" onclick="toggleBlock('${esc(r.targetUid)}','blocked')">Block reported user</button></div>`:""}
+   ${r.status!=="resolved"?`<div class="row">
+   <button class="success" onclick="updateReport('${esc(r.id)}','resolved')">Resolve</button>
+   <button class="secondary" onclick="updateReport('${esc(r.id)}','reviewed')">Mark reviewed</button>
+   <button class="danger" onclick="toggleBlock('${esc(r.targetUid)}','blocked')">Block reported user</button></div>`:""}
   </div>`).join(""):'<p class="muted">No reports submitted.</p>';
 }
+
 window.updateReport=async function(id,status){
  if(me?.email!==ADMIN)return;
  try{
@@ -565,24 +802,32 @@ window.updateReport=async function(id,status){
   toast("Report updated");loadAdmin();
  }catch(e){toast("Could not update report: "+e.message);}
 };
+
 function renderAdminMatches(){
  $("adminMatches").innerHTML=allMatches.slice(0,100).map(m=>`
-  <div class="userrow"><div class="grow"><b>${esc(m.user1)}</b><p class="muted">matched with ${esc(m.user2)}</p></div></div>`).join("")||'<p class="muted">No matches yet.</p>';
+  <div class="userrow"><div class="grow"><b>${esc(m.user1)}</b>
+  <p class="muted">matched with ${esc(m.user2)}</p></div></div>`).join("")||'<p class="muted">No matches yet.</p>';
 }
 
 /* FREE AUDIO / VIDEO CALLS - WebRTC */
-const rtcConfig={iceServers:[{urls:"stun:stun.l.google.com:19302"},{urls:"stun:stun1.l.google.com:19302"}]};
+const rtcConfig={iceServers:[
+ {urls:"stun:stun.l.google.com:19302"},
+ {urls:"stun:stun1.l.google.com:19302"}
+]};
+
 async function getMedia(type){
  return navigator.mediaDevices.getUserMedia({audio:true,video:type==="video"});
 }
 function showCall(status){
- $("callScreen").style.display="block";$("callStatus").textContent=status;
+ $("callScreen").style.display="block";
+ $("callStatus").textContent=status;
 }
 async function createPeer(){
  pc=new RTCPeerConnection(rtcConfig);
  pc.ontrack=e=>{$("remoteVideo").srcObject=e.streams[0];};
  pc.onconnectionstatechange=()=>{
-  if(pc&&["failed","disconnected","closed"].includes(pc.connectionState))$("callStatus").textContent="Call connection: "+pc.connectionState;
+  if(pc&&["failed","disconnected","closed"].includes(pc.connectionState))
+   $("callStatus").textContent="Call connection: "+pc.connectionState;
  };
  pc.onicecandidate=async e=>{
   if(!e.candidate||!currentCallId)return;
@@ -602,29 +847,36 @@ function listenCandidates(sub){
    if(change.type!=="added"||!pc)return;
    const c=change.doc.data();
    if(c.ownerUid===me.uid)return;
-   try{await pc.addIceCandidate(new RTCIceCandidate({
-    candidate:c.candidate,sdpMid:c.sdpMid,sdpMLineIndex:c.sdpMLineIndex
-   }));}catch(e){console.warn(e);}
+   try{
+    await pc.addIceCandidate(new RTCIceCandidate({
+     candidate:c.candidate,sdpMid:c.sdpMid,sdpMLineIndex:c.sdpMLineIndex
+    }));
+   }catch(e){console.warn(e);}
   });
  });
  callCandidateUnsubs.push(unsub);
 }
+
 window.startCall=async function(type){
  if(!activeMatch||!activePartner)return toast("Open a match first");
  try{
-  if(!navigator.mediaDevices?.getUserMedia)return toast("Calls require HTTPS and browser permission");
+  if(!navigator.mediaDevices?.getUserMedia)
+   return toast("Calls require HTTPS and browser permission");
   currentCallType=type;callRole="caller";
   localStream=await getMedia(type);
   $("localVideo").srcObject=localStream;
   $("remoteVideo").srcObject=null;
   $("callHeading").textContent=type==="video"?"Video call":"Audio call";
-  $("acceptCallBtn").classList.add("hidden");$("rejectCallBtn").classList.add("hidden");
+  $("acceptCallBtn").classList.add("hidden");
+  $("rejectCallBtn").classList.add("hidden");
   showCall("Calling...");
   await createPeer();
-  const offer=await pc.createOffer();await pc.setLocalDescription(offer);
+  const offer=await pc.createOffer();
+  await pc.setLocalDescription(offer);
   const ref=await addDoc(collection(db,"calls"),{
    callerUid:me.uid,calleeUid:activePartner,matchId:activeMatch,
-   type,offer:{type:offer.type,sdp:offer.sdp},status:"ringing",createdAt:serverTimestamp()
+   type,offer:{type:offer.type,sdp:offer.sdp},
+   status:"ringing",createdAt:serverTimestamp()
   });
   currentCallId=ref.id;
   listenCandidates("calleeCandidates");
@@ -636,69 +888,109 @@ window.startCall=async function(type){
     await pc.setRemoteDescription(new RTCSessionDescription(data.answer));
     $("callStatus").textContent="Connected";
    }
-   if(["rejected","ended"].includes(data.status)){toast("Call "+data.status);cleanupCall();}
+   if(["rejected","ended"].includes(data.status)){
+    toast("Call "+data.status);cleanupCall();
+   }
   });
   callCandidateUnsubs.push(unsub);
- }catch(e){toast("Could not start call: "+e.message);cleanupCall();}
+ }catch(e){
+  toast("Could not start call: "+e.message);
+  cleanupCall();
+ }
 };
+
 function listenIncoming(){
  if(!me)return;
- incomingUnsub=onSnapshot(query(collection(db,"calls"),where("calleeUid","==",me.uid),where("status","==","ringing")),snap=>{
-  snap.docChanges().forEach(change=>{
-   if(change.type!=="added")return;
-   const c=change.doc.data();
-   if(currentCallId)return;
-   pendingOffer={id:change.doc.id,data:c};
-   currentCallType=c.type||"audio";callRole="callee";
-   $("callHeading").textContent=currentCallType==="video"?"Incoming video call":"Incoming audio call";
-   $("acceptCallBtn").classList.remove("hidden");$("rejectCallBtn").classList.remove("hidden");
-   showCall("Incoming call...");
-  });
- },e=>console.warn("Incoming call listener",e));
+ incomingUnsub=onSnapshot(
+  query(collection(db,"calls"),where("calleeUid","==",me.uid),where("status","==","ringing")),
+  snap=>{
+   snap.docChanges().forEach(change=>{
+    if(change.type!=="added")return;
+    const c=change.doc.data();
+    if(currentCallId)return;
+    pendingOffer={id:change.doc.id,data:c};
+    currentCallType=c.type||"audio";callRole="callee";
+    $("callHeading").textContent=currentCallType==="video"?"Incoming video call":"Incoming audio call";
+    $("acceptCallBtn").classList.remove("hidden");
+    $("rejectCallBtn").classList.remove("hidden");
+    showCall("Incoming call...");
+   });
+  },
+  e=>console.warn("Incoming call listener",e)
+ );
 }
+
 window.acceptCall=async function(){
  if(!pendingOffer)return;
  try{
   currentCallId=pendingOffer.id;
   localStream=await getMedia(currentCallType);
-  $("localVideo").srcObject=localStream;$("remoteVideo").srcObject=null;
+  $("localVideo").srcObject=localStream;
+  $("remoteVideo").srcObject=null;
   await createPeer();
   await pc.setRemoteDescription(new RTCSessionDescription(pendingOffer.data.offer));
-  const answer=await pc.createAnswer();await pc.setLocalDescription(answer);
+  const answer=await pc.createAnswer();
+  await pc.setLocalDescription(answer);
   await updateDoc(doc(db,"calls",currentCallId),{
-   answer:{type:answer.type,sdp:answer.sdp},status:"accepted",answeredAt:serverTimestamp()
+   answer:{type:answer.type,sdp:answer.sdp},
+   status:"accepted",answeredAt:serverTimestamp()
   });
   listenCandidates("callerCandidates");
-  $("acceptCallBtn").classList.add("hidden");$("rejectCallBtn").classList.add("hidden");
-  $("callStatus").textContent="Connected";pendingOffer=null;
+  $("acceptCallBtn").classList.add("hidden");
+  $("rejectCallBtn").classList.add("hidden");
+  $("callStatus").textContent="Connected";
+  pendingOffer=null;
   const unsub=onSnapshot(doc(db,"calls",currentCallId),snap=>{
-   if(snap.exists()&&snap.data().status==="ended"){toast("Call ended");cleanupCall();}
+   if(snap.exists()&&snap.data().status==="ended"){
+    toast("Call ended");cleanupCall();
+   }
   });
   callCandidateUnsubs.push(unsub);
- }catch(e){toast("Could not accept call: "+e.message);cleanupCall();}
+ }catch(e){
+  toast("Could not accept call: "+e.message);
+  cleanupCall();
+ }
 };
+
 window.rejectCall=async function(){
  if(!pendingOffer)return;
- try{await updateDoc(doc(db,"calls",pendingOffer.id),{status:"rejected"});}catch(e){}
- pendingOffer=null;cleanupCall();
+ try{
+  await updateDoc(doc(db,"calls",pendingOffer.id),{status:"rejected"});
+ }catch(e){}
+ pendingOffer=null;
+ cleanupCall();
 };
+
 window.endCall=async function(){
  try{
-  if(currentCallId)await updateDoc(doc(db,"calls",currentCallId),{status:"ended",endedAt:serverTimestamp()});
+  if(currentCallId)
+   await updateDoc(doc(db,"calls",currentCallId),{
+    status:"ended",endedAt:serverTimestamp()
+   });
  }catch(e){}
  cleanupCall();
 };
+
 function cleanupCall(){
- callCandidateUnsubs.forEach(f=>f());callCandidateUnsubs=[];
+ callCandidateUnsubs.forEach(f=>f());
+ callCandidateUnsubs=[];
  if(pc){pc.close();pc=null;}
- if(localStream){localStream.getTracks().forEach(t=>t.stop());localStream=null;}
- $("localVideo").srcObject=null;$("remoteVideo").srcObject=null;
+ if(localStream){
+  localStream.getTracks().forEach(t=>t.stop());
+  localStream=null;
+ }
+ $("localVideo").srcObject=null;
+ $("remoteVideo").srcObject=null;
  $("callScreen").style.display="none";
- $("acceptCallBtn").classList.add("hidden");$("rejectCallBtn").classList.add("hidden");
+ $("acceptCallBtn").classList.add("hidden");
+ $("rejectCallBtn").classList.add("hidden");
  currentCallId=null;pendingOffer=null;
 }
-window.addEventListener("beforeunload",()=>{clearListeners();cleanupCall();});
+
+window.addEventListener("beforeunload",()=>{
+ clearListeners();cleanupCall();
+});
 showAuth("login");
 </script>
 </body>
-</html>
+          </html>
