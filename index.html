@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#100719">
+<meta name="description" content="THENNAL — Meet Malayalis around the world. Free chat and audio/video calling.">
 <title>THENNAL ❤️ Connect Hearts</title>
 <style>
 :root{--pink:#ff3d9a;--purple:#a855f7;--dark:#100719;--panel:#1b1028;--muted:#b9a9c8;--green:#28d17c;--red:#ff5268}
@@ -35,6 +36,7 @@ nav button.active{color:var(--pink);background:#2a1738}
 #messages{height:55vh;overflow:auto;background:#120c1b;padding:12px;border-radius:12px}
 .msg{max-width:82%;padding:10px 12px;border-radius:13px;margin:8px 0;background:#382448;overflow-wrap:anywhere}
 .msg.mine{margin-left:auto;background:#803a8e}
+.modal{position:fixed;inset:0;z-index:25;background:#08040ddd;overflow:auto;padding:18px}.modal-card{max-width:620px;margin:20px auto;background:var(--panel);border:1px solid #49345e;border-radius:18px;padding:16px}
 #callScreen{position:fixed;inset:0;background:#100719;z-index:30;padding:18px;display:none;text-align:center}
 video{width:100%;max-height:38vh;background:#241532;border-radius:15px;object-fit:cover}
 .stat{background:#291a38;border-radius:12px;padding:13px;flex:1;min-width:100px}
@@ -83,12 +85,12 @@ a{color:#f3a6d0}.legal-links{display:flex;gap:14px;flex-wrap:wrap;margin-top:16p
    <button class="secondary" onclick="loadDiscover()">Apply filters</button>
   </div><div id="discoverList"></div>
  </section>
- <section id="likesPage" class="hidden"><div class="card"><h2>People who liked you ❤️</h2><div id="likesList"></div></div></section>
+ <section id="likesPage" class="hidden"><div class="card"><h2>People who liked you ❤️</h2><div id="likesList"></div></div><div class="card"><h2>Friend Requests 👥</h2><div id="friendRequestsList"></div></div></section>
  <section id="matchesPage" class="hidden"><div class="card"><h2>Your Matches 💕</h2><div id="matchesList"></div></div></section>
  <section id="chatPage" class="hidden"><div class="card">
   <button class="secondary" onclick="showPage('matches')">← Back to matches</button><h2 id="chatTitle">Chat</h2><div id="messages"></div>
   <div class="row"><input id="chatInput" maxlength="1000" placeholder="Write a message..." onkeydown="if(event.key==='Enter')sendMessage()"><button onclick="sendMessage()">Send</button></div>
-  <div class="row"><button onclick="startCall('audio')">📞 Audio call</button><button onclick="startCall('video')">🎥 Video call</button></div>
+  <p class="muted" style="text-align:center">✨ Audio & Video calls are always FREE</p><div class="row"><button onclick="startCall('audio')">📞 Audio call</button><button onclick="startCall('video')">🎥 Video call</button></div>
  </div></section>
  <section id="profilePage" class="hidden"><div class="card">
   <h2>My Profile</h2><label>Full name</label><input id="pName" maxlength="60">
@@ -103,7 +105,6 @@ a{color:#f3a6d0}.legal-links{display:flex;gap:14px;flex-wrap:wrap;margin-top:16p
   <h3>Legal information</h3><div class="legal-links"><a onclick="showLegal('privacy')">Privacy Policy</a><a onclick="showLegal('terms')">Terms & Conditions</a></div>
   <hr><button class="danger" onclick="logout()">Logout</button>
  </div></section>
- <section id="walletPage" class="hidden"><div class="card"><h2>Wallet 🪙</h2><h2 id="coinBalance">0 coins</h2><p class="muted">Audio and video calls are free in this version. Coin purchases and deductions are not enabled.</p></div></section>
  <section id="adminPage" class="hidden">
   <div class="card"><h2>Owner Admin Dashboard 👑</h2>
    <div class="row"><div class="stat"><b id="statUsers">0</b><span class="muted">Users</span></div><div class="stat"><b id="statActive">0</b><span class="muted">Active</span></div><div class="stat"><b id="statBlocked">0</b><span class="muted">Blocked</span></div></div>
@@ -118,8 +119,15 @@ a{color:#f3a6d0}.legal-links{display:flex;gap:14px;flex-wrap:wrap;margin-top:16p
 </section>
 </main>
 <nav id="bottomNav" class="hidden">
- <button id="navDiscover" class="active" onclick="showPage('discover')">💜<br>Discover</button><button id="navLikes" onclick="showPage('likes')">❤️<br>Likes</button><button id="navMatches" onclick="showPage('matches')">💕<br>Matches</button><button id="navWallet" onclick="showPage('wallet')">🪙<br>Wallet</button><button id="navProfile" onclick="showPage('profile')">👤<br>Profile</button><button id="navAdmin" class="hidden" onclick="showPage('admin')">👑<br>Admin</button>
+ <button id="navDiscover" class="active" onclick="showPage('discover')">💜<br>Discover</button><button id="navLikes" onclick="showPage('likes')">❤️<br>Likes</button><button id="navMatches" onclick="showPage('matches')">💕<br>Matches</button><button id="navProfile" onclick="showPage('profile')">👤<br>Profile</button><button id="navAdmin" class="hidden" onclick="showPage('admin')">👑<br>Admin</button>
 </nav>
+
+<div id="publicProfileModal" class="modal hidden" role="dialog" aria-modal="true">
+ <div class="modal-card">
+  <button class="secondary" onclick="closePublicProfile()">✕ Close</button>
+  <div id="publicProfileContent"></div>
+ </div>
+</div>
 <div id="callScreen">
  <h2 id="callHeading">Call</h2><p id="callStatus">Connecting...</p><video id="remoteVideo" autoplay playsinline></video><video id="localVideo" autoplay muted playsinline></video>
  <div class="row"><button class="danger" onclick="endCall()">End call</button><button id="acceptCallBtn" class="success hidden" onclick="acceptCall()">Accept</button><button id="rejectCallBtn" class="secondary hidden" onclick="rejectCall()">Reject</button></div>
@@ -147,14 +155,12 @@ let selectedPhotos=[],currentPage="discover",authRun=0;
 const $=id=>document.getElementById(id);
 const isGmail=e=>/^[^@\s]+@gmail\.com$/i.test(e||"");
 const currentUid=()=>auth.currentUser?.uid||null;
-
-/* FIXED: corrected arrow-function syntax */
 const esc=(v="")=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-
 function toast(s){$("toast").textContent=s;$("toast").style.display="block";clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>$("toast").style.display="none",3500);}
 function safePhoto(v){return typeof v==="string"&&(/^data:image\//i.test(v)||/^https:\/\//i.test(v))?v:"";}
 function photosOf(p){return Array.isArray(p?.photoURLs)?p.photoURLs.filter(safePhoto):(safePhoto(p?.photoURL)?[p.photoURL]:[]);}
 
+/* Always recover uid from the Firestore document ID if the field is missing. */
 function normalizeProfile(data,id){
  const p={...(data||{}),uid:String(data?.uid||id||"")};
  p.photoURLs=photosOf(p);if(!p.photoURL&&p.photoURLs.length)p.photoURL=p.photoURLs[0];
@@ -167,7 +173,7 @@ function clearListeners(){
 const privacyHTML=`<h2>Privacy Policy</h2><p class="muted">Effective date: 18 November 2026</p>
 <p>THENNAL explains how information is used when you use the app.</p>
 <h3>1. Eligibility</h3><p>THENNAL is for adults aged 18 and above only.</p>
-<h3>2. Information</h3><p>We may process your name, email, age, gender, location, profile photos, biography, likes, matches, messages, reports and verification requests.</p>
+<h3>2. Information</h3><p>We may process your name, email, age, gender, location, profile photos, biography, likes, matches, friend requests, reviews, messages, reports and verification requests.</p>
 <h3>3. Use of information</h3><p>Information is used to operate profiles, discovery, matching, messaging, calls, safety reviews and account services.</p>
 <h3>4. Profile visibility</h3><p>Your profile details and photos may be visible to other THENNAL users.</p>
 <h3>5. Chats and calls</h3><p>Messages are stored in the database. Audio/video calls use WebRTC. The app does not intentionally record calls.</p>
@@ -225,6 +231,7 @@ window.resendVerification=async()=>{
 };
 window.logout=async()=>{clearListeners();cleanupCall();await signOut(auth);};
 
+/* Auth/profile loading is sequential: app data is not queried until the signed-in uid is ready. */
 onAuthStateChanged(auth,async user=>{
  const run=++authRun;me=user||null;myProfile=null;clearListeners();
  if(!user){
@@ -244,7 +251,7 @@ onAuthStateChanged(auth,async user=>{
    if(photosOf(myProfile).length<2){showPage("profile");toast("Add at least 2 profile photos before using the app.");}
    else showPage("discover");
   }else{showPage("profile");toast("Complete your profile with at least 2 photos.");}
-  await Promise.allSettled([loadDiscover(),loadLikes(),loadMatches(),loadWallet()]);
+  await Promise.allSettled([loadDiscover(),loadLikes(),loadMatches()]);
   if(run!==authRun)return;listenIncoming();if(user.email===ADMIN)loadAdmin();
  }catch(e){if(run===authRun)toast("Unable to load account: "+e.message);}
 });
@@ -308,11 +315,13 @@ window.showPage=page=>{
  if(page==="admin"&&auth.currentUser.email!==ADMIN)return toast("Admin access only");
  if(!$(page+"Page"))return;
  currentPage=page;
- ["discover","likes","matches","chat","profile","wallet","admin"].forEach(p=>$(p+"Page").classList.toggle("hidden",p!==page));
- ["Discover","Likes","Matches","Profile","Wallet","Admin"].forEach(p=>{const b=$("nav"+p);if(b)b.classList.toggle("active",p.toLowerCase()===page);});
+ ["discover","likes","matches","chat","profile","admin"].forEach(p=>$(p+"Page").classList.toggle("hidden",p!==page));
+ ["Discover","Likes","Matches","Profile","Admin"].forEach(p=>{const b=$("nav"+p);if(b)b.classList.toggle("active",p.toLowerCase()===page);});
  if(page==="admin")loadAdmin();
+ if(page==="likes")loadFriendRequests();
 };
 
+/* DISCOVER */
 window.loadDiscover=async()=>{
  const uid=currentUid();if(!uid||!myProfile||photosOf(myProfile).length<2)return;
  try{
@@ -330,7 +339,7 @@ window.loadDiscover=async()=>{
    return `<div class="card"><div class="photo-grid">${pics.map(src=>`<img src="${esc(src)}" alt="Profile photo">`).join("")}</div>
    <h2>${esc(u.name||"Member")}, ${esc(u.age||"")}</h2><p class="muted">${esc([u.city,u.state,u.country].filter(Boolean).join(", "))}</p><p>${esc(u.bio||"")}</p>
    ${u.verificationStatus==="verified"?'<span class="pill">✓ Verified</span>':""}
-   <div class="row" style="margin-top:12px"><button ${liked.has(u.uid)?"disabled":""} onclick="likeUser('${id}')">${liked.has(u.uid)?"Liked ✓":"❤️ Like"}</button><button class="secondary" onclick="reportUser('${id}','${esc(u.name||"Member")}')">Report</button></div></div>`;
+   <div class="row" style="margin-top:12px"><button class="secondary" onclick="viewPublicProfile('${id}')">View Profile</button><button ${liked.has(u.uid)?"disabled":""} onclick="likeUser('${id}')">${liked.has(u.uid)?"Liked ✓":"❤️ Like"}</button><button class="secondary" onclick="reportUser('${id}','${esc(u.name||"Member")}')">Report</button></div></div>`;
   }).join(""):'<div class="card muted">No profiles found. Try changing your filters.</div>';
  }catch(e){toast("Discover error: "+e.message);}
 };
@@ -355,8 +364,7 @@ window.loadLikes=async()=>{
   const list=[];
   for(const d of snap.docs){
    const fromUid=d.data()?.fromUid;if(typeof fromUid!=="string"||!fromUid||fromUid===uid)continue;
-   let p=await getDoc(doc(db,"publicProfiles",fromUid));
-   if(!p.exists())p=await getDoc(doc(db,"users",fromUid));
+   const p=await getDoc(doc(db,"publicProfiles",fromUid));
    if(p.exists()){const user=normalizeProfile(p.data(),p.id);if(user.uid)list.push(user);}
   }
   $("likesList").innerHTML=list.length?list.map(u=>userRow(u,`<button onclick="likeUser('${esc(u.uid)}')">Like back</button>`)).join(""):'<p class="muted">No likes yet.</p>';
@@ -367,6 +375,7 @@ function userRow(u,actions=""){
  return `<div class="userrow"><img class="small-photo" src="${esc(p)}" alt=""><div class="grow"><b>${esc(u.name||"Member")}</b><p class="muted">${esc([u.city,u.country].filter(Boolean).join(", "))}</p></div>${actions}</div>`;
 };
 
+/* MATCHES */
 window.loadMatches=async()=>{
  const uid=currentUid();if(!uid)return;
  try{
@@ -380,8 +389,7 @@ window.loadMatches=async()=>{
    const m=d.data()||{},u1=typeof m.user1==="string"?m.user1:"",u2=typeof m.user2==="string"?m.user2:"";
    if(!u1||!u2||u1===u2||!(u1===uid||u2===uid))continue;
    const partnerUid=u1===uid?u2:u1;if(!partnerUid||partnerUid===uid)continue;
-   let p=await getDoc(doc(db,"publicProfiles",partnerUid));
-   if(!p.exists())p=await getDoc(doc(db,"users",partnerUid));
+   const p=await getDoc(doc(db,"publicProfiles",partnerUid));
    if(!p.exists())continue;
    const partner=normalizeProfile(p.data(),partnerUid);
    if(!partner.uid)continue;
@@ -411,6 +419,64 @@ window.sendMessage=async()=>{
  try{$("chatInput").value="";await addDoc(collection(db,"chats",activeMatch,"messages"),{senderUid:uid,text,createdAt:serverTimestamp()});}
  catch(e){toast("Message failed: "+e.message);}
 };
+window.closePublicProfile=()=>$("publicProfileModal").classList.add("hidden");
+window.viewPublicProfile=async uid=>{
+ try{
+  const snap=await getDoc(doc(db,"publicProfiles",uid));if(!snap.exists())throw Error("Profile not found");
+  const p=normalizeProfile(snap.data(),uid),photos=photosOf(p);
+  const [matchA,matchB,outgoingSnap,incomingSnap,reviewsSnap]=await Promise.all([
+   getDocs(query(collection(db,"matches"),where("user1","==",currentUid()))),
+   getDocs(query(collection(db,"matches"),where("user2","==",currentUid()))),
+   getDocs(query(collection(db,"friendRequests"),where("fromUid","==",currentUid()),where("toUid","==",uid),limit(1))),
+   getDocs(query(collection(db,"friendRequests"),where("fromUid","==",uid),where("toUid","==",currentUid()),limit(1))),
+   getDocs(query(collection(db,"reviews"),where("targetUid","==",uid),limit(50)))
+  ]);
+  const matched=[...matchA.docs,...matchB.docs].some(d=>{const m=d.data();return (m.user1===currentUid()&&m.user2===uid)||(m.user2===currentUid()&&m.user1===uid)});
+  const req=outgoingSnap.empty?null:outgoingSnap.docs[0].data();
+  const incoming=incomingSnap.empty?null:incomingSnap.docs[0];
+  const incomingId=incoming?incoming.id:(uid+"_"+currentUid());
+  const reviews=reviewsSnap.docs.map(d=>d.data());
+  const avg=reviews.length?(reviews.reduce((a,r)=>a+Number(r.rating||0),0)/reviews.length).toFixed(1):"—";
+  const chatAction=matched?`<button onclick="closePublicProfile();openChatFromProfile('${esc(uid)}','${esc(p.name||"Member")}')">💬 Chat</button>`:`<button class="secondary" onclick="toast('Chat തുറക്കാൻ പരസ്പരം Like ചെയ്ത് Match ആകണം.')">💬 Chat (Match required)</button>`;
+  let friendAction=`<button onclick="sendFriendRequest('${esc(uid)}')">➕ Add Friend</button>`;
+  if(req?.status==="pending")friendAction='<button class="secondary" disabled>Request Sent</button>';
+  if(req?.status==="accepted")friendAction='<button class="success" disabled>✓ Friends</button>';
+  if(incoming&&incoming.data().status==="pending")friendAction=`<button class="success" onclick="respondFriendRequest('${esc(incomingId)}','accepted')">Accept Friend</button><button class="danger" onclick="respondFriendRequest('${esc(incomingId)}','rejected')">Decline</button>`;
+  $("publicProfileContent").innerHTML=`<h2>${esc(p.name||"THENNAL Member")}${p.age?`, ${esc(p.age)}`:""}</h2><p class="muted">${esc([p.city,p.state,p.country].filter(Boolean).join(", "))}</p><div class="photo-grid">${photos.map(x=>`<img src="${esc(x)}" alt="Profile photo">`).join("")}</div><p>${esc(p.bio||"")}</p><div class="row">${chatAction}${friendAction}<button class="secondary" onclick="writeReview('${esc(uid)}','${esc(p.name||"Member")}')">⭐ Review</button></div><hr><h3>⭐ Reviews (${reviews.length}) · Average ${avg}/5</h3>${reviews.length?reviews.map(r=>`<div class="card"><b>${"★".repeat(Math.max(1,Math.min(5,Number(r.rating)||1)))}</b><p>${esc(r.text||"")}</p><p class="muted">${esc(r.reviewerName||"THENNAL Member")}</p></div>`).join(""):'<p class="muted">No reviews yet.</p>'}<button class="secondary" onclick="reportUser('${esc(uid)}','${esc(p.name||"Member")}')">Report Profile</button>`;
+  $("publicProfileModal").classList.remove("hidden");
+ }catch(e){toast("Could not open profile: "+e.message);}
+};
+window.openChatFromProfile=async(uid,name)=>{
+ const [a,b]=await Promise.all([getDocs(query(collection(db,"matches"),where("user1","==",currentUid()))),getDocs(query(collection(db,"matches"),where("user2","==",currentUid())))]);
+ const d=[...a.docs,...b.docs].find(x=>{const m=x.data();return (m.user1===currentUid()&&m.user2===uid)||(m.user2===currentUid()&&m.user1===uid)});
+ if(!d)return toast("A mutual Match is required before chatting.");
+ await loadMatches();window.openChat(d.id,uid,name);
+};
+window.sendFriendRequest=async targetUid=>{
+ const uid=currentUid();if(!uid||uid===targetUid)return;
+ try{await setDoc(doc(db,"friendRequests",uid+"_"+targetUid),{fromUid:uid,toUid:targetUid,status:"pending",createdAt:serverTimestamp()});toast("Friend request sent!");viewPublicProfile(targetUid);}
+ catch(e){toast("Friend request failed: "+e.message);}
+};
+window.respondFriendRequest=async(id,status)=>{
+ try{await updateDoc(doc(db,"friendRequests",id),{status,updatedAt:serverTimestamp()});toast(status==="accepted"?"Friend request accepted":"Request declined");loadFriendRequests();}
+ catch(e){toast("Could not update request: "+e.message);}
+};
+window.loadFriendRequests=async()=>{
+ const area=$("friendRequestsList");if(!area||!currentUid())return;
+ try{
+  const snap=await getDocs(query(collection(db,"friendRequests"),where("toUid","==",currentUid()),where("status","==","pending")));
+  const items=[];
+  for(const d of snap.docs){const x=d.data(),u=await getDoc(doc(db,"publicProfiles",x.fromUid));if(u.exists()){const p=normalizeProfile(u.data(),x.fromUid);items.push(`<div class="userrow"><img class="small-photo" src="${esc(photosOf(p)[0]||"")}"><div class="grow"><b>${esc(p.name||"Member")}</b><p class="muted">Wants to be your friend</p></div><button class="success" onclick="respondFriendRequest('${esc(d.id)}','accepted')">Accept</button><button class="danger" onclick="respondFriendRequest('${esc(d.id)}','rejected')">Decline</button></div>`);}}
+  area.innerHTML=items.join("")||'<p class="muted">No pending friend requests.</p>';
+ }catch(e){area.textContent="Friend requests error: "+e.message;}
+};
+window.writeReview=async(targetUid,targetName)=>{
+ const rating=Number(prompt("Give a rating from 1 to 5:"));if(!Number.isInteger(rating)||rating<1||rating>5)return toast("Rating must be 1 to 5.");
+ const text=(prompt("Write a short review (optional):")||"").trim().slice(0,500);
+ try{const uid=currentUid();await setDoc(doc(db,"reviews",uid+"_"+targetUid),{reviewerUid:uid,targetUid,rating,text,reviewerName:myProfile?.name||"THENNAL Member",createdAt:serverTimestamp()});toast("Review submitted");viewPublicProfile(targetUid);}
+ catch(e){toast("Review failed: "+e.message);}
+};
+
 window.reportUser=async(uid,name)=>{
  const reporter=currentUid();if(!reporter||!uid||uid===reporter)return toast("Invalid report target.");
  const reason=prompt("Why are you reporting this profile?");if(!reason)return;
@@ -418,12 +484,8 @@ window.reportUser=async(uid,name)=>{
  try{await addDoc(collection(db,"reports"),{reporterUid:reporter,targetUid:uid,targetName:name,reason:reason.slice(0,100),details:details.slice(0,1000),status:"open",createdAt:serverTimestamp()});toast("Report submitted. Thank you.");}
  catch(e){toast("Report failed: "+e.message);}
 };
-async function loadWallet(){
- const uid=currentUid();if(!uid)return;
- try{const s=await getDoc(doc(db,"wallets",uid));$("coinBalance").textContent=(s.exists()?Number(s.data().coins||0):0)+" coins";}
- catch(e){$("coinBalance").textContent="Unavailable";}
-}
 
+/* ADMIN */
 window.loadAdmin=async()=>{
  if(auth.currentUser?.email!==ADMIN)return toast("Admin access only");
  try{
@@ -467,6 +529,7 @@ function renderAdminMatches(){
  $("adminMatches").innerHTML=allMatches.slice(0,100).map(m=>`<div class="userrow"><div class="grow"><b>${esc(m.user1||"")}</b><p class="muted">matched with ${esc(m.user2||"")}</p></div></div>`).join("")||'<p class="muted">No matches yet.</p>';
 }
 
+/* WEBRTC */
 const rtcConfig={iceServers:[{urls:"stun:stun.l.google.com:19302"},{urls:"stun:stun1.l.google.com:19302"}]};
 async function getMedia(type){return navigator.mediaDevices.getUserMedia({audio:true,video:type==="video"});}
 function showCall(status){$("callScreen").style.display="block";$("callStatus").textContent=status;}
@@ -549,4 +612,4 @@ window.addEventListener("beforeunload",()=>{clearListeners();cleanupCall();});
 showAuth("login");
 </script>
 </body>
-</html>
+ </html>
