@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -148,12 +147,14 @@ let selectedPhotos=[],currentPage="discover",authRun=0;
 const $=id=>document.getElementById(id);
 const isGmail=e=>/^[^@\s]+@gmail\.com$/i.test(e||"");
 const currentUid=()=>auth.currentUser?.uid||null;
-const esc(v="")=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+/* FIXED: corrected arrow-function syntax */
+const esc=(v="")=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
 function toast(s){$("toast").textContent=s;$("toast").style.display="block";clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>$("toast").style.display="none",3500);}
 function safePhoto(v){return typeof v==="string"&&(/^data:image\//i.test(v)||/^https:\/\//i.test(v))?v:"";}
 function photosOf(p){return Array.isArray(p?.photoURLs)?p.photoURLs.filter(safePhoto):(safePhoto(p?.photoURL)?[p.photoURL]:[]);}
 
-/* Always recover uid from the Firestore document ID if the field is missing. */
 function normalizeProfile(data,id){
  const p={...(data||{}),uid:String(data?.uid||id||"")};
  p.photoURLs=photosOf(p);if(!p.photoURL&&p.photoURLs.length)p.photoURL=p.photoURLs[0];
@@ -224,7 +225,6 @@ window.resendVerification=async()=>{
 };
 window.logout=async()=>{clearListeners();cleanupCall();await signOut(auth);};
 
-/* Auth/profile loading is sequential: app data is not queried until the signed-in uid is ready. */
 onAuthStateChanged(auth,async user=>{
  const run=++authRun;me=user||null;myProfile=null;clearListeners();
  if(!user){
@@ -313,7 +313,6 @@ window.showPage=page=>{
  if(page==="admin")loadAdmin();
 };
 
-/* DISCOVER: use document ID whenever a profile's uid field is absent. */
 window.loadDiscover=async()=>{
  const uid=currentUid();if(!uid||!myProfile||photosOf(myProfile).length<2)return;
  try{
@@ -366,9 +365,8 @@ window.loadLikes=async()=>{
 function userRow(u,actions=""){
  const p=photosOf(u)[0]||"";
  return `<div class="userrow"><img class="small-photo" src="${esc(p)}" alt=""><div class="grow"><b>${esc(u.name||"Member")}</b><p class="muted">${esc([u.city,u.country].filter(Boolean).join(", "))}</p></div>${actions}</div>`;
-}
+};
 
-/* MATCHES: reject malformed match records before constructing Firestore paths. */
 window.loadMatches=async()=>{
  const uid=currentUid();if(!uid)return;
  try{
@@ -426,7 +424,6 @@ async function loadWallet(){
  catch(e){$("coinBalance").textContent="Unavailable";}
 }
 
-/* ADMIN */
 window.loadAdmin=async()=>{
  if(auth.currentUser?.email!==ADMIN)return toast("Admin access only");
  try{
@@ -470,7 +467,6 @@ function renderAdminMatches(){
  $("adminMatches").innerHTML=allMatches.slice(0,100).map(m=>`<div class="userrow"><div class="grow"><b>${esc(m.user1||"")}</b><p class="muted">matched with ${esc(m.user2||"")}</p></div></div>`).join("")||'<p class="muted">No matches yet.</p>';
 }
 
-/* WEBRTC */
 const rtcConfig={iceServers:[{urls:"stun:stun.l.google.com:19302"},{urls:"stun:stun1.l.google.com:19302"}]};
 async function getMedia(type){return navigator.mediaDevices.getUserMedia({audio:true,video:type==="video"});}
 function showCall(status){$("callScreen").style.display="block";$("callStatus").textContent=status;}
@@ -553,4 +549,4 @@ window.addEventListener("beforeunload",()=>{clearListeners();cleanupCall();});
 showAuth("login");
 </script>
 </body>
- </html>
+</html>
