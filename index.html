@@ -1,349 +1,136 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#100719">
 <title>THENNAL ❤️ Connect Hearts</title>
-
 <style>
+:root{--pink:#ff3d9a;--purple:#a855f7;--dark:#100719;--panel:#1b1028;--muted:#b9a9c8;--green:#28d17c;--red:#ff5268}
 *{box-sizing:border-box}
-:root{
- --pink:#ff3d9a;
- --purple:#a855f7;
- --dark:#0b0613;
- --panel:#1b1028;
-}
-body{
- margin:0;
- background:radial-gradient(ellipse at top,#351044,#100719 65%);
- color:white;
- font-family:Arial,sans-serif;
-}
-header{
- background:#170c22;
- padding:18px;
- text-align:center;
- border-bottom:1px solid var(--pink);
- box-shadow:0 0 22px #ff3d9a55;
-}
-header h1{
- color:#ff65b0;
- letter-spacing:7px;
- text-shadow:0 0 12px #ff3d9a,0 0 28px #a855f7;
- margin:8px;
-}
-header img{
- width:85px;height:85px;
- object-fit:contain;
- filter:drop-shadow(0 0 12px #ff3d9a);
-}
-header p{color:#edc9ff;letter-spacing:2px}
-main{max-width:850px;margin:auto;padding:15px}
-.card{
- background:linear-gradient(145deg,#271633,#160d22);
- padding:20px;
- border:1px solid #873c89;
- border-radius:20px;
- margin:12px 0;
- box-shadow:0 0 18px #a855f722;
-}
-input,textarea,select{
- width:100%;padding:14px;margin:7px 0;
- border-radius:12px;
- border:1px solid #a855f7;
- background:#100a1b;color:white;
- outline:none;
-}
-input:focus,textarea:focus,select:focus{
- border-color:#ff3d9a;
- box-shadow:0 0 12px #ff3d9a88;
-}
-button{
- padding:12px 18px;
- border:1px solid #ff8ac4;
- border-radius:25px;
- background:linear-gradient(100deg,#ff2789,#a43cff);
- color:white;font-weight:bold;
- margin:5px;cursor:pointer;
- box-shadow:0 0 12px #ff3d9a55;
-}
-button:hover{transform:scale(1.03)}
-button.secondary{background:#39264e}
-button:disabled{opacity:.5}
-nav{
- display:flex;flex-wrap:wrap;
- justify-content:center;
- background:#100a1b;
- padding:10px;
- position:sticky;top:0;z-index:5;
- border-bottom:1px solid #a855f7;
-}
-nav button{font-size:12px}
-.hidden{display:none!important}
-.profile{display:flex;gap:15px;align-items:center}
-.avatar{
- width:85px;height:85px;border-radius:50%;
- object-fit:cover;border:2px solid #ff3d9a;
- box-shadow:0 0 15px #ff3d9a;
-}
-.person{display:inline-block;width:220px;vertical-align:top;margin:8px}
-.person img{
- width:100%;height:180px;
- object-fit:cover;border-radius:14px;
- border:1px solid #ff3d9a;
-}
-.small{color:#d5b8e8;font-size:13px}
-h2{color:#ff80bd;text-shadow:0 0 8px #ff3d9a55}
-#messages{
- height:300px;overflow:auto;
- background:#100a1b;padding:12px;
- border-radius:12px;border:1px solid #873c89;
-}
-.msg{
- padding:9px;margin:6px;border-radius:12px;
- background:#392747;max-width:85%;
- overflow-wrap:anywhere;
-}
-.mine{margin-left:auto;background:#922c72}
-video{
- width:100%;max-width:350px;
- background:black;border-radius:12px;
-}
-.photo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
-.photo-grid img{width:100%;height:170px;object-fit:cover;border-radius:14px;border:1px solid #ff3d9a}
-.person .photo-grid{display:block;margin:0}
-.person .photo-grid img{height:190px}
-.intro-screen{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;padding:18px;background:linear-gradient(180deg,#16091dcc,#080411f5),url('https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1200&q=85') center/cover}
-.intro-inner{max-width:650px;width:100%;text-align:center;background:#170c22dd;border:1px solid #ff65b088;border-radius:26px;padding:22px;backdrop-filter:blur(8px);box-shadow:0 0 35px #ff3d9a55}
-.intro-photos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}
-.intro-photos img{width:100%;height:130px;object-fit:cover;border-radius:14px;border:1px solid #ff8ac4}
-#profileModal{position:fixed;inset:0;z-index:10000;background:#05020beF;overflow:auto;padding:18px}
-#profileModal .modal-inner{max-width:620px;margin:20px auto;background:#21122f;border:1px solid #ff3d9a;border-radius:20px;padding:20px}
-.notice{font-size:13px;color:#e7c9f5;background:#21142d;padding:12px;border-radius:12px;border:1px solid #694078}
-@media(max-width:500px){.intro-photos img{height:95px}.photo-grid img{height:135px}}
-#auth{
- max-width:420px;margin:25px auto;
- border:1px solid #ff3d9a;
- box-shadow:0 0 25px #ff3d9a33;
-}
-#splash{
- position:fixed;inset:0;z-index:9999;
- display:flex;flex-direction:column;
- justify-content:center;align-items:center;
- background:radial-gradient(circle,#421052,#090514 70%);
- animation:splashFade 4s forwards;
-}
-#splash img{
- width:190px;height:190px;object-fit:contain;
- filter:drop-shadow(0 0 18px #ff3d9a);
- animation:heartReveal 1.5s ease-in-out infinite alternate;
-}
-#splash h1{
- color:#ff64b1;letter-spacing:9px;
- text-shadow:0 0 15px #ff3d9a,0 0 30px #a855f7;
-}
-#splash p{color:#edc4ff;letter-spacing:3px}
-@keyframes heartReveal{
- from{transform:scale(.8)}
- to{transform:scale(1.12)}
-}
-@keyframes splashFade{
- 0%,75%{opacity:1;visibility:visible}
- 100%{opacity:0;visibility:hidden;pointer-events:none}
-}
-@media(max-width:500px){
- nav button{font-size:11px;padding:10px}
- .person{width:100%;margin:5px 0}
- .profile{flex-wrap:wrap}
-}
+body{margin:0;background:var(--dark);color:white;font-family:Arial,sans-serif}
+button,input,select,textarea{font:inherit}
+button{border:0;border-radius:12px;padding:12px 16px;background:linear-gradient(110deg,var(--pink),var(--purple));color:white;font-weight:bold;cursor:pointer}
+button.secondary{background:#38254a}button.danger{background:#9e263c}button.success{background:#147a50}
+button:disabled{opacity:.5;cursor:not-allowed}
+input,select,textarea{width:100%;padding:12px;margin:6px 0 12px;background:#120c1b;color:white;border:1px solid #49345e;border-radius:10px}
+textarea{min-height:80px;resize:vertical}label{font-size:13px;color:var(--muted)}
+header{position:sticky;top:0;z-index:5;background:#160d20;border-bottom:1px solid #39264a;padding:13px 16px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:23px;font-weight:900;color:var(--pink)}
+main{max-width:900px;margin:auto;padding:16px 14px 90px}
+.card{background:var(--panel);border:1px solid #382448;border-radius:17px;padding:16px;margin:12px 0}
+h2,h3{margin:5px 0 14px}.muted{color:var(--muted);font-size:13px}.hidden{display:none!important}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1;min-width:0}
+nav{position:fixed;bottom:0;left:0;right:0;z-index:8;background:#190f24;border-top:1px solid #49345e;display:flex;overflow-x:auto}
+nav button{flex:1;min-width:65px;border-radius:0;background:transparent;padding:12px 5px;font-size:12px}
+nav button.active{color:var(--pink);background:#2a1738}
+.profile-photo{width:100%;height:320px;object-fit:cover;border-radius:14px}
+.photo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0}
+.photo-grid img{width:100%;height:180px;object-fit:cover;border-radius:12px;background:#30203e}
+.small-photo{width:58px;height:58px;border-radius:50%;object-fit:cover;background:#30203e}
+.userrow{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #39264a}
+.userrow .grow{flex:1;min-width:0}.userrow p{margin:4px 0}
+.pill{display:inline-block;background:#382448;padding:5px 9px;border-radius:30px;font-size:11px;color:#e9c9ff}
+#toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:40;background:#352044;padding:12px 18px;border-radius:12px;display:none;max-width:90%;box-shadow:0 5px 25px #0008}
+#messages{height:55vh;overflow:auto;background:#120c1b;padding:12px;border-radius:12px}
+.msg{max-width:82%;padding:10px 12px;border-radius:13px;margin:8px 0;background:#382448;overflow-wrap:anywhere}
+.msg.mine{margin-left:auto;background:#803a8e}
+#callScreen{position:fixed;inset:0;background:#100719;z-index:30;padding:18px;display:none;text-align:center}
+video{width:100%;max-height:38vh;background:#241532;border-radius:15px;object-fit:cover}
+.stat{background:#291a38;border-radius:12px;padding:13px;flex:1;min-width:100px}
+.stat b{font-size:23px;color:var(--pink);display:block}
+hr{border:0;border-top:1px solid #49345e;margin:15px 0}
+a{color:#f3a6d0}.legal-links{display:flex;gap:14px;flex-wrap:wrap;margin-top:16px;font-size:13px}
+.legal-links a{cursor:pointer}.legal-content{line-height:1.65;color:#eee}
+.legal-content h3{color:#ff9bc9;margin-top:22px}.legal-content p,.legal-content li{color:#d8cadd;font-size:14px}
+.checkline{display:flex;align-items:flex-start;gap:9px;margin:12px 0;color:#e8d9ef;font-size:13px;line-height:1.5}
+.checkline input{width:18px;height:18px;flex:0 0 18px;margin:1px 0}
+.photo-preview{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.photo-preview img{width:100%;height:130px;object-fit:cover;border-radius:10px}
 </style>
 </head>
-
 <body>
-
-<div id="splash">
- <img src="ChatGPT%20Image%20Nov%205%2C%202026%2C%2005_09_05%20PM.png"
- alt="THENNAL Logo" onerror="this.style.display='none'">
- <h1>THENNAL</h1>
- <p>CONNECT HEARTS ❤️</p>
-</div>
-
-<div id="intro" class="intro-screen hidden">
- <div class="intro-inner">
-  <h1 style="color:#ff70b8;letter-spacing:6px">THENNAL ❤️</h1>
-  <h2>ഹൃദയങ്ങൾ ഒന്നിക്കുന്ന ഇടം...</h2>
-  <p>ദൂരങ്ങൾ എത്രയുണ്ടെങ്കിലും മനസ്സുകൾക്ക് ഒന്നിക്കാം.</p>
-  <div class="intro-photos">
-   <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=500&q=80" alt="Couple together">
-   <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=500&q=80" alt="Couple celebrating">
-   <img src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=500&q=80" alt="Friends together">
-  </div>
-  <h3>പുതിയ സൗഹൃദങ്ങൾ... പുതിയ ബന്ധങ്ങൾ...</h3>
-  <p>നിങ്ങളുടെ മനസ്സിന് ഇണങ്ങുന്ന ഒരാളെ കണ്ടെത്തൂ.</p>
-  <button onclick="closeIntro()">തുടങ്ങാം ❤️</button>
- </div>
-</div>
-
-<header>
- <img src="ChatGPT%20Image%20Nov%205%2C%202026%2C%2005_09_05%20PM.png"
- alt="THENNAL Logo" onerror="this.style.display='none'">
- <h1>THENNAL ❤️</h1>
- <p>Connect Hearts • Find Your Soulmate</p>
-</header>
-
-<section id="auth" class="card">
- <h2 id="authTitle">THENNAL-ലേക്ക് സ്വാഗതം ❤️</h2>
- <p class="small">Verified Gmail ഉപയോഗിച്ച് Login ചെയ്യുക. പുതിയ അക്കൗണ്ടിന് കുറഞ്ഞത് 2 ഫോട്ടോകൾ വേണം.</p>
- <input id="email" type="email" placeholder="Gmail Address (@gmail.com)" autocomplete="email">
- <input id="password" type="password" placeholder="Password (കുറഞ്ഞത് 6 അക്ഷരങ്ങൾ)" autocomplete="current-password">
- <button onclick="login()">LOGIN</button>
- <button class="secondary" onclick="showRegister()">CREATE ACCOUNT</button>
- <div id="registerFields" class="hidden">
-  <hr>
-  <h3>പുതിയ അക്കൗണ്ട് വിവരങ്ങൾ</h3>
-  <input id="regName" placeholder="പേര് / Name" maxlength="50">
-  <input id="regAge" type="number" min="18" max="100" placeholder="Age (18+) ">
-  <select id="regGender"><option value="">Select Gender</option><option>Male</option><option>Female</option><option>Other</option></select>
-  <textarea id="regBio" placeholder="About yourself" maxlength="500"></textarea>
-  <label>Profile Photos (കുറഞ്ഞത് 2, പരമാവധി 4)</label>
-  <input id="regPhotos" type="file" accept="image/*" multiple>
-  <label><input id="agreeTerms" type="checkbox" style="width:auto"> I am 18+ and agree to Terms & Privacy Policy.</label>
-  <button onclick="register()">VERIFY EMAIL & CREATE ACCOUNT</button>
-  <p class="small">Gmail verification link അയയ്ക്കും. Link സ്ഥിരീകരിച്ച ശേഷം മാത്രമേ Login അനുവദിക്കൂ. Spark plan-ൽ SMS OTP ലഭ്യമല്ല.</p>
- </div>
- <p id="authMsg" class="small"></p>
-</section>
-
-<div id="app" class="hidden">
-
-<nav>
- <button onclick="show('home')">Home</button>
- <button onclick="show('discover')">Discover</button>
- <button onclick="show('likes')">Likes</button>
- <button onclick="show('matches')">Matches</button>
- <button onclick="show('chat')">Chat</button>
- <button onclick="show('profile')">Profile</button>
- <button onclick="show('wallet')">Wallet</button>
- <button onclick="show('admin')">Admin</button>
- <button onclick="logout()">Logout</button>
-</nav>
-
+<header><div class="logo">THENNAL ❤️</div><div id="headerUser" class="muted">Connect Hearts</div></header>
+<div id="toast"></div>
 <main>
-
-<section id="home" class="page card">
- <h2>Welcome to THENNAL ❤️</h2>
- <p>Meet new people and connect hearts.</p>
- <div id="welcome"></div>
-</section>
-
-<section id="discover" class="page hidden">
- <h2>Discover People 💕</h2>
- <div id="people"></div>
-</section>
-
-<section id="likes" class="page hidden card">
- <h2>People Who Like You ❤️</h2>
- <div id="likesList"></div>
-</section>
-
-<section id="matches" class="page hidden card">
- <h2>Your Matches 💜</h2>
- <div id="matchesList"></div>
-</section>
-
-<section id="chat" class="page hidden card">
- <h2>Chat 💬</h2>
- <div id="chatList"></div>
- <div id="messages"></div>
- <input id="chatText" placeholder="Write a message...">
- <button onclick="sendMessage()">SEND</button>
- <div>
-  <button onclick="startAudioCall()">🎙 AUDIO CALL</button>
-  <button onclick="startVideoCall()">📹 VIDEO CALL</button>
+<section id="authPage">
+ <div class="card">
+  <h2>Welcome to THENNAL ❤️</h2><p class="muted">Meet Malayalis around the world.</p>
+  <div class="row"><button id="loginTab" onclick="showAuth('login')">Login</button><button class="secondary" id="registerTab" onclick="showAuth('register')">Create account</button></div>
+  <div id="loginForm">
+   <label>Gmail address</label><input id="loginEmail" type="email" autocomplete="email" placeholder="example@gmail.com">
+   <label>Password</label><input id="loginPassword" type="password" autocomplete="current-password">
+   <button style="width:100%" onclick="login()">Login</button>
+   <button class="secondary" style="width:100%;margin-top:8px" onclick="resendVerification()">Resend verification email</button>
+  </div>
+  <div id="registerForm" class="hidden">
+   <label>Gmail address only</label><input id="regEmail" type="email" placeholder="example@gmail.com">
+   <label>Password</label><input id="regPassword" type="password" placeholder="At least 6 characters">
+   <label class="checkline"><input type="checkbox" id="regAgeConfirm"><span>I confirm that I am 18 years of age or older.</span></label>
+   <label class="checkline"><input type="checkbox" id="regTermsConfirm"><span>I agree to the Terms & Conditions and Privacy Policy.</span></label>
+   <button style="width:100%" onclick="register()">Create account</button>
+   <p class="muted">Verify your email, then complete your profile with at least 2 photos.</p>
+  </div>
+  <div class="legal-links"><a onclick="showLegal('privacy')">Privacy Policy</a><a onclick="showLegal('terms')">Terms & Conditions</a></div>
  </div>
 </section>
-
-<section id="profile" class="page hidden card">
- <h2>My Profile</h2>
- <div class="profile">
-  <img id="myPhoto" class="avatar" alt="Profile">
-  <div id="myDetails"></div>
- </div>
- <input id="name" placeholder="Your Name">
- <input id="age" type="number" placeholder="Age">
- <select id="gender">
-  <option value="">Select Gender</option>
-  <option>Male</option>
-  <option>Female</option>
-  <option>Other</option>
- </select>
- <textarea id="bio" placeholder="About yourself"></textarea>
- <label>Profile Photos (minimum 2, maximum 4). പുതിയ photos തിരഞ്ഞെടുക്കുമ്പോൾ പഴയവ replace ചെയ്യും.</label>
- <input id="photo" type="file" accept="image/*" multiple>
- <div id="myPhotoGrid" class="photo-grid"></div>
- <button onclick="saveProfile()">SAVE PROFILE</button>
- <p id="profileMsg" class="small"></p>
+<section id="legalPage" class="hidden"><div class="card"><button class="secondary" onclick="closeLegal()">← Back</button><div id="legalContent" class="legal-content"></div></div></section>
+<section id="appPage" class="hidden">
+ <section id="discoverPage">
+  <div class="card"><h2>Discover ❤️</h2>
+   <div class="row"><div><label>Minimum age</label><input id="minAge" type="number" min="18" value="18"></div><div><label>Maximum age</label><input id="maxAge" type="number" min="18" value="45"></div></div>
+   <div class="row"><div><label>Country</label><input id="filterCountry" placeholder="Any country"></div><div><label>City</label><input id="filterCity" placeholder="Any city"></div></div>
+   <button class="secondary" onclick="loadDiscover()">Apply filters</button>
+  </div><div id="discoverList"></div>
+ </section>
+ <section id="likesPage" class="hidden"><div class="card"><h2>People who liked you ❤️</h2><div id="likesList"></div></div></section>
+ <section id="matchesPage" class="hidden"><div class="card"><h2>Your Matches 💕</h2><div id="matchesList"></div></div></section>
+ <section id="chatPage" class="hidden"><div class="card">
+  <button class="secondary" onclick="showPage('matches')">← Back to matches</button><h2 id="chatTitle">Chat</h2><div id="messages"></div>
+  <div class="row"><input id="chatInput" maxlength="1000" placeholder="Write a message..." onkeydown="if(event.key==='Enter')sendMessage()"><button onclick="sendMessage()">Send</button></div>
+  <div class="row"><button onclick="startCall('audio')">📞 Audio call</button><button onclick="startCall('video')">🎥 Video call</button></div>
+ </div></section>
+ <section id="profilePage" class="hidden"><div class="card">
+  <h2>My Profile</h2><label>Full name</label><input id="pName" maxlength="60">
+  <div class="row"><div><label>Age (18+)</label><input id="pAge" type="number" min="18" max="100"></div><div><label>Gender</label><select id="pGender"><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option></select></div></div>
+  <label>Country</label><input id="pCountry"><label>State</label><input id="pState"><label>City</label><input id="pCity">
+  <label>About me</label><textarea id="pBio" maxlength="500"></textarea>
+  <label>Profile photos (minimum 2, maximum 4)</label><input id="pPhotos" type="file" accept="image/*" multiple>
+  <p class="muted">Selecting new photos replaces previous photos.</p><div id="photoPreview" class="photo-preview"></div>
+  <button style="width:100%;margin-top:12px" onclick="saveProfile()">Save profile</button><hr>
+  <h3>Profile verification</h3><textarea id="verifyNote" maxlength="500" placeholder="Optional note for the admin"></textarea>
+  <button class="secondary" onclick="requestVerification()">Request verification</button><p id="verifyStatus" class="muted"></p><hr>
+  <h3>Legal information</h3><div class="legal-links"><a onclick="showLegal('privacy')">Privacy Policy</a><a onclick="showLegal('terms')">Terms & Conditions</a></div>
+  <hr><button class="danger" onclick="logout()">Logout</button>
+ </div></section>
+ <section id="walletPage" class="hidden"><div class="card"><h2>Wallet 🪙</h2><h2 id="coinBalance">0 coins</h2><p class="muted">Audio and video calls are free in this version. Coin purchases and deductions are not enabled.</p></div></section>
+ <section id="adminPage" class="hidden">
+  <div class="card"><h2>Owner Admin Dashboard 👑</h2>
+   <div class="row"><div class="stat"><b id="statUsers">0</b><span class="muted">Users</span></div><div class="stat"><b id="statActive">0</b><span class="muted">Active</span></div><div class="stat"><b id="statBlocked">0</b><span class="muted">Blocked</span></div></div>
+   <div class="row"><div class="stat"><b id="statMatches">0</b><span class="muted">Matches</span></div><div class="stat"><b id="statReports">0</b><span class="muted">Reports</span></div><div class="stat"><b id="statVerify">0</b><span class="muted">Pending verification</span></div></div>
+   <button class="secondary" onclick="loadAdmin()">Refresh dashboard</button>
+  </div>
+  <div class="card"><h3>User Management</h3><input id="adminSearch" placeholder="Search name, email or city" oninput="renderAdminUsers()"><div id="adminUsers"></div></div>
+  <div class="card"><h3>Verification Requests</h3><div id="adminVerifications"></div></div>
+  <div class="card"><h3>Reports & Complaints</h3><div id="adminReports"></div></div>
+  <div class="card"><h3>Matches</h3><div id="adminMatches"></div></div>
+ </section>
 </section>
-
-<section id="wallet" class="page hidden card">
- <h2>My Wallet 🪙</h2>
- <h1 id="coinBalance">0 Coins</h1>
- <p>Audio call rate: <span id="audioRate">5</span> coins/min</p>
- <p>Video call rate: <span id="videoRate">10</span> coins/min</p>
- <p class="small">
- Coin purchases and secure deductions require server-side
- payment and billing integration.
- </p>
-</section>
-
-<section id="admin" class="page hidden card">
- <h2>Admin Dashboard</h2>
- <div id="adminContent">Admin access only.</div>
-</section>
-
-<section id="call" class="page hidden card">
- <h2 id="callTitle">Call</h2>
- <p id="callStatus">Waiting...</p>
- <p class="notice">Safety note: Firebase Spark Free-ൽ Live Audio/Video AI monitoring, automatic call-cut, automatic violation strikes എന്നിവ ലഭ്യമല്ല. സംശയാസ്പദമായ പെരുമാറ്റം കണ്ടാൽ call അവസാനിപ്പിച്ച് Admin-നെ ബന്ധപ്പെടുക.</p>
- <video id="remoteVideo" autoplay playsinline></video>
- <video id="localVideo" autoplay muted playsinline></video>
- <button onclick="endCall()">END CALL</button>
-</section>
-
 </main>
+<nav id="bottomNav" class="hidden">
+ <button id="navDiscover" class="active" onclick="showPage('discover')">💜<br>Discover</button><button id="navLikes" onclick="showPage('likes')">❤️<br>Likes</button><button id="navMatches" onclick="showPage('matches')">💕<br>Matches</button><button id="navWallet" onclick="showPage('wallet')">🪙<br>Wallet</button><button id="navProfile" onclick="showPage('profile')">👤<br>Profile</button><button id="navAdmin" class="hidden" onclick="showPage('admin')">👑<br>Admin</button>
+</nav>
+<div id="callScreen">
+ <h2 id="callHeading">Call</h2><p id="callStatus">Connecting...</p><video id="remoteVideo" autoplay playsinline></video><video id="localVideo" autoplay muted playsinline></video>
+ <div class="row"><button class="danger" onclick="endCall()">End call</button><button id="acceptCallBtn" class="success hidden" onclick="acceptCall()">Accept</button><button id="rejectCallBtn" class="secondary hidden" onclick="rejectCall()">Reject</button></div>
 </div>
-
-<div id="profileModal" class="hidden">
- <div class="modal-inner">
-  <button class="secondary" onclick="closeProfileView()">CLOSE ✕</button>
-  <div id="profileModalContent"></div>
- </div>
-</div>
-
 <script type="module">
-
-import {initializeApp}
-from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-
-import {
- getAuth,onAuthStateChanged,createUserWithEmailAndPassword,
- signInWithEmailAndPassword,signOut,sendEmailVerification,reload
-} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-
-import {
- getFirestore,doc,setDoc,getDoc,collection,addDoc,getDocs,
- query,where,onSnapshot,serverTimestamp,updateDoc
-} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-
-import {
- getStorage,ref,uploadBytes,getDownloadURL
-} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
-
+import{initializeApp}from"https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import{getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,onAuthStateChanged,sendEmailVerification,reload}from"https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+import{getFirestore,doc,setDoc,getDoc,collection,addDoc,getDocs,query,where,onSnapshot,serverTimestamp,updateDoc,writeBatch,orderBy,limit}from"https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 const firebaseConfig={
- apiKey:"AIzaSyBlmHvVRkcJ2DB6I6H3a-zsN1Zt0CKo94s",
+ apiKey:"AIzaSyBlmHvVRkcJ2DB6I3H6a-zsN1Zt0CKo94s",
  authDomain:"mizhi-59e7e.firebaseapp.com",
  projectId:"mizhi-59e7e",
  storageBucket:"mizhi-59e7e.firebasestorage.app",
@@ -351,133 +138,415 @@ const firebaseConfig={
  appId:"1:109570780589:web:5a42cede76210ba8e5c524",
  measurementId:"G-FG0P26JEXK"
 };
-
-const firebase=initializeApp(firebaseConfig);
-const auth=getAuth(firebase);
-const db=getFirestore(firebase);
-const storage=getStorage(firebase);
-
 const ADMIN="kproushal@gmail.com";
-
-let me=null;
-let myProfile={};
-let activeMatch=null;
-let chatUnsub=null;
-let callPC=null;
-let localStream=null;
-let activeCall=null;
-let incomingUnsub=null;
-let callUnsubs=[];
-
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+let me=null,myProfile=null,activeMatch=null,activePartner=null;
+let allUsers=[],allMatches=[],allReports=[],allVerifications=[];
+let chatUnsub=null,incomingUnsub=null,pc=null,localStream=null,currentCallId=null,currentCallType="audio",callRole="",pendingOffer=null,callUnsubs=[];
+let selectedPhotos=[],currentPage="discover",authRun=0;
 const $=id=>document.getElementById(id);
-const say=(id,msg)=>$(id).textContent=msg;
-setTimeout(()=>{$("splash").style.display="none";$("intro").classList.remove("hidden");},3500);
+const isGmail=e=>/^[^@\s]+@gmail\.com$/i.test(e||"");
+const currentUid=()=>auth.currentUser?.uid||null;
 
-window.show=id=>{
- document.querySelectorAll(".page").forEach(p=>{
-  p.classList.add("hidden");
- });
- $(id).classList.remove("hidden");
+/* FIXED: corrected arrow-function syntax */
+const esc=(v="")=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
- if(id==="discover")loadPeople();
- if(id==="likes")loadLikes();
- if(id==="matches")loadMatches();
- if(id==="wallet")loadWallet();
- if(id==="admin")loadAdmin();
- if(id==="chat")loadChatList();
+function toast(s){$("toast").textContent=s;$("toast").style.display="block";clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>$("toast").style.display="none",3500);}
+function safePhoto(v){return typeof v==="string"&&(/^data:image\//i.test(v)||/^https:\/\//i.test(v))?v:"";}
+function photosOf(p){return Array.isArray(p?.photoURLs)?p.photoURLs.filter(safePhoto):(safePhoto(p?.photoURL)?[p.photoURL]:[]);}
+
+function normalizeProfile(data,id){
+ const p={...(data||{}),uid:String(data?.uid||id||"")};
+ p.photoURLs=photosOf(p);if(!p.photoURL&&p.photoURLs.length)p.photoURL=p.photoURLs[0];
+ return p;
+}
+function clearListeners(){
+ if(chatUnsub){chatUnsub();chatUnsub=null;}
+ if(incomingUnsub){incomingUnsub();incomingUnsub=null;}
+}
+const privacyHTML=`<h2>Privacy Policy</h2><p class="muted">Effective date: 18 November 2026</p>
+<p>THENNAL explains how information is used when you use the app.</p>
+<h3>1. Eligibility</h3><p>THENNAL is for adults aged 18 and above only.</p>
+<h3>2. Information</h3><p>We may process your name, email, age, gender, location, profile photos, biography, likes, matches, messages, reports and verification requests.</p>
+<h3>3. Use of information</h3><p>Information is used to operate profiles, discovery, matching, messaging, calls, safety reviews and account services.</p>
+<h3>4. Profile visibility</h3><p>Your profile details and photos may be visible to other THENNAL users.</p>
+<h3>5. Chats and calls</h3><p>Messages are stored in the database. Audio/video calls use WebRTC. The app does not intentionally record calls.</p>
+<h3>6. Service providers</h3><p>THENNAL uses Firebase services for authentication and database functions.</p>
+<h3>7. Reports</h3><p>Reports and verification requests may be reviewed by authorised administrators.</p>
+<h3>8. Security and retention</h3><p>We cannot guarantee absolute security. Information may be retained for operational, safety or legal reasons.</p>
+<h3>9. Deletion requests</h3><p>You may contact us to request account or data deletion.</p>
+<h3>10. Contact</h3><p><a href="mailto:kproushal@gmail.com">kproushal@gmail.com</a></p>`;
+const termsHTML=`<h2>Terms & Conditions</h2><p class="muted">Effective date: 18 November 2026</p>
+<p>By using THENNAL, you agree to these Terms.</p>
+<h3>1. Adults only</h3><p>You must be at least 18 years old. Do not create an account for a minor or provide a false age.</p>
+<h3>2. Account details</h3><p>Provide accurate information and protect your login credentials.</p>
+<h3>3. Conduct</h3><p>Harassment, threats, fraud, exploitation, illegal content and misuse are prohibited.</p>
+<h3>4. Photos and content</h3><p>You are responsible for content you upload.</p>
+<h3>5. Interactions</h3><p>A match does not guarantee another user's identity or intentions. Use caution.</p>
+<h3>6. Reports and restrictions</h3><p>THENNAL may review reports and restrict or block accounts.</p>
+<h3>7. Verification</h3><p>A verification label is not a guarantee of identity or behaviour.</p>
+<h3>8. Calls</h3><p>Calls depend on device permissions and network connectivity. Calls are free in this version.</p>
+<h3>9. Availability</h3><p>Uninterrupted service is not guaranteed.</p>
+<h3>10. Contact</h3><p><a href="mailto:kproushal@gmail.com">kproushal@gmail.com</a></p>`;
+
+window.showLegal=which=>{
+ $("authPage").classList.add("hidden");$("appPage").classList.add("hidden");$("bottomNav").classList.add("hidden");
+ $("legalPage").classList.remove("hidden");$("legalContent").innerHTML=which==="privacy"?privacyHTML:termsHTML;window.scrollTo(0,0);
 };
-
-let registrationInProgress=false;
-window.closeIntro=()=>$("intro").classList.add("hidden");
-window.showRegister=()=>{
- $("registerFields").classList.remove("hidden");
- $("authTitle").textContent="Create your THENNAL account ❤️";
+window.closeLegal=()=>{
+ $("legalPage").classList.add("hidden");
+ if(auth.currentUser){$("appPage").classList.remove("hidden");$("bottomNav").classList.remove("hidden");showPage(currentPage);}
+ else $("authPage").classList.remove("hidden");
 };
-
-window.login=async()=>{
- try{
-  const email=$("email").value.trim().toLowerCase();
-  if(!email.endsWith("@gmail.com"))throw Error("Please use a Gmail address ending in @gmail.com");
-  const cred=await signInWithEmailAndPassword(auth,email,$("password").value);
-  await reload(cred.user);
-  if(!cred.user.emailVerified){
-   await sendEmailVerification(cred.user).catch(()=>{});
-   await signOut(auth);
-   throw Error("Gmail verify ചെയ്തിട്ടില്ല. Email-ൽ വന്ന verification link തുറന്ന ശേഷം വീണ്ടും Login ചെയ്യുക.");
-  }
- }catch(e){ say("authMsg",e.message); }
+window.showAuth=which=>{
+ $("loginForm").classList.toggle("hidden",which!=="login");$("registerForm").classList.toggle("hidden",which!=="register");
+ $("loginTab").classList.toggle("secondary",which!=="login");$("registerTab").classList.toggle("secondary",which!=="register");
 };
-
 window.register=async()=>{
- let createdUser=null;
- try{
-  const email=$("email").value.trim().toLowerCase();
-  const password=$("password").value;
-  const name=$("regName").value.trim();
-  const age=Number($("regAge").value);
-  const gender=$("regGender").value;
-  const files=Array.from($("regPhotos").files||[]);
-  if(!email.endsWith("@gmail.com"))throw Error("Gmail address (@gmail.com) മാത്രം ഉപയോഗിക്കുക.");
-  if(password.length<6)throw Error("Password കുറഞ്ഞത് 6 അക്ഷരങ്ങൾ വേണം.");
-  if(!name||!age||age<18||age>100||!gender)throw Error("Name, 18+ Age, Gender എന്നിവ നൽകണം.");
-  if(files.length<2||files.length>4)throw Error("കൃത്യമായി 2 മുതൽ 4 വരെ photos തിരഞ്ഞെടുക്കുക.");
-  if(!$("agreeTerms").checked)throw Error("18+ സ്ഥിരീകരിക്കുകയും Terms & Privacy അംഗീകരിക്കുകയും വേണം.");
-  if(files.some(f=>!f.type.startsWith("image/")))throw Error("Image files മാത്രം upload ചെയ്യുക.");
-  registrationInProgress=true;
-  const cred=await createUserWithEmailAndPassword(auth,email,password);
-  createdUser=cred.user;
-  await sendEmailVerification(createdUser);
-  const photoURLs=[];
-  for(let i=0;i<files.length;i++){
-   const imageRef=ref(storage,"profilePhotos/"+createdUser.uid+"/"+Date.now()+"_"+i);
-   await uploadBytes(imageRef,files[i]);
-   photoURLs.push(await getDownloadURL(imageRef));
-  }
-  const profile={uid:createdUser.uid,email,name,age,gender,bio:$("regBio").value.trim(),photoURL:photoURLs[0],photoURLs,status:"active",emailVerified:false,createdAt:serverTimestamp(),updatedAt:serverTimestamp()};
-  await setDoc(doc(db,"users",createdUser.uid),profile);
-  await setDoc(doc(db,"publicProfiles",createdUser.uid),{uid:createdUser.uid,name,age,gender,bio:profile.bio,photoURL:photoURLs[0],photoURLs,status:"active"});
-  await signOut(auth);
-  say("authMsg","Account തയ്യാറായി! Gmail-ലേക്ക് verification link അയച്ചു. Link തുറന്ന് verify ചെയ്ത ശേഷം Login ചെയ്യുക. ❤️");
-  $("registerFields").classList.add("hidden");
- }catch(e){
-  if(createdUser)await signOut(auth).catch(()=>{});
-  say("authMsg",e.message);
- }finally{registrationInProgress=false;}
+ const email=$("regEmail").value.trim().toLowerCase(),password=$("regPassword").value;
+ if(!isGmail(email))return toast("Please use a Gmail address ending in @gmail.com");
+ if(password.length<6)return toast("Password must contain at least 6 characters");
+ if(!$("regAgeConfirm").checked)return toast("You must confirm that you are 18 or older");
+ if(!$("regTermsConfirm").checked)return toast("Please agree to the Terms and Privacy Policy");
+ try{const c=await createUserWithEmailAndPassword(auth,email,password);await sendEmailVerification(c.user);await signOut(auth);$("loginEmail").value=email;showAuth("login");toast("Verification email sent. Verify your Gmail, then log in.");}
+ catch(e){toast("Registration failed: "+e.message);}
 };
-
-window.logout=()=>signOut(auth);
+window.login=async()=>{
+ const email=$("loginEmail").value.trim().toLowerCase(),password=$("loginPassword").value;
+ if(!isGmail(email))return toast("Please use your registered Gmail address");if(!password)return toast("Enter your password");
+ try{const c=await signInWithEmailAndPassword(auth,email,password);await reload(c.user);if(!c.user.emailVerified){await signOut(auth);toast("Verify your email first. Check Gmail inbox and spam.");}}
+ catch(e){toast("Login failed: "+e.message);}
+};
+window.resendVerification=async()=>{
+ const email=$("loginEmail").value.trim().toLowerCase(),password=$("loginPassword").value;
+ if(!isGmail(email)||!password)return toast("Enter your Gmail and password first");
+ try{const c=await signInWithEmailAndPassword(auth,email,password);await reload(c.user);if(c.user.emailVerified){await signOut(auth);return toast("Your email is already verified. Please log in.");}await sendEmailVerification(c.user);await signOut(auth);toast("A new verification email has been sent.");}
+ catch(e){toast("Could not resend email: "+e.message);}
+};
+window.logout=async()=>{clearListeners();cleanupCall();await signOut(auth);};
 
 onAuthStateChanged(auth,async user=>{
- if(registrationInProgress)return;
+ const run=++authRun;me=user||null;myProfile=null;clearListeners();
  if(!user){
-  me=null;
-  $("auth").classList.remove("hidden");
-  $("app").classList.add("hidden");
-  if(incomingUnsub)incomingUnsub();
-  if(chatUnsub)chatUnsub();
-  return;
+  $("legalPage").classList.add("hidden");$("authPage").classList.remove("hidden");$("appPage").classList.add("hidden");$("bottomNav").classList.add("hidden");
+  $("headerUser").textContent="Connect Hearts";showAuth("login");return;
  }
-
- me=user;
- try{ await reload(user); }catch(e){}
- if(!user.emailVerified){
-  await signOut(auth).catch(()=>{});
-  say("authMsg","Verified Gmail ഇല്ലാതെ Login അനുവദിക്കില്ല. Email verification link തുറക്കുക.");
-  return;
- }
- $("auth").classList.add("hidden");
- $("app").classList.remove("hidden");
-
  try{
-  await loadMyProfile();
-  if(!Array.isArray(myProfile.photoURLs)||myProfile.photoURLs.length<2){
-   show("profile");
-   say("profileMsg","Profile പൂർത്തിയാക്കാൻ കുറഞ്ഞത് 2 photos upload ചെയ്യുക.");
-  }else{
-   listenIncomingCalls();
-   show("home");
-  }
- }catch(e){
-  alert("Loading error: "+e.message);
- }
+  await reload(user);if(run!==authRun)return;
+  if(!user.emailVerified||!isGmail(user.email)){await signOut(auth);toast("Verified Gmail is required to use THENNAL.");return;}
+  $("legalPage").classList.add("hidden");$("authPage").classList.add("hidden");$("appPage").classList.remove("hidden");$("bottomNav").classList.remove("hidden");
+  $("headerUser").textContent=user.email;$("navAdmin").classList.toggle("hidden",user.email!==ADMIN);
+  const snap=await getDoc(doc(db,"users",user.uid));if(run!==authRun)return;
+  if(snap.exists()){
+   myProfile=normalizeProfile(snap.data(),snap.id);
+   if(myProfile.status==="blocked"){toast("Your account is blocked. Contact support.");await signOut(auth);return;}
+   fillProfile();
+   if(photosOf(myProfile).length<2){showPage("profile");toast("Add at least 2 profile photos before using the app.");}
+   else showPage("discover");
+  }else{showPage("profile");toast("Complete your profile with at least 2 photos.");}
+  await Promise.allSettled([loadDiscover(),loadLikes(),loadMatches(),loadWallet()]);
+  if(run!==authRun)return;listenIncoming();if(user.email===ADMIN)loadAdmin();
+ }catch(e){if(run===authRun)toast("Unable to load account: "+e.message);}
 });
+
+function fillProfile(){
+ if(!myProfile)return;
+ $("pName").value=myProfile.name||"";$("pAge").value=myProfile.age||"";$("pGender").value=myProfile.gender||"";
+ $("pCountry").value=myProfile.country||"";$("pState").value=myProfile.state||"";$("pCity").value=myProfile.city||"";
+ $("pBio").value=myProfile.bio||"";$("verifyStatus").textContent="Verification: "+(myProfile.verificationStatus||"Not requested");
+ selectedPhotos=photosOf(myProfile);renderPhotoPreview(selectedPhotos);
+}
+function renderPhotoPreview(list){$("photoPreview").innerHTML=list.map(src=>`<img src="${esc(src)}" alt="Selected profile photo">`).join("");}
+async function compressImage(file){
+ if(!file.type.startsWith("image/"))throw Error("Only image files are allowed");
+ return await new Promise((resolve,reject)=>{
+  const reader=new FileReader(),img=new Image();reader.onerror=reject;
+  reader.onload=()=>img.src=reader.result;
+  img.onload=()=>{
+   const canvas=document.createElement("canvas"),scale=Math.min(650/img.width,650/img.height,1);
+   canvas.width=Math.round(img.width*scale);canvas.height=Math.round(img.height*scale);
+   canvas.getContext("2d").drawImage(img,0,0,canvas.width,canvas.height);
+   const data=canvas.toDataURL("image/jpeg",.58);
+   if(data.length>170000)return reject(Error("One photo is too large after compression. Choose another photo."));
+   resolve(data);
+  };img.onerror=reject;reader.readAsDataURL(file);
+ });
+}
+$("pPhotos").addEventListener("change",async e=>{
+ const files=[...(e.target.files||[])];if(files.length<2||files.length>4){e.target.value="";return toast("Select at least 2 and no more than 4 photos.");}
+ try{toast("Preparing photos...");const result=[];for(const f of files)result.push(await compressImage(f));
+ if(result.join("").length>600000)throw Error("Combined photos are too large. Choose smaller photos.");
+ selectedPhotos=result;renderPhotoPreview(result);toast("Photos ready. Save your profile.");
+ }catch(err){e.target.value="";toast(err.message);}
+});
+window.saveProfile=async()=>{
+ const uid=currentUid();if(!uid)return toast("Please log in again.");
+ const name=$("pName").value.trim(),age=Number($("pAge").value),gender=$("pGender").value;
+ if(name.length<2||age<18||age>100||!gender)return toast("Enter your name, age 18+ and gender");
+ if(selectedPhotos.length<2||selectedPhotos.length>4)return toast("Please add 2 to 4 profile photos");
+ if(selectedPhotos.join("").length>600000)return toast("Photos exceed the storage limit. Choose smaller photos.");
+ try{
+  const data={uid,name,age,gender,country:$("pCountry").value.trim(),state:$("pState").value.trim(),city:$("pCity").value.trim(),bio:$("pBio").value.trim(),photoURLs:selectedPhotos,photoURL:selectedPhotos[0],status:"active",updatedAt:serverTimestamp()};
+  await setDoc(doc(db,"users",uid),{...data,email:auth.currentUser.email,createdAt:myProfile?.createdAt||serverTimestamp()},{merge:true});
+  await setDoc(doc(db,"publicProfiles",uid),data,{merge:true});
+  myProfile={...myProfile,...data};toast("Profile saved successfully ❤️");fillProfile();await loadDiscover();showPage("discover");
+ }catch(e){toast("Profile save failed: "+e.message);}
+};
+window.requestVerification=async()=>{
+ const uid=currentUid();if(!uid||!myProfile||photosOf(myProfile).length<2)return toast("Complete your profile first");
+ try{
+  const data={uid,email:auth.currentUser.email,name:myProfile.name||"",note:$("verifyNote").value.trim(),status:"pending",createdAt:serverTimestamp()};
+  await setDoc(doc(db,"verificationRequests",uid),data);
+  await updateDoc(doc(db,"users",uid),{verificationStatus:"pending"});
+  await updateDoc(doc(db,"publicProfiles",uid),{verificationStatus:"pending"});
+  myProfile.verificationStatus="pending";$("verifyStatus").textContent="Verification: pending";toast("Verification request submitted");
+ }catch(e){toast("Request failed: "+e.message);}
+};
+window.showPage=page=>{
+ const uid=currentUid();if(!uid)return;
+ if(page!=="profile"&&(!myProfile||photosOf(myProfile).length<2)){page="profile";toast("Complete your profile with at least 2 photos first.");}
+ if(page==="admin"&&auth.currentUser.email!==ADMIN)return toast("Admin access only");
+ if(!$(page+"Page"))return;
+ currentPage=page;
+ ["discover","likes","matches","chat","profile","wallet","admin"].forEach(p=>$(p+"Page").classList.toggle("hidden",p!==page));
+ ["Discover","Likes","Matches","Profile","Wallet","Admin"].forEach(p=>{const b=$("nav"+p);if(b)b.classList.toggle("active",p.toLowerCase()===page);});
+ if(page==="admin")loadAdmin();
+};
+
+window.loadDiscover=async()=>{
+ const uid=currentUid();if(!uid||!myProfile||photosOf(myProfile).length<2)return;
+ try{
+  const snap=await getDocs(query(collection(db,"publicProfiles"),where("status","==","active"),limit(100)));
+  let users=snap.docs.map(d=>normalizeProfile(d.data(),d.id)).filter(u=>u.uid&&u.uid!==uid&&Number(u.age)>=18&&photosOf(u).length>0);
+  const min=Math.max(18,Number($("minAge").value||18)),max=Number($("maxAge").value||100);
+  const country=$("filterCountry").value.trim().toLowerCase(),city=$("filterCity").value.trim().toLowerCase();
+  users=users.filter(u=>Number(u.age)>=min&&Number(u.age)<=max);
+  if(country)users=users.filter(u=>(u.country||"").toLowerCase().includes(country));
+  if(city)users=users.filter(u=>(u.city||"").toLowerCase().includes(city));
+  const likes=await getDocs(query(collection(db,"likes"),where("fromUid","==",uid)));
+  const liked=new Set(likes.docs.map(d=>String(d.data()?.toUid||"")).filter(Boolean));
+  $("discoverList").innerHTML=users.length?users.map(u=>{
+   const pics=photosOf(u),id=esc(u.uid);
+   return `<div class="card"><div class="photo-grid">${pics.map(src=>`<img src="${esc(src)}" alt="Profile photo">`).join("")}</div>
+   <h2>${esc(u.name||"Member")}, ${esc(u.age||"")}</h2><p class="muted">${esc([u.city,u.state,u.country].filter(Boolean).join(", "))}</p><p>${esc(u.bio||"")}</p>
+   ${u.verificationStatus==="verified"?'<span class="pill">✓ Verified</span>':""}
+   <div class="row" style="margin-top:12px"><button ${liked.has(u.uid)?"disabled":""} onclick="likeUser('${id}')">${liked.has(u.uid)?"Liked ✓":"❤️ Like"}</button><button class="secondary" onclick="reportUser('${id}','${esc(u.name||"Member")}')">Report</button></div></div>`;
+  }).join(""):'<div class="card muted">No profiles found. Try changing your filters.</div>';
+ }catch(e){toast("Discover error: "+e.message);}
+};
+window.likeUser=async targetUid=>{
+ const uid=currentUid();if(!uid||!targetUid||targetUid===uid)return toast("Invalid profile.");
+ if(!myProfile||photosOf(myProfile).length<2)return toast("Complete your profile first");
+ try{
+  await setDoc(doc(db,"likes",uid+"_"+targetUid),{fromUid:uid,toUid:targetUid,createdAt:serverTimestamp()},{merge:true});
+  const reverse=await getDoc(doc(db,"likes",targetUid+"_"+uid));
+  if(reverse.exists()){
+   const ids=[uid,targetUid].sort(),matchId=ids[0]+"_"+ids[1];
+   await setDoc(doc(db,"matches",matchId),{user1:ids[0],user2:ids[1],createdAt:serverTimestamp()},{merge:true});
+   toast("It's a match! ❤️");await loadMatches();
+  }else toast("Like sent ❤️");
+  await Promise.allSettled([loadDiscover(),loadLikes()]);
+ }catch(e){toast("Like failed: "+e.message);}
+};
+window.loadLikes=async()=>{
+ const uid=currentUid();if(!uid)return;
+ try{
+  const snap=await getDocs(query(collection(db,"likes"),where("toUid","==",uid)));
+  const list=[];
+  for(const d of snap.docs){
+   const fromUid=d.data()?.fromUid;if(typeof fromUid!=="string"||!fromUid||fromUid===uid)continue;
+   let p=await getDoc(doc(db,"publicProfiles",fromUid));
+   if(!p.exists())p=await getDoc(doc(db,"users",fromUid));
+   if(p.exists()){const user=normalizeProfile(p.data(),p.id);if(user.uid)list.push(user);}
+  }
+  $("likesList").innerHTML=list.length?list.map(u=>userRow(u,`<button onclick="likeUser('${esc(u.uid)}')">Like back</button>`)).join(""):'<p class="muted">No likes yet.</p>';
+ }catch(e){toast("Could not load likes: "+e.message);}
+};
+function userRow(u,actions=""){
+ const p=photosOf(u)[0]||"";
+ return `<div class="userrow"><img class="small-photo" src="${esc(p)}" alt=""><div class="grow"><b>${esc(u.name||"Member")}</b><p class="muted">${esc([u.city,u.country].filter(Boolean).join(", "))}</p></div>${actions}</div>`;
+};
+
+window.loadMatches=async()=>{
+ const uid=currentUid();if(!uid)return;
+ try{
+  const [a,b]=await Promise.all([
+   getDocs(query(collection(db,"matches"),where("user1","==",uid))),
+   getDocs(query(collection(db,"matches"),where("user2","==",uid)))
+  ]);
+  const docs=[...a.docs,...b.docs],seen=new Set();allMatches=[];
+  for(const d of docs){
+   if(seen.has(d.id))continue;seen.add(d.id);
+   const m=d.data()||{},u1=typeof m.user1==="string"?m.user1:"",u2=typeof m.user2==="string"?m.user2:"";
+   if(!u1||!u2||u1===u2||!(u1===uid||u2===uid))continue;
+   const partnerUid=u1===uid?u2:u1;if(!partnerUid||partnerUid===uid)continue;
+   let p=await getDoc(doc(db,"publicProfiles",partnerUid));
+   if(!p.exists())p=await getDoc(doc(db,"users",partnerUid));
+   if(!p.exists())continue;
+   const partner=normalizeProfile(p.data(),partnerUid);
+   if(!partner.uid)continue;
+   allMatches.push({id:d.id,partner});
+  }
+  $("matchesList").innerHTML=allMatches.length?allMatches.map(m=>userRow(m.partner,`
+   <button onclick="openChat('${esc(m.id)}','${esc(m.partner.uid)}','${esc(m.partner.name||"Member")}')">Chat</button>
+   <button class="secondary" onclick="reportUser('${esc(m.partner.uid)}','${esc(m.partner.name||"Member")}')">Report</button>`)).join(""):'<p class="muted">Your matches will appear here.</p>';
+ }catch(e){toast("Could not load matches: "+e.message);}
+};
+window.openChat=(matchId,uid,name)=>{
+ const meUid=currentUid();if(!meUid||!matchId||!uid||uid===meUid)return toast("Invalid match.");
+ const match=allMatches.find(m=>m.id===matchId);
+ if(!match||match.partner.uid!==uid)return toast("Match not found. Refresh Matches.");
+ activeMatch=matchId;activePartner=uid;$("chatTitle").textContent="Chat with "+name;showPage("chat");
+ if(chatUnsub)chatUnsub();
+ const q=query(collection(db,"chats",matchId,"messages"),orderBy("createdAt","asc"),limit(200));
+ chatUnsub=onSnapshot(q,snap=>{
+  $("messages").innerHTML=snap.docs.map(d=>{const m=d.data()||{};return `<div class="msg ${m.senderUid===meUid?"mine":""}">${esc(m.text||"")}</div>`;}).join("");
+  $("messages").scrollTop=$("messages").scrollHeight;
+ },e=>toast("Chat error: "+e.message));
+};
+window.sendMessage=async()=>{
+ const uid=currentUid(),text=$("chatInput").value.trim();
+ if(!uid||!text||!activeMatch||!activePartner)return;
+ if(text.length>1000)return toast("Message is too long");
+ try{$("chatInput").value="";await addDoc(collection(db,"chats",activeMatch,"messages"),{senderUid:uid,text,createdAt:serverTimestamp()});}
+ catch(e){toast("Message failed: "+e.message);}
+};
+window.reportUser=async(uid,name)=>{
+ const reporter=currentUid();if(!reporter||!uid||uid===reporter)return toast("Invalid report target.");
+ const reason=prompt("Why are you reporting this profile?");if(!reason)return;
+ const details=prompt("Additional details (optional)")||"";
+ try{await addDoc(collection(db,"reports"),{reporterUid:reporter,targetUid:uid,targetName:name,reason:reason.slice(0,100),details:details.slice(0,1000),status:"open",createdAt:serverTimestamp()});toast("Report submitted. Thank you.");}
+ catch(e){toast("Report failed: "+e.message);}
+};
+async function loadWallet(){
+ const uid=currentUid();if(!uid)return;
+ try{const s=await getDoc(doc(db,"wallets",uid));$("coinBalance").textContent=(s.exists()?Number(s.data().coins||0):0)+" coins";}
+ catch(e){$("coinBalance").textContent="Unavailable";}
+}
+
+window.loadAdmin=async()=>{
+ if(auth.currentUser?.email!==ADMIN)return toast("Admin access only");
+ try{
+  const [us,ms,rs,vs]=await Promise.all([getDocs(collection(db,"users")),getDocs(collection(db,"matches")),getDocs(query(collection(db,"reports"),orderBy("createdAt","desc"),limit(100))),getDocs(collection(db,"verificationRequests"))]);
+  allUsers=us.docs.map(d=>normalizeProfile(d.data(),d.id));allMatches=ms.docs.map(d=>({id:d.id,...d.data()}));
+  allReports=rs.docs.map(d=>({id:d.id,...d.data()}));allVerifications=vs.docs.map(d=>({id:d.id,...d.data()}));
+  $("statUsers").textContent=allUsers.length;$("statActive").textContent=allUsers.filter(u=>u.status==="active").length;
+  $("statBlocked").textContent=allUsers.filter(u=>u.status==="blocked").length;$("statMatches").textContent=allMatches.length;
+  $("statReports").textContent=allReports.filter(r=>r.status==="open").length;$("statVerify").textContent=allVerifications.filter(v=>v.status==="pending").length;
+  renderAdminUsers();renderAdminReports();renderAdminVerifications();renderAdminMatches();
+ }catch(e){toast("Admin dashboard error: "+e.message);}
+};
+window.renderAdminUsers=()=>{
+ const term=($("adminSearch").value||"").toLowerCase();
+ const users=allUsers.filter(u=>[u.name,u.email,u.city,u.country,u.uid].join(" ").toLowerCase().includes(term));
+ $("adminUsers").innerHTML=users.map(u=>`<div class="userrow"><div class="grow"><b>${esc(u.name||"Unnamed user")}</b><p class="muted">${esc(u.email||u.uid)} · ${esc(u.status||"unknown")}</p></div><button class="${u.status==="blocked"?"success":"danger"}" onclick="toggleBlock('${esc(u.uid)}','${u.status==="blocked"?"active":"blocked"}')">${u.status==="blocked"?"Unblock":"Block"}</button></div>`).join("")||'<p class="muted">No users found.</p>';
+};
+window.toggleBlock=async(uid,status)=>{
+ if(auth.currentUser?.email!==ADMIN||!uid)return;
+ if(!confirm(status==="blocked"?"Block this user?":"Unblock this user?"))return;
+ try{const batch=writeBatch(db);batch.update(doc(db,"users",uid),{status});batch.update(doc(db,"publicProfiles",uid),{status});await batch.commit();toast("User status updated");loadAdmin();}
+ catch(e){toast("Update failed: "+e.message);}
+};
+function renderAdminVerifications(){
+ $("adminVerifications").innerHTML=allVerifications.length?allVerifications.map(v=>`<div class="card"><b>${esc(v.name||v.uid)}</b><p class="muted">${esc(v.email||"")}</p><p>${esc(v.note||"No note")}</p><span class="pill">${esc(v.status||"pending")}</span>${v.status==="pending"?`<div class="row" style="margin-top:10px"><button class="success" onclick="reviewVerification('${esc(v.uid)}','verified')">Approve</button><button class="danger" onclick="reviewVerification('${esc(v.uid)}','rejected')">Reject</button></div>`:""}</div>`).join(""):'<p class="muted">No verification requests.</p>';
+}
+window.reviewVerification=async(uid,status)=>{
+ if(auth.currentUser?.email!==ADMIN||!uid)return;
+ try{const batch=writeBatch(db);batch.update(doc(db,"verificationRequests",uid),{status,reviewedAt:serverTimestamp()});batch.update(doc(db,"users",uid),{verificationStatus:status});batch.update(doc(db,"publicProfiles",uid),{verificationStatus:status});await batch.commit();toast("Verification updated");loadAdmin();}
+ catch(e){toast("Verification update failed: "+e.message);}
+};
+function renderAdminReports(){
+ $("adminReports").innerHTML=allReports.length?allReports.map(r=>`<div class="card"><b>${esc(r.targetName||r.targetUid)}</b><p class="muted">Reason: ${esc(r.reason)} · Status: ${esc(r.status)}</p><p>${esc(r.details||"")}</p><p class="muted">Reporter: ${esc(r.reporterUid)}</p>${r.status!=="resolved"?`<div class="row"><button class="success" onclick="updateReport('${esc(r.id)}','resolved')">Resolve</button><button class="secondary" onclick="updateReport('${esc(r.id)}','reviewed')">Mark reviewed</button><button class="danger" onclick="toggleBlock('${esc(r.targetUid)}','blocked')">Block user</button></div>`:""}</div>`).join(""):'<p class="muted">No reports submitted.</p>';
+}
+window.updateReport=async(id,status)=>{
+ if(auth.currentUser?.email!==ADMIN)return;
+ try{await updateDoc(doc(db,"reports",id),{status,resolvedAt:serverTimestamp()});toast("Report updated");loadAdmin();}
+ catch(e){toast("Could not update report: "+e.message);}
+};
+function renderAdminMatches(){
+ $("adminMatches").innerHTML=allMatches.slice(0,100).map(m=>`<div class="userrow"><div class="grow"><b>${esc(m.user1||"")}</b><p class="muted">matched with ${esc(m.user2||"")}</p></div></div>`).join("")||'<p class="muted">No matches yet.</p>';
+}
+
+const rtcConfig={iceServers:[{urls:"stun:stun.l.google.com:19302"},{urls:"stun:stun1.l.google.com:19302"}]};
+async function getMedia(type){return navigator.mediaDevices.getUserMedia({audio:true,video:type==="video"});}
+function showCall(status){$("callScreen").style.display="block";$("callStatus").textContent=status;}
+async function createPeer(){
+ pc=new RTCPeerConnection(rtcConfig);
+ pc.ontrack=e=>{$("remoteVideo").srcObject=e.streams[0];};
+ pc.onconnectionstatechange=()=>{if(pc)$("callStatus").textContent=pc.connectionState==="connected"?"Connected":"Call: "+pc.connectionState;};
+ pc.onicecandidate=async e=>{
+  if(!e.candidate||!currentCallId)return;
+  const sub=callRole==="caller"?"callerCandidates":"calleeCandidates";
+  try{await addDoc(collection(db,"calls",currentCallId,sub),{ownerUid:currentUid(),candidate:e.candidate.candidate,sdpMid:e.candidate.sdpMid,sdpMLineIndex:e.candidate.sdpMLineIndex});}catch(err){console.warn(err);}
+ };
+ if(localStream)localStream.getTracks().forEach(t=>pc.addTrack(t,localStream));
+}
+function listenCandidates(sub){
+ const uid=currentUid();if(!uid||!currentCallId)return;
+ const unsub=onSnapshot(collection(db,"calls",currentCallId,sub),snap=>{
+  snap.docChanges().forEach(async change=>{
+   if(change.type!=="added"||!pc)return;const c=change.doc.data()||{};if(c.ownerUid===uid)return;
+   try{await pc.addIceCandidate(new RTCIceCandidate({candidate:c.candidate,sdpMid:c.sdpMid,sdpMLineIndex:c.sdpMLineIndex}));}catch(e){console.warn(e);}
+  });
+ });callUnsubs.push(unsub);
+}
+window.startCall=async type=>{
+ if(!activeMatch||!activePartner)return toast("Open a match first");
+ if(!navigator.mediaDevices?.getUserMedia)return toast("Calls require HTTPS and browser permission");
+ try{
+  currentCallType=type;callRole="caller";localStream=await getMedia(type);
+  $("localVideo").srcObject=localStream;$("remoteVideo").srcObject=null;$("callHeading").textContent=type==="video"?"Video call":"Audio call";
+  $("acceptCallBtn").classList.add("hidden");$("rejectCallBtn").classList.add("hidden");showCall("Calling...");
+  const ref=await addDoc(collection(db,"calls"),{callerUid:currentUid(),calleeUid:activePartner,matchId:activeMatch,type,status:"creating",createdAt:serverTimestamp()});
+  currentCallId=ref.id;await createPeer();const offer=await pc.createOffer();await pc.setLocalDescription(offer);
+  await updateDoc(doc(db,"calls",currentCallId),{offer:{type:offer.type,sdp:offer.sdp},status:"ringing"});listenCandidates("calleeCandidates");
+  const unsub=onSnapshot(doc(db,"calls",currentCallId),async snap=>{
+   if(!snap.exists())return;const d=snap.data();
+   if(d.status==="accepted"&&d.answer&&pc?.signalingState==="have-local-offer"){await pc.setRemoteDescription(new RTCSessionDescription(d.answer));$("callStatus").textContent="Connected";}
+   if(["rejected","ended"].includes(d.status)){toast("Call "+d.status);cleanupCall();}
+  });callUnsubs.push(unsub);
+ }catch(e){toast("Could not start call: "+e.message);cleanupCall();}
+};
+function listenIncoming(){
+ const uid=currentUid();if(!uid)return;if(incomingUnsub)incomingUnsub();
+ incomingUnsub=onSnapshot(query(collection(db,"calls"),where("calleeUid","==",uid),where("status","==","ringing")),snap=>{
+  snap.docChanges().forEach(change=>{
+   if(change.type!=="added"||currentCallId)return;
+   const d=change.doc.data()||{};if(!d.callerUid||!d.matchId||!d.offer)return;
+   pendingOffer={id:change.doc.id,data:d};currentCallType=d.type||"audio";callRole="callee";
+   $("callHeading").textContent=currentCallType==="video"?"Incoming video call":"Incoming audio call";
+   $("acceptCallBtn").classList.remove("hidden");$("rejectCallBtn").classList.remove("hidden");showCall("Incoming call...");
+  });
+ },e=>console.warn(e));
+}
+window.acceptCall=async()=>{
+ if(!pendingOffer)return;
+ try{
+  currentCallId=pendingOffer.id;localStream=await getMedia(currentCallType);$("localVideo").srcObject=localStream;$("remoteVideo").srcObject=null;
+  await createPeer();await pc.setRemoteDescription(new RTCSessionDescription(pendingOffer.data.offer));
+  const answer=await pc.createAnswer();await pc.setLocalDescription(answer);
+  await updateDoc(doc(db,"calls",currentCallId),{answer:{type:answer.type,sdp:answer.sdp},status:"accepted",answeredAt:serverTimestamp()});
+  listenCandidates("callerCandidates");$("acceptCallBtn").classList.add("hidden");$("rejectCallBtn").classList.add("hidden");$("callStatus").textContent="Connected";pendingOffer=null;
+  const unsub=onSnapshot(doc(db,"calls",currentCallId),snap=>{if(snap.exists()&&snap.data().status==="ended"){toast("Call ended");cleanupCall();}});callUnsubs.push(unsub);
+ }catch(e){toast("Could not accept call: "+e.message);cleanupCall();}
+};
+window.rejectCall=async()=>{
+ if(!pendingOffer)return;try{await updateDoc(doc(db,"calls",pendingOffer.id),{status:"rejected"});}catch(e){}
+ pendingOffer=null;cleanupCall();
+};
+window.endCall=async()=>{
+ try{if(currentCallId)await updateDoc(doc(db,"calls",currentCallId),{status:"ended",endedAt:serverTimestamp()});}catch(e){}
+ cleanupCall();
+};
+function cleanupCall(){
+ callUnsubs.forEach(f=>f());callUnsubs=[];
+ if(pc){pc.close();pc=null;}if(localStream){localStream.getTracks().forEach(t=>t.stop());localStream=null;}
+ $("localVideo").srcObject=null;$("remoteVideo").srcObject=null;$("callScreen").style.display="none";
+ $("acceptCallBtn").classList.add("hidden");$("rejectCallBtn").classList.add("hidden");
+ currentCallId=null;pendingOffer=null;
+}
+window.addEventListener("beforeunload",()=>{clearListeners();cleanupCall();});
+showAuth("login");
+</script>
+</body>
+</html>
