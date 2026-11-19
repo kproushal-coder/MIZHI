@@ -321,13 +321,13 @@ window.showPage=page=>{
  if(page==="likes")loadFriendRequests();
 };
 
-/* DISCOVER */
+/* DISCOVER: use document ID whenever a profile's uid field is absent. */
 window.loadDiscover=async()=>{
  const uid=currentUid();if(!uid||!myProfile||photosOf(myProfile).length<2)return;
  try{
   const snap=await getDocs(query(collection(db,"publicProfiles"),where("status","==","active"),limit(100)));
   let users=snap.docs.map(d=>normalizeProfile(d.data(),d.id)).filter(u=>u.uid&&u.uid!==uid&&Number(u.age)>=18&&photosOf(u).length>0);
-  const min=Math.max(18,Number($("minAge").value||18)),max=Number($("maxAge").value||100);
+  const min=Math.max(18,Number($("minAge").value||18)),max=Math.max(18,Number($("maxAge").value||100));
   const country=$("filterCountry").value.trim().toLowerCase(),city=$("filterCity").value.trim().toLowerCase();
   users=users.filter(u=>Number(u.age)>=min&&Number(u.age)<=max);
   if(country)users=users.filter(u=>(u.country||"").toLowerCase().includes(country));
@@ -373,9 +373,9 @@ window.loadLikes=async()=>{
 function userRow(u,actions=""){
  const p=photosOf(u)[0]||"";
  return `<div class="userrow"><img class="small-photo" src="${esc(p)}" alt=""><div class="grow"><b>${esc(u.name||"Member")}</b><p class="muted">${esc([u.city,u.country].filter(Boolean).join(", "))}</p></div>${actions}</div>`;
-};
+}
 
-/* MATCHES */
+/* MATCHES: reject malformed match records before constructing Firestore paths. */
 window.loadMatches=async()=>{
  const uid=currentUid();if(!uid)return;
  try{
